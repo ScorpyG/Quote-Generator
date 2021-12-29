@@ -1,0 +1,228 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+
+:root {
+  --bgColor: #141414;
+  --hoverColor: #fbc1c0;
+  --ContrastColor: #eee5e5;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+  
+}
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: var(--bgColor);
+  color: var(--ContrastColor);
+  font-family: "Oswald", sans-serif;
+  cursor: none;
+}
+body::-webkit-scrollbar {
+  width: 9;
+  height: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--ContrastColor);
+}
+
+/* Add quote button */
+.nav-btn {
+  right: 20px;
+  top: 20px;
+  display: grid;
+  place-items: center;
+  position: absolute;
+
+  background-color: var(--bgColor);
+  border: 2px #eee5e5 solid;
+  border-radius: 50px;
+
+  height: 50px;
+  width: 50px;
+  cursor: none;
+  transition-duration: 0.5s;
+}
+
+.nav-btn:before {
+  display: grid;
+  justify-content: center;
+  width: 80px;
+  align-self: center;
+  font-size: 1.3rem;
+  position: absolute;
+  visibility: hidden;
+  color: var(--bgColor);
+  z-index: -1;
+  transition-duration: 0.5s;
+}
+
+.nav-btn:hover {
+  cursor: none;
+  color: var(--bgColor);
+  background-color: var(--hoverColor);
+  border-color: var(--hoverColor);
+}
+
+.nav-btn:hover::before {
+  transform: translateX(-100%);
+  overflow: visible;
+  visibility: visible;
+  color: var(--hoverColor);
+}
+
+.nav-btn i {
+  font-size: 20px;
+}
+
+.bt1::before {
+  content: "Add quote";
+}
+.bt2::before {
+  content: "Return";
+}
+
+/* Each Page Title */
+.page-title {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  overflow: hidden;
+  background: linear-gradient(to right, rgb(247, 142, 159), var(--hoverColor) 50%,  var(--ContrastColor)50%);
+  transition: background-position 800ms ease;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+}
+
+.page-title:hover {
+  background-position: 0 100%
+}
+
+
+/* User buttons */
+.button-options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.save-btn {
+  justify-content: space-evenly;
+}
+
+.submit-btn {
+  font-size: 2rem;
+  font-family: "Oswald", sans-serif;
+  color: var(--ContrastColor);
+
+  width: 150px;
+
+  padding-bottom: 5px;
+
+  border: 2px #eee5e5 solid;
+  border-radius: 20px;
+  background-color: transparent;
+  box-shadow: 6px 6px rgba(255, 192, 203, 0.6);
+
+  transition-duration: 0.5s;
+  cursor: none;
+}
+
+.submit-btn:hover{
+  cursor: none;
+  transform: translateY(6px);
+  transform: translateX(6px);
+  box-shadow: none;
+  color: var(--bgColor);
+  background-color: var(--hoverColor);
+}
+
+/* Main Page */
+#root {
+  height: 85vh;
+  display: grid;
+  place-items: center;
+}
+
+.quote-box {
+  height: 350px;
+  width: 500px;
+  margin: auto;
+}
+
+.display-quote, .input-box {
+  font-size: 1.7rem;
+  height: 100%;
+  padding: 20px 25px;
+  border: 5px #fbc1c0 solid;
+  box-shadow: 10px 10px rgba(255, 192, 203, 0.5);
+  border-radius: 20px;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+  cursor: none;
+}
+
+.quote, .author {
+  margin: 0;
+  transition-duration: 0.5s;
+}
+
+.author {
+  border-top: 2px #eee5e5 solid;
+  text-align: right;
+}
+
+/* Input Quote Page */
+.input-box label {
+  font-size: 2rem;
+  padding-left: 10px;
+  display: block;
+}
+
+.label2 {
+  margin-top: 20px;
+}
+
+textarea, input {
+  background-color: transparent;
+  color: var(--ContrastColor);
+  font-size: 1.5rem;
+  outline: none;
+  border: 2px white solid;
+  border-radius: 20px;
+  padding: 10px;
+  height: 40vh;
+  margin-top: 5px;
+  resize: none;
+  cursor: none;
+}
+textarea:focus, input:focus {
+  background-color: rgb(68, 68, 68);
+}
+input {
+  height: 30px;
+}
+
+.input-box {
+  height: 100%;
+  padding: 10px 20px 20px 20px;
+  border: 5px #fbc1c0 solid;
+  border-radius: 20px;
+}
+
+.add-quote {
+  height: 550px;
+  width: 650px;
+  margin: auto;
+}
