@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FillingBottle from "react-cssfx-loading/lib/FillingBottle";
 import axios from "axios";
 import "./App.css";
 import Navigator from "./components/AddNav";
@@ -9,6 +10,8 @@ function App() {
   const url = `${process.env.REACT_APP_API_URL}`;
   const [quoteObj, setQuoteObj] = useState(null);
 
+  const [completed, setCompleted] = useState(undefined);
+
   // Function GET request new quote from MongoDB
   const getNewQuote = () => {
     axios.get(url).then((res) => {
@@ -17,15 +20,17 @@ function App() {
     });
   };
 
-  
   // Onload the quote object is not yet exist then do get-request and create a quote object
-  if (!quoteObj) {
-    axios.get(url).then((res) => {
-      var randObjIndex = Math.floor(Math.random() * res.data.length); // Get a random index position in quote' objects
-      setQuoteObj(res.data[randObjIndex]);
-    });
+  if (!completed) {
+    setTimeout(() => {
+      axios.get(url).then((res) => {
+        var randObjIndex = Math.floor(Math.random() * res.data.length); // Get a random index position in quote' objects
+        setQuoteObj(res.data[randObjIndex]);
+        setCompleted(true);
+      });
+    }, 4000);
     return (
-      <></> // Return no JSX Component ?? and it worked?? idk wtf is going here!!
+      <FillingBottle color="#FBC1C0" width="150px" height="150px" duration="2s"/> // Return loading animation while API server responding
     );
   }
 
@@ -33,8 +38,7 @@ function App() {
   return (
     <>
       <Navigator />
-
-      <PageTitle title="Generate Quote"/>
+      <PageTitle title="Generate Quote" />
 
       <div className="quote-box">
         <div className="display-quote">
