@@ -28,7 +28,7 @@ function App() {
         setQuoteObj(res.data[randObjIndex]);
         setCompleted(true);
       });
-    }, 4000);
+    }, 1000);
     return (
       <FillingBottle color="#FBC1C0" width="150px" height="150px" duration="2s"/> // Return loading animation while API server responding
     );
