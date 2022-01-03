@@ -9,8 +9,11 @@ import PageTitle from "./components/PageTitle";
 function App() {
   const url = `${process.env.REACT_APP_API_URL}`;
   const [quoteObj, setQuoteObj] = useState(null);
-
-  const [completed, setCompleted] = useState(undefined);
+  const [
+    // eslint-disable-next-line
+    completed,
+    setCompleted,
+  ] = useState(undefined);
 
   // Function GET request new quote from MongoDB
   const getNewQuote = () => {
@@ -21,7 +24,7 @@ function App() {
   };
 
   // Onload the quote object is not yet exist then do get-request and create a quote object
-  if (!completed) {
+  if (!quoteObj) {
     setTimeout(() => {
       axios.get(url).then((res) => {
         var randObjIndex = Math.floor(Math.random() * res.data.length); // Get a random index position in quote' objects
@@ -30,7 +33,12 @@ function App() {
       });
     }, 1000);
     return (
-      <FillingBottle color="#FBC1C0" width="150px" height="150px" duration="2s"/> // Return loading animation while API server responding
+      <FillingBottle
+        color="#FBC1C0"
+        width="150px"
+        height="150px"
+        duration="2s"
+      /> // Return loading animation while API server responding
     );
   }
 
