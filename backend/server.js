@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const quoteRouter = require('./routes/quotes');
 
 require('dotenv').config();
 
@@ -21,7 +22,6 @@ mongoose.connection.once('open', () => {
     console.log("MongoDB database connection established successfully!");
 });
 
-const quoteRouter = require('./routes/quotes');
 app.use('/quotes', quoteRouter);
 
 app.listen(port, (error) => {

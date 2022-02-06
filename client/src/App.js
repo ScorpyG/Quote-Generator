@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import FillingBottle from "react-cssfx-loading/lib/FillingBottle";
+import FadingDots from "react-cssfx-loading/lib/FadingDots";
 import axios from "axios";
 import "./App.css";
 import Navigator from "./components/AddNav";
@@ -18,8 +18,7 @@ function App() {
   // Function GET request new quote from MongoDB
   const getNewQuote = () => {
     axios.get(url).then((res) => {
-      var randObjIndex = Math.floor(Math.random() * res.data.length); // Get a random index position in quote' objects
-      setQuoteObj(res.data[randObjIndex]);
+      setQuoteObj(res.data);
     });
   };
 
@@ -27,13 +26,12 @@ function App() {
   if (!quoteObj) {
     setTimeout(() => {
       axios.get(url).then((res) => {
-        var randObjIndex = Math.floor(Math.random() * res.data.length); // Get a random index position in quote' objects
-        setQuoteObj(res.data[randObjIndex]);
+        setQuoteObj(res.data);
         setCompleted(true);
       });
     }, 1000);
     return (
-      <FillingBottle
+      <FadingDots
         color="#FBC1C0"
         width="150px"
         height="150px"
@@ -55,11 +53,11 @@ function App() {
         </div>
         <div className="button-options">
           <Link to={`/edit/${quoteObj._id}`}>
-            <button className="submit-btn">
+            <button className="submit-btn edit-btn">
               <i className="fas fa-edit" /> Edit
             </button>
           </Link>
-          <button onClick={getNewQuote} className="submit-btn">
+          <button onClick={getNewQuote} className="submit-btn next-btn">
             Next <i className="fas fa-angle-double-right" />
           </button>
         </div>

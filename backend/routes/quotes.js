@@ -1,9 +1,14 @@
 const router = require('express').Router();
-let Quote = require('../models/quotes.model');
+const Quote = require('../models/quotes.model');
+const { quoteHash } = require('./duplicateQuotes');
 
 router.route('/').get((req, res) => {
     Quote.find()
-        .then(quotes => res.json(quotes))
+        .then(quotes => {
+            // Return 1 random quote as JSON instead of the whole query
+            var randObjIndex = Math.floor(Math.random() * quotes.length); // Get a random index position in quotes' object
+            res.json(quotes[randObjIndex])
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -11,8 +16,10 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
     const quote = req.body.quote;
     const author = req.body.author;
+    const hash = quoteHash(quote);
 
     const newQuote = new Quote({
+        hash,
         quote,
         author
     });

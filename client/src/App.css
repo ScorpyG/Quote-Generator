@@ -9,7 +9,6 @@
 html {
   scroll-behavior: smooth;
   cursor: none;
-  
 }
 body {
   margin: 0;
@@ -93,7 +92,12 @@ a {
   top: 20px;
   left: 20px;
   overflow: hidden;
-  background: linear-gradient(to right, rgb(247, 142, 159), var(--hoverColor) 50%,  var(--ContrastColor)50%);
+  background: linear-gradient(
+    to right,
+    rgb(247, 142, 159),
+    var(--hoverColor) 50%,
+    var(--ContrastColor) 50%
+  );
   transition: background-position 800ms ease;
   background-clip: text;
   -webkit-background-clip: text;
@@ -103,9 +107,8 @@ a {
 }
 
 .page-title:hover {
-  background-position: 0 100%
+  background-position: 0 100%;
 }
-
 
 /* User buttons */
 .button-options {
@@ -135,13 +138,16 @@ a {
   cursor: none;
 }
 
-.submit-btn:hover{
+.submit-btn:hover {
   cursor: none;
+  color: var(--bgColor);
+  background-color: var(--hoverColor);
+}
+
+.submit-btn:active {
   transform: translateY(6px);
   transform: translateX(6px);
   box-shadow: none;
-  color: var(--bgColor);
-  background-color: var(--hoverColor);
 }
 
 /* Main Page */
@@ -157,14 +163,15 @@ a {
   margin: auto;
 }
 
-.display-quote, .input-box {
+.display-quote,
+.input-box {
   font-size: 1.7rem;
   height: 100%;
   padding: 20px 25px;
   border: 5px #fbc1c0 solid;
   box-shadow: 10px 10px rgba(255, 192, 203, 0.5);
   border-radius: 20px;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -173,7 +180,8 @@ a {
   cursor: none;
 }
 
-.quote, .author {
+.quote,
+.author {
   margin: 0;
   transition-duration: 0.5s;
 }
@@ -194,7 +202,8 @@ a {
   margin-top: 20px;
 }
 
-textarea, input {
+textarea,
+input {
   background-color: transparent;
   color: var(--ContrastColor);
   font-size: 1.5rem;
@@ -207,7 +216,8 @@ textarea, input {
   resize: none;
   cursor: none;
 }
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
   background-color: rgb(68, 68, 68);
 }
 input {
@@ -225,4 +235,89 @@ input {
   height: 550px;
   width: 650px;
   margin: auto;
+}
+
+@media screen and (max-width: 650px) {
+  /* Responsive Main Page */
+  .quote-box, .add-quote {
+    width: 100%;
+    margin: 5px auto 0px auto;
+  }
+
+  .add-quote {
+    height: 60vh;
+  }
+  .quote-box {
+    height: 50vh;
+  }
+
+  .display-quote,
+  .input-box {
+    padding: 10px 15px;
+    font-size: 1.6rem;
+    margin: 15px;
+    box-shadow: none;
+  }
+
+  /* Input Quote Page */
+  .input-box label {
+    font-size: 1.3rem;
+  }
+
+  textarea,
+  input {
+    font-size: 1rem;
+    outline: none;
+    border-radius: 20px;
+    padding: 10px;
+
+    margin: 5px 0 5px 0;
+    resize: none;
+    cursor: none;
+  }
+
+  .input-box {
+    padding: 10px;
+    border: none;
+    margin: 0px;
+  }
+
+  .label2 {
+    margin-top: 5px;
+  }
+
+  /* Responsive nav-buttons */
+  .submit-btn {
+    font-size: 1.5rem;
+    width: 120px;
+    margin: 10px;
+    box-shadow: none;
+  }
+
+  .submit-btn:hover {
+    transform: none;
+    transform: none;
+  }
+
+  .nav-btn:hover::before {
+    overflow: none;
+    visibility: hidden;
+  }
+
+  .edit-btn,
+  .next-btn,
+  .save-btn {
+    bottom: 10px;
+    position: absolute;
+  }
+  .edit-btn {
+    left: 10px;
+  }
+  .next-btn {
+    right: 10px;
+  }
+  .save-btn {
+    left: 10px;
+    right: 10px;
+  }
 }
