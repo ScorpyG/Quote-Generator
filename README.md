@@ -1,17 +1,36 @@
 # Quote Generator (MERN Project)
 
-### Description
-- A quote generator, this page will allow you to request API calls to the backend server MongoDB hosted by Heroku. For each fetch will give you **one** random quote available inside the server.
-- The website also allow the user to add their own quotes and modification if needed.
-- The project focuses on the fondation principles of full-stack project on UX/UI design for the front-end and server/database optimization.
+- This project was rewritten from traditional JavaScript and React.js and Node/Express framework to full TypeScript and
 
-[View Page!](https://mern-quote-generator.netlify.app/)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/146ea0c6-f41d-45fc-a7d5-737e1311fc4d/deploy-status)](https://app.netlify.com/sites/mern-quote-generator/deploys)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Revision!?
-### Problem 
-- Quote ***duplication*** as every single user allow to add their own quote. There is nothing preventing them to add a quote that already existing in the database. 
-- This issue is a bad practice is the process design which lead to data redundancy cause storage constraint, poor optimization and longer response time. 
-### Possible Solutions 
-- Create a duplication detector, that will prevent the user to add a similar quote that already exist in the database. The solution will be handle in the back-end side (where a POST request will return an error/ message and stop the new user's quote save into the database if duplication detected)
-- Duplication Detector -> The server will grab the new user's input and remove the anomalies from the string (**NO CAPITALIZATION**, **NO UNIQUE CHARACTERS**, **NO WHITE SPACE**) then compare that to the existing *non-anomalies* attribute of each quote object in the database if it's match then there is duplication. Otherwise save that new quote into the database
+## Description
+
+<!-- TODO: fill in the description -->
+
+```bash
+yarn dev
+```
+
+## Getting Started
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
