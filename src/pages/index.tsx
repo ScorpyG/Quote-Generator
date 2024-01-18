@@ -1,14 +1,9 @@
-'use client';
-
-import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
-import { generateTestData } from '@/utils/demoData';
+import QuoteContainer, { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
 
-export default function Home() {
-  // TODO: remove this after testing
-  const demoDatas = generateTestData();
-
+// eslint-disable-next-line react/prop-types
+export default function Home(quotes: Array<QuoteProps>) {
   return (
     <>
       <Head>
@@ -18,14 +13,25 @@ export default function Home() {
         margin={'auto'}
         display={'flex'}
         flexDirection={'column'}
-        gap={'20px'}
+        gap={'25px'}
         justifyContent={'center'}
         alignItems={'center'}
       >
-        {demoDatas.map((quote, i) => (
-          <QuoteContainer {...quote} key={i} />
+        {quotes.map((quote) => (
+          <QuoteContainer {...quote} key={quote.id} />
         ))}
       </Box>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3000/api/quotes');
+  const quotes = await res.json();
+
+  return {
+    props: {
+      quotes,
+    },
+  };
 }

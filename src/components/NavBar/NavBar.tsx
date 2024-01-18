@@ -1,7 +1,7 @@
 import { Box, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import NavMenu from '../NavMenu/NavMenu';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
+import NavMenu from './NavMenu';
 
 export default function NavBar() {
   return (
