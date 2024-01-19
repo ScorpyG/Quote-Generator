@@ -17,11 +17,16 @@ export default function SignUpForm() {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+    reset,
   } = useForm<SignUpFormInput>();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const { onSubmit, onInvalidSubmit } = useSignUpForm();
+
+  if (isSubmitSuccessful) {
+    reset();
+  }
 
   return (
     <form

@@ -9,6 +9,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import { useState } from 'react';
 import LoginForm from './LoginForm/LoginForm';
@@ -22,6 +23,12 @@ interface FormModalProps {
 export default function FormModal(formModalProps: FormModalProps) {
   const [isLogin, setIsLogin] = useState(true);
   const { isOpen, onClose } = formModalProps;
+
+  const { status } = useSession();
+
+  if (status === 'authenticated') {
+    onClose();
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

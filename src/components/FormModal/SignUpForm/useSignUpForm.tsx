@@ -13,10 +13,55 @@ export interface SignUpFormInput {
 export default function useSignUpForm() {
   const toast = useToast();
 
-  const onSubmit: SubmitHandler<SignUpFormInput> = useCallback((data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-  }, []);
+  const onSubmit: SubmitHandler<SignUpFormInput> = useCallback(
+    async (data) => {
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        // TODO: refactor this implementation
+        if (res.status === 201) {
+          toast({
+            title: 'Registration successful',
+            description: 'Your account was successfully created',
+            status: 'success',
+            duration: 3500,
+            isClosable: true,
+          });
+        } else if (res.status === 400) {
+          toast({
+            title: 'Registration failed',
+            description: 'Email is already in use',
+            status: 'warning',
+            duration: 3500,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: 'Registration failed',
+            description: 'Unable to register your account please try again later',
+            status: 'error',
+            duration: 6000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        toast({
+          title: 'Registration failed',
+          description: 'Unable to register your account please try again later',
+          status: 'error',
+          duration: 6000,
+          isClosable: true,
+        });
+      }
+    },
+    [toast]
+  );
 
   const onInvalidSubmit = useCallback(() => {
     toast({
