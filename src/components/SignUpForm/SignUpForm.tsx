@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -40,6 +41,7 @@ export default function SignUpForm() {
       }}
     >
       <FormControl isInvalid={errors.firstName && true}>
+        <FormLabel>First Name</FormLabel>
         <Input
           {...register('firstName', {
             pattern: {
@@ -55,6 +57,7 @@ export default function SignUpForm() {
       </FormControl>
 
       <FormControl isInvalid={errors.firstName && true}>
+        <FormLabel>Last Name</FormLabel>
         <Input
           {...register('lastName', {
             pattern: {
@@ -70,6 +73,7 @@ export default function SignUpForm() {
       </FormControl>
 
       <FormControl isInvalid={errors.email && true}>
+        <FormLabel>Email</FormLabel>
         <Input
           {...register('email', {
             pattern: {
@@ -87,6 +91,7 @@ export default function SignUpForm() {
       </FormControl>
 
       <FormControl isInvalid={errors.password && true}>
+        <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
             {...register('password', {
@@ -117,6 +122,7 @@ export default function SignUpForm() {
       </FormControl>
 
       <FormControl isInvalid={errors.confirmPassword && true}>
+        <FormLabel>Confirm Password</FormLabel>
         <InputGroup>
           <Input
             {...register('confirmPassword', {

@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -33,6 +34,7 @@ export default function LoginForm() {
       }}
     >
       <FormControl isInvalid={errors.email && true}>
+        <FormLabel>Email</FormLabel>
         <Input
           {...register('email', {
             required: 'Please enter your email',
@@ -43,6 +45,7 @@ export default function LoginForm() {
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={errors.password && true}>
+        <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
             {...register('password', {
