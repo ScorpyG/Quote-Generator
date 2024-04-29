@@ -43,7 +43,7 @@ export default function QuoteContainer(quoteProps: QuoteProps) {
         )}
 
         <Text>&quot;{quoteProps.quote}&quot;</Text>
-        <Text textAlign={'right'} fontStyle={'italic'} fontWeight={600}>
+        <Text mt={2} textAlign={'right'} fontStyle={'italic'} fontWeight={600}>
           {quoteProps.author}
         </Text>
         {quoteProps.tags.length > 0 && <TagsList tagsList={quoteProps.tags} />}

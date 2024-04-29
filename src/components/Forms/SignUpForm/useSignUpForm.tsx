@@ -1,4 +1,5 @@
 import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -16,13 +17,19 @@ export default function useSignUpForm() {
   const onSubmit: SubmitHandler<SignUpFormInput> = useCallback(
     async (data) => {
       try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const res = await axios.post(
+          '/api/register',
+          {
+            data,
           },
-          body: JSON.stringify(data),
-        });
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         // TODO: refactor this implementation
         if (res.status === 201) {

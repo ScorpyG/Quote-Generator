@@ -52,6 +52,7 @@ export default function SignUpForm() {
           })}
           name="firstName"
           placeholder="First Name"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
       </FormControl>
@@ -68,6 +69,7 @@ export default function SignUpForm() {
           })}
           name="lastName"
           placeholder="Last Name"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.lastName && errors.lastName.message}</FormErrorMessage>
       </FormControl>
@@ -86,6 +88,7 @@ export default function SignUpForm() {
           name="email"
           placeholder="Email"
           type="email"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
@@ -108,6 +111,7 @@ export default function SignUpForm() {
             name="password"
             placeholder="Password"
             type={isPasswordVisible ? 'text' : 'password'}
+            variant={'filled'}
           />
           <InputRightElement>
             <IconButton
@@ -132,6 +136,7 @@ export default function SignUpForm() {
             name="confirmPassword"
             placeholder="Confirm Password"
             type={isConfirmPasswordVisible ? 'text' : 'password'}
+            variant={'filled'}
           />
           <InputRightElement>
             <IconButton
@@ -145,7 +150,17 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.confirmPassword && errors.confirmPassword.message}</FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" isLoading={isSubmitting} w={'100%'}>
+      <Button
+        type="submit"
+        isLoading={isSubmitting}
+        w={'100%'}
+        mt={2}
+        bgGradient={'linear(to-l, pink.400, purple.500)'}
+        _hover={{
+          bgGradient: 'linear(to-r, pink.300, purple.300)',
+        }}
+        textColor={'white'}
+      >
         Sign Up
       </Button>
     </form>
