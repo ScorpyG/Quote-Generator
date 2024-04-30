@@ -1,43 +1,41 @@
-// import clientPromise from '@/lib/mongodbClient';
-import User from '@/models/User';
-import connect from '@/utils/db';
-// import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import bcrypt from 'bcryptjs';
+import clientPromise from '@/lib/mongodbClient';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import { Adapter } from 'next-auth/adapters';
+import Credentials from 'next-auth/providers/credentials';
 
-// TODO: refactor the authentication approach
 export const authOptions: NextAuthOptions = {
-  // adapter: MongoDBAdapter(clientPromise),
-  pages: {},
+  // ! Casting is required because the MongoDBAdapter function from @auth/mongodb-adapter NOR @next-auth/mongodb-adapter does not return an Adapter
+  adapter: MongoDBAdapter(clientPromise) as Adapter,
   providers: [
-    CredentialsProvider({
-      id: 'credentials',
+    Credentials({
       name: 'Credentials',
-      credentials: {
-        email: { label: 'Email', type: 'text' },
-        password: { label: 'Password', type: 'password' },
-      },
+      type: 'credentials',
+      credentials: {},
+      async authorize(credentials) {
+        const { email, password } = credentials as { email: string; password: string };
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      async authorize(credentials: any) {
-        await connect();
-        try {
-          const user = await User.findOne({ email: credentials.email });
-          if (user) {
-            const isPasswordMatched = await bcrypt.compare(credentials.password, user.password);
-            if (isPasswordMatched) {
-              return user;
-            }
-          }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-          // TODO: not sure how to handle error here
-          throw new Error(error);
+        // TODO: replace this with actual database query
+        if (email !== 'testuser1@test.com' || password !== 'TestUser@123') {
+          throw new Error('Invalid credentials!');
+        } else {
+          return {
+            id: '1',
+            name: 'Test User',
+            email: 'testuser1@test.com',
+          };
         }
       },
     }),
   ],
+  pages: {
+    signIn: '/signin',
+  },
+  debug: process.env.NODE_ENV !== 'production',
+
+  session: {
+    strategy: 'jwt',
+  },
 };
 
 export default NextAuth(authOptions);

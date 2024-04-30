@@ -1,4 +1,4 @@
-import dbConnect from '@/lib/dbConnect';
+import clientPromise from '@/lib/mongodbClient';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -6,10 +6,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { email, password, firstName, lastName } = await req.body;
 
-  await dbConnect().catch((error: string) => {
-    res.status(503).json({ message: `Unable to connect to database. ${error}` });
-  });
-  const userExist = await User.find({ email });
+  // ! Not sure y this isn't working
+  await clientPromise;
+
+  const userExist = await User.findOne({ email: email });
 
   if (userExist) {
     return res.status(400).json({ message: 'Email is already in use' });

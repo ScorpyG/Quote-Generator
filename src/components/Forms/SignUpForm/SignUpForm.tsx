@@ -157,7 +157,7 @@ export default function SignUpForm() {
         mt={2}
         bgGradient={'linear(to-l, pink.400, purple.500)'}
         _hover={{
-          bgGradient: 'linear(to-r, pink.300, purple.300)',
+          bgGradient: 'linear(to-l, pink.300, purple.300)',
         }}
         textColor={'white'}
       >

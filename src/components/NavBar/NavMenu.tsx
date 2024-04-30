@@ -5,7 +5,6 @@ import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 
 export default function NavMenu() {
-  // TODO: implement authentication
   const { status } = useSession();
 
   return (

@@ -20,19 +20,19 @@ export default function useLoginForm() {
         password: data.password,
       });
 
-      if (res?.error) {
+      if (res?.status === 200) {
+        toast({
+          title: 'Login successful',
+          status: 'success',
+          duration: 3500,
+          isClosable: true,
+        });
+      } else {
         toast({
           title: 'Login failed',
           description: 'Please enter the correct email and password',
           status: 'error',
           duration: 5000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Login successful',
-          status: 'success',
-          duration: 3500,
           isClosable: true,
         });
       }
