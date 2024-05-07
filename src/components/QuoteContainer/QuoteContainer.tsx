@@ -10,11 +10,11 @@ export interface QuoteProps {
   author: string;
   createdBy: Date;
   tags: Array<string>;
+
+  isAdmin?: boolean;
 }
 
-export default function QuoteContainer(quoteProps: QuoteProps) {
-  // TODO: implement authentication
-  const isAdmin = true;
+export default function QuoteContainer({ quote, author, createdBy, tags, isAdmin }: QuoteProps) {
   const { onClose, onOpen, isOpen } = useDisclosure();
 
   return (
@@ -32,7 +32,7 @@ export default function QuoteContainer(quoteProps: QuoteProps) {
           <>
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
               <Text fontStyle={'italic'} fontSize={'xs'}>
-                {`Created by: ${format(quoteProps.createdBy, 'd MMM, yyyy')}`}
+                {`Created by: ${format(createdBy, 'd MMM, yyyy')}`}
               </Text>
               <PopoverTrigger>
                 <OptionIcon fontSize={'16px'} _hover={{ cursor: 'pointer' }} />
@@ -42,11 +42,11 @@ export default function QuoteContainer(quoteProps: QuoteProps) {
           </>
         )}
 
-        <Text>&quot;{quoteProps.quote}&quot;</Text>
+        <Text>&quot;{quote}&quot;</Text>
         <Text mt={2} textAlign={'right'} fontStyle={'italic'} fontWeight={600}>
-          {quoteProps.author}
+          {author}
         </Text>
-        {quoteProps.tags.length > 0 && <TagsList tagsList={quoteProps.tags} />}
+        {tags.length > 0 && <TagsList tagsList={tags} />}
       </Box>
     </ControlOption>
   );

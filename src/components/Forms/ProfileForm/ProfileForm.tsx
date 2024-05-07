@@ -64,10 +64,10 @@ export default function ProfileForm(profileFormProps: ProfileFormProps) {
           type="submit"
           isLoading={isSubmitting}
           w={'full'}
-          mt={2}
-          bgGradient={'linear(to-l, green.300, teal.400)'}
+          my={2}
+          bgGradient={'linear(to-l, pink.400, purple.400)'}
           _hover={{
-            bgGradient: 'linear(to-l, teal.200, blue.200)',
+            bgGradient: 'linear(to-l, pink.200, purple.300)',
           }}
           textColor={'white'}
         >
