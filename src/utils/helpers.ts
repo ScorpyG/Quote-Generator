@@ -20,3 +20,7 @@ export function generateTestData() {
 
   return demoDataList;
 }
+
+export const PERSONAL_GITHUB = 'https://github.com/ScorpyG';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/justin-gia-hoang/';
+export const DEV_COMMUNITY_URL = 'https://dev.to/scorpyg';
