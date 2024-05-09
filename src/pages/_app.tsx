@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer/Footer';
 import NavBar from '@/components/NavBar/NavBar';
 import { Chakra } from '@/context/CustomChakraProvider';
 import { SessionProvider } from 'next-auth/react';
@@ -17,9 +18,19 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
             <link rel="icon" href="/light-logo.svg" media="(prefers-color-scheme: dark)" />
             <link rel="icon" href="/dark-logo.svg" media="(prefers-color-scheme: light)" />
           </Head>
-          <main style={{ maxWidth: '1200px', margin: 'auto' }}>
+          <main
+            style={{
+              maxWidth: '1200px',
+              margin: 'auto',
+              // To push footer to bottom of page
+              minHeight: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             <NavBar />
-            <Component {...pageProps} />
+            <Component {...pageProps} style={{ flex: 1 }} />
+            <Footer />
           </main>
         </Suspense>
       </Chakra>
