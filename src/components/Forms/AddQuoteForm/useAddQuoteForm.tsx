@@ -13,12 +13,13 @@ export default function useAddQuoteForm() {
   const toast = useToast();
 
   const onSubmit: SubmitHandler<AddQuoteFormInput> = useCallback(
-    async (data) => {
+    async (quoteData) => {
       try {
         const res = await axios.post(
           '/api/quote',
           {
-            data,
+            quoteData,
+            // TODO: Add user ID
           },
           {
             method: 'POST',

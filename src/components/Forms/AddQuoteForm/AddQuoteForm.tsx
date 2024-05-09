@@ -16,6 +16,7 @@ export default function AddQuoteForm() {
     reset();
   }
 
+  // TODO: Prevent form submission if profanity is detected
   return (
     <>
       <Box display={'flex'} flexDirection={'column'} mb={2} textAlign={'center'}>
