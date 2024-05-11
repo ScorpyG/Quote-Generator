@@ -26,7 +26,7 @@ export default function QuoteContainer({ quote, author, createdBy, tags, isAdmin
         borderRadius={'20px'}
         boxShadow={'6px 6px rgba(255, 192, 203, 0.5)'}
         padding={'20px'}
-        maxWidth={'650px'}
+        width={'650px'}
       >
         {isAdmin && (
           <>

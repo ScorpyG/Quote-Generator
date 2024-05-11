@@ -1,3 +1,4 @@
+import { EMAIL_PATTERN, NAME_PATTERN, PASSWORD_PATTERN } from '@/utils/helpers';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
   Button,
@@ -45,10 +46,10 @@ export default function SignUpForm() {
         <Input
           {...register('firstName', {
             pattern: {
-              value: /^[A-Za-z]+$/,
-              message: 'Please enter your name',
+              value: NAME_PATTERN,
+              message: 'Please enter text only',
             },
-            required: 'Required Field',
+            required: 'Please enter your first name',
           })}
           name="firstName"
           placeholder="First Name"
@@ -62,10 +63,10 @@ export default function SignUpForm() {
         <Input
           {...register('lastName', {
             pattern: {
-              value: /^[A-Za-z]+$/,
-              message: 'Please enter your name',
+              value: NAME_PATTERN,
+              message: 'Please enter text only',
             },
-            required: 'Required Field',
+            required: 'Please enter your last name',
           })}
           name="lastName"
           placeholder="Last Name"
@@ -79,11 +80,10 @@ export default function SignUpForm() {
         <Input
           {...register('email', {
             pattern: {
-              value:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              value: EMAIL_PATTERN,
               message: 'Please enter a valid email address',
             },
-            required: 'Required Field',
+            required: 'Please enter your email',
           })}
           name="email"
           placeholder="Email"
@@ -99,14 +99,14 @@ export default function SignUpForm() {
           <Input
             {...register('password', {
               pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                value: PASSWORD_PATTERN,
                 message: 'Your password must contains at least 1 number, 1 uppercase letter, 1 special character.',
               },
               minLength: {
                 value: 8,
                 message: 'Your password must have at least 8 characters',
               },
-              required: 'Required Field',
+              required: 'Please enter your password',
             })}
             name="password"
             placeholder="Password"
@@ -131,7 +131,7 @@ export default function SignUpForm() {
           <Input
             {...register('confirmPassword', {
               validate: (value) => value === watch('password') || 'You password must match',
-              required: 'Required Field',
+              required: 'Please confirm your password',
             })}
             name="confirmPassword"
             placeholder="Confirm Password"

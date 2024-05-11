@@ -1,4 +1,5 @@
-import { Box, Button, FormControl, FormLabel, Heading, Input, Text } from '@chakra-ui/react';
+import { NAME_PATTERN } from '@/utils/helpers';
+import { Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Text } from '@chakra-ui/react';
 import { Session } from 'next-auth';
 import { useForm } from 'react-hook-form';
 import useProfileForm, { ProfileFormInput } from './useProfileForm';
@@ -41,24 +42,34 @@ export default function ProfileForm(profileFormProps: ProfileFormProps) {
           <Input
             {...register('firstName', {
               required: 'Required Field',
+              pattern: {
+                value: NAME_PATTERN,
+                message: 'Please enter your first name',
+              },
             })}
             name="firstName"
             placeholder="First Name"
             variant={'filled'}
             defaultValue={userSessionData?.user?.name ?? 'First name'}
           />
+          <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.lastName && true}>
           <FormLabel>Last Name</FormLabel>
           <Input
             {...register('lastName', {
               required: 'Required Field',
+              pattern: {
+                value: NAME_PATTERN,
+                message: 'Please enter your last name',
+              },
             })}
             name="lastName"
             placeholder="Last Name"
             variant={'filled'}
             defaultValue={userSessionData?.user?.name ?? 'Last name'}
           />
+          <FormErrorMessage mt={1}>{errors.lastName && errors.lastName.message}</FormErrorMessage>
         </FormControl>
         <Button
           type="submit"

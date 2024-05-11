@@ -8,9 +8,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const db = client.db(process.env.MONGODB_DB_NAME);
 
     const quoteId = req.body.quoteId;
-    const query = { _id: new ObjectId(quoteId) };
 
-    const result = await db.collection('quotes').findOneAndDelete({ query });
+    const result = await db.collection('quotes').deleteOne({ _id: new ObjectId(quoteId) });
 
     res.status(200).json({ result, message: 'Quote deleted successfully.' });
   } catch (error) {

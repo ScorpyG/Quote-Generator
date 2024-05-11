@@ -15,24 +15,20 @@ export default function useSignUpForm() {
   const toast = useToast();
 
   const onSubmit: SubmitHandler<SignUpFormInput> = useCallback(
-    async (data) => {
-      try {
-        const res = await axios.post(
-          '/api/register',
-          {
-            data,
-          },
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+    async (data: SignUpFormInput) => {
+      const config = {
+        method: 'POST',
+        url: '/api/auth/register',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data,
+      };
 
-        // TODO: refactor this implementation
-        if (res.status === 201) {
+      try {
+        const response = await axios(config);
+
+        if (response.status === 201) {
           toast({
             title: 'Registration successful',
             description: 'Your account was successfully created',
@@ -40,7 +36,7 @@ export default function useSignUpForm() {
             duration: 3500,
             isClosable: true,
           });
-        } else if (res.status === 400) {
+        } else if (response.status === 203) {
           toast({
             title: 'Registration failed',
             description: 'Email is already in use',
@@ -60,7 +56,7 @@ export default function useSignUpForm() {
       } catch (error) {
         toast({
           title: 'Registration failed',
-          description: 'Unable to register your account please try again later',
+          description: 'Service is temporarily unavailable. Please try again later.',
           status: 'error',
           duration: 6000,
           isClosable: true,

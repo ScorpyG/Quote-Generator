@@ -14,9 +14,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       createdAt: new Date(),
     });
 
-    res.status(201).json({ result, message: 'Quote created successfully.' });
+    return res.status(201).json({ result, message: 'Quote created successfully.' });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error,
       message: 'Unable to create your quote.',
     });

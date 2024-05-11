@@ -1,11 +1,27 @@
-import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
-import { generateTestData } from '@/utils/helpers';
+import QuoteContainer, { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import { Box } from '@chakra-ui/react';
+import axios from 'axios';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  // TODO: remove this an actually set up the API to consume the /api/quotes endpoint
-  const quotes = generateTestData();
+  // TODO: refactor this to fetch data from the API
+  const [quotes, setQuotes] = useState<Array<QuoteProps>>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    axios.get('/api/quote/getQuotes').then((res) => {
+      setQuotes(res.data.results);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (!quotes) {
+    return <p>No data found</p>;
+  }
 
   return (
     <>
@@ -20,8 +36,8 @@ export default function Home() {
         justifyContent={'center'}
         alignItems={'center'}
       >
-        {quotes.map((quote) => (
-          <QuoteContainer {...quote} isAdmin={false} key={quote.id} />
+        {quotes.map((quote, i) => (
+          <QuoteContainer {...quote} isAdmin={false} key={quote.id || i} />
         ))}
       </Box>
     </>

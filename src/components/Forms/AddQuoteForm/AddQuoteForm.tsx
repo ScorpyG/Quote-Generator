@@ -1,4 +1,15 @@
-import { Box, Button, FormControl, FormLabel, Heading, Input, Text, Textarea } from '@chakra-ui/react';
+import { PROFANITY_WORDS } from '@/utils/helpers';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  Text,
+  Textarea,
+} from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import useAddQuoteForm, { AddQuoteFormInput } from './useAddQuoteForm';
 
@@ -16,7 +27,6 @@ export default function AddQuoteForm() {
     reset();
   }
 
-  // TODO: Prevent form submission if profanity is detected
   return (
     <>
       <Box display={'flex'} flexDirection={'column'} mb={2} textAlign={'center'}>
@@ -40,7 +50,7 @@ export default function AddQuoteForm() {
           <Textarea
             {...register('quote', {
               required: 'Please enter a quote',
-              // validate: (value) => value...
+              validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
             })}
             placeholder="Enter your quote"
             name="quote"
@@ -49,6 +59,7 @@ export default function AddQuoteForm() {
             h={'180px'}
             p={2}
           />
+          <FormErrorMessage mt={1}>{errors.quote && errors.quote.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.author && true}>
           <FormLabel>Author</FormLabel>
@@ -60,18 +71,20 @@ export default function AddQuoteForm() {
             name="author"
             variant={'filled'}
           />
+          <FormErrorMessage mt={1}>{errors.author && errors.author.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.tags && true}>
           <FormLabel>Tags</FormLabel>
           <Input
             {...register('tags', {
               required: 'Please enter tags',
-              // validate: (value) => ...
+              validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
             })}
-            placeholder="Enter tags"
+            placeholder="Enter tags separated by commas"
             name="tags"
             variant={'filled'}
           />
+          <FormErrorMessage mt={1}>{errors.tags && errors.tags.message}</FormErrorMessage>
         </FormControl>
 
         <Button

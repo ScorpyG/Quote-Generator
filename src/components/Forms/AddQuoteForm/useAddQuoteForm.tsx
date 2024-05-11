@@ -6,7 +6,7 @@ import { SubmitHandler } from 'react-hook-form';
 export interface AddQuoteFormInput {
   quote: string;
   author: string;
-  tags: string[];
+  tags: string;
 }
 
 export default function useAddQuoteForm() {
@@ -16,9 +16,10 @@ export default function useAddQuoteForm() {
     async (quoteData) => {
       try {
         const res = await axios.post(
-          '/api/quote',
+          '/api/quote/createQuote',
           {
-            quoteData,
+            ...quoteData,
+            tags: quoteData.tags.split(',').map((tag) => tag.trim()),
             // TODO: Add user ID
           },
           {
