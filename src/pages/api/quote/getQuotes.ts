@@ -7,7 +7,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const db = client.db(process.env.MONGODB_DB_NAME);
     const results = await db.collection('quotes').find({}).toArray();
 
-    return res.status(200).json({ results });
+    return res.status(200).json(results);
   } catch (error) {
     return res.status(500).json({
       error,
