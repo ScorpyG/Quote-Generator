@@ -5,21 +5,21 @@ import ControlOption from './ControlOptions';
 import TagsList from './TagsList';
 
 export interface QuoteProps {
-  id: string;
+  _id: string;
   quote: string;
   author: string;
-  createdBy: Date;
+  createdAt: Date;
   tags: Array<string>;
 
   isAdmin?: boolean;
 }
 
-export default function QuoteContainer({ quote, author, createdBy, tags, isAdmin }: QuoteProps) {
+export default function QuoteContainer({ _id, quote, author, createdAt, tags, isAdmin }: QuoteProps) {
   const { onClose, onOpen, isOpen } = useDisclosure();
 
   return (
     // TODO: make the card responsive
-    <ControlOption isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
+    <ControlOption isOpen={isOpen} onClose={onClose} onOpen={onOpen} quoteId={_id}>
       <Box
         borderWidth={'5px'}
         borderColor={'#fbc1c0'}
@@ -32,7 +32,7 @@ export default function QuoteContainer({ quote, author, createdBy, tags, isAdmin
           <>
             <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
               <Text fontStyle={'italic'} fontSize={'xs'}>
-                {`Created by: ${format(createdBy, 'd MMM, yyyy')}`}
+                {`Created by: ${format(createdAt, 'd MMM, yyyy')}`}
               </Text>
               <PopoverTrigger>
                 <OptionIcon fontSize={'16px'} _hover={{ cursor: 'pointer' }} />

@@ -11,7 +11,7 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import useAddQuoteForm, { AddQuoteFormInput } from './useAddQuoteForm';
+import useAddQuoteForm, { QuoteFormInput } from './useAddQuoteForm';
 
 export default function AddQuoteForm() {
   const {
@@ -19,7 +19,7 @@ export default function AddQuoteForm() {
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
-  } = useForm<AddQuoteFormInput>();
+  } = useForm<QuoteFormInput>();
 
   const { onSubmit, onInvalidSubmit } = useAddQuoteForm();
 
@@ -66,6 +66,7 @@ export default function AddQuoteForm() {
           <Input
             {...register('author', {
               required: `Author's name is required`,
+              validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
             })}
             placeholder="Enter the author"
             name="author"

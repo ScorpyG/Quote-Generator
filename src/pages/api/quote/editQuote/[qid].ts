@@ -2,6 +2,7 @@ import clientPromise from '@/lib/mongodbClient';
 import { ObjectId } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+// TODO: add authentication to this API endpoint
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const client = await clientPromise;

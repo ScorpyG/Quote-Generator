@@ -1,7 +1,7 @@
 import AddQuoteForm from '@/components/Forms/AddQuoteForm/AddQuoteForm';
 import ProfileForm from '@/components/Forms/ProfileForm/ProfileForm';
 import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
-import { generateTestData } from '@/utils/helpers';
+import useQuote from '@/hooks/useQuote';
 import {
   Box,
   Button,
@@ -12,6 +12,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
+  Stack,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
@@ -23,12 +26,13 @@ export default function Profile() {
   const router = useRouter();
   const { status, data } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { useUserQuotes } = useQuote();
   const [modalType, setModalType] = useState<'edit' | 'create' | null>(null);
 
-  // TODO: remove this and setup the API to consume the /api/quotes of specific userId endpoint
-  const quotes = generateTestData();
+  // TODO: update the function to use the session user id instead of the hardcoded id
+  const { quotes, isLoading } = useUserQuotes('65a9cd85fa2c4b5fd6214d42');
 
-  if (status === 'authenticated' && data) {
+  if (status === 'authenticated' && quotes) {
     return (
       <>
         <Head>
@@ -39,7 +43,7 @@ export default function Profile() {
         </Heading>
         <Box
           w={'sm'}
-          margin={'auto'}
+          mx={'auto'}
           display={'flex'}
           flexDirection={'row'}
           gap={'25px'}
@@ -94,18 +98,50 @@ export default function Profile() {
           </Button>
         </Box>
 
-        <Box
-          margin={'auto'}
-          display={'flex'}
-          flexDirection={'column'}
-          gap={'25px'}
-          justifyContent={'center'}
-          alignItems={'center'}
-        >
-          {quotes.map((quote) => (
-            <QuoteContainer {...quote} isAdmin={true} key={quote.id} />
-          ))}
-        </Box>
+        {quotes.length > 0 ? (
+          <Box
+            margin={'auto'}
+            display={'flex'}
+            flexDirection={'column'}
+            gap={'25px'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            {quotes.map((quote) => (
+              <QuoteContainer {...quote} isAdmin={true} key={quote._id} />
+            ))}
+          </Box>
+        ) : (
+          <Stack spacing={7} margin={'auto'}>
+            <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
+              You have not created any quotes yet
+            </Text>
+            <Box
+              backgroundColor={'#CBD5E0'}
+              height={'300px'}
+              borderRadius={'lg'}
+              w={'650px'}
+              h={'220px'}
+              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+            />
+            <Box
+              backgroundColor={'#CBD5E0'}
+              height={'300px'}
+              borderRadius={'lg'}
+              w={'650px'}
+              h={'220px'}
+              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+            />
+            <Box
+              backgroundColor={'#CBD5E0'}
+              height={'300px'}
+              borderRadius={'lg'}
+              w={'650px'}
+              h={'220px'}
+              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+            />
+          </Stack>
+        )}
 
         {/* ---------------------------------- Form Modal ---------------------------------- */}
         <Modal
@@ -125,8 +161,32 @@ export default function Profile() {
         </Modal>
       </>
     );
-  } else if (status === 'loading') {
-    return <p>Loading...</p>; // TODO: custom skeleton loader
+  } else if (status === 'loading' || isLoading) {
+    return (
+      <Stack spacing={7} margin={'auto'}>
+        <Skeleton
+          height={'300px'}
+          borderRadius={'lg'}
+          w={'650px'}
+          h={'220px'}
+          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+        />
+        <Skeleton
+          height={'300px'}
+          borderRadius={'lg'}
+          w={'650px'}
+          h={'220px'}
+          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+        />
+        <Skeleton
+          height={'300px'}
+          borderRadius={'lg'}
+          w={'650px'}
+          h={'220px'}
+          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
+        />
+      </Stack>
+    );
   } else {
     router.replace('/signin');
   }

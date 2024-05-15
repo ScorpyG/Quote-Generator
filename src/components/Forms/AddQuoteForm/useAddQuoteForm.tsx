@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export interface AddQuoteFormInput {
+export interface QuoteFormInput {
   quote: string;
   author: string;
   tags: string;
@@ -12,7 +12,7 @@ export interface AddQuoteFormInput {
 export default function useAddQuoteForm() {
   const toast = useToast();
 
-  const onSubmit: SubmitHandler<AddQuoteFormInput> = useCallback(
+  const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
       try {
         const res = await axios.post(

@@ -1,7 +1,9 @@
 import { CloseIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Popover, PopoverArrow, PopoverBody, PopoverContent, Text } from '@chakra-ui/react';
+import useControlOptions from './useControlOptions';
 
 interface ControlOptionProps {
+  quoteId: string;
   isOpen: boolean;
   onClose: VoidFunction;
   onOpen: VoidFunction;
@@ -9,7 +11,8 @@ interface ControlOptionProps {
 }
 
 export default function ControlOption(controlOptionProps: ControlOptionProps) {
-  const { isOpen, onOpen, onClose, children } = controlOptionProps;
+  const { quoteId, isOpen, onOpen, onClose, children } = controlOptionProps;
+  const { deleteQuote, updateQueryParamToIncludeQuoteId } = useControlOptions();
 
   return (
     <Popover placement="right" isOpen={isOpen} onClose={onClose} onOpen={onOpen} closeOnEsc>
@@ -21,12 +24,25 @@ export default function ControlOption(controlOptionProps: ControlOptionProps) {
             <Text>Close</Text>
           </Button>
 
-          <Button gap={3} justifyContent={'flex-start'}>
+          <Button
+            onClick={() => {
+              updateQueryParamToIncludeQuoteId(quoteId);
+            }}
+            gap={3}
+            justifyContent={'flex-start'}
+          >
             <EditIcon />
             <Text>Edit</Text>
           </Button>
 
-          <Button gap={3} colorScheme="red" justifyContent={'flex-start'}>
+          <Button
+            onClick={() => {
+              deleteQuote(quoteId);
+            }}
+            gap={3}
+            colorScheme="red"
+            justifyContent={'flex-start'}
+          >
             <DeleteIcon />
             <Text>Delete</Text>
           </Button>

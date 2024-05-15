@@ -1,13 +1,11 @@
-import QuoteContainer, { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
+import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
+import useQuote from '@/hooks/useQuote';
 import { Box } from '@chakra-ui/react';
-import axios from 'axios';
 import Head from 'next/head';
-import useSWR from 'swr';
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function Home() {
-  const { data: quotes, error, isLoading } = useSWR<QuoteProps[]>('/api/quote/getQuotes', fetcher);
+  const { useAllQuotes } = useQuote();
+  const { quotes, isLoading, error } = useAllQuotes();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -29,7 +27,7 @@ export default function Home() {
           alignItems={'center'}
         >
           {quotes.map((quote, i) => (
-            <QuoteContainer {...quote} isAdmin={false} key={quote.id || i} />
+            <QuoteContainer {...quote} isAdmin={false} key={quote._id ?? i} />
           ))}
         </Box>
       </>

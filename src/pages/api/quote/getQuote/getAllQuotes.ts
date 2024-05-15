@@ -1,6 +1,7 @@
 import clientPromise from '@/lib/mongodbClient';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+// No authentication required for this API endpoint
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const client = await clientPromise;
@@ -11,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } catch (error) {
     return res.status(500).json({
       error,
-      message: 'Unable to generate demo data.',
+      message: 'Unable retrieve data.',
     });
   }
 }

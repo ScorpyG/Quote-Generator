@@ -16,7 +16,7 @@ export default function useProfileForm() {
       try {
         // TODO: implement the API request to update user profile
         const res = await axios.put(
-          '/api/profile',
+          '/api/auth/updateProfile',
           {
             data,
           },
