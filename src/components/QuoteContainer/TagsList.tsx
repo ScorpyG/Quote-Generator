@@ -1,4 +1,3 @@
-import { generateRandomColorScheme } from '@/utils/helpers';
 import { Badge, Divider, Stack } from '@chakra-ui/react';
 
 interface TagsListProp {
@@ -11,7 +10,12 @@ export default function TagsList(tagsListProp: TagsListProp) {
       <Divider marginTop={1} marginBottom={2} />
       <Stack direction={'row'}>
         {tagsListProp.tagsList.map((tag, i) => (
-          <Badge variant={'subtle'} colorScheme={generateRandomColorScheme()} key={i}>
+          <Badge
+            variant={'subtle'}
+            // TODO: implement random color scheme
+            colorScheme={'yellow'}
+            key={i}
+          >
             {tag}
           </Badge>
         ))}

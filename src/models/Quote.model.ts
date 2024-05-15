@@ -18,7 +18,16 @@ const quoteSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
+
+export interface Quote {
+  quote: string;
+  author: string;
+  tags: string[];
+  userId: string;
+}
 
 export default mongoose.models.Quote || mongoose.model('User', quoteSchema);

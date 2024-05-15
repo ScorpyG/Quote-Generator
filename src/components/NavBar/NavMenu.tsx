@@ -1,14 +1,10 @@
-import { GithubIcon, LoginIcon, LogoutIcon, ProfileIcon } from '@/utils/icons';
+import { GithubIcon, LoginIcon, LogoutIcon, ProfileIcon, RegisterIcon } from '@/utils/icons';
 import { SettingsIcon } from '@chakra-ui/icons';
-import { IconButton, Link, Menu, MenuButton, MenuItem, MenuList, useDisclosure } from '@chakra-ui/react';
+import { IconButton, Link, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
-import FormModal from '../FormModal/FormModal';
 
 export default function NavMenu() {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
-  // TODO: implement authentication
   const { status } = useSession();
 
   return (
@@ -37,9 +33,12 @@ export default function NavMenu() {
             </>
           ) : (
             <>
-              <MenuItem icon={<LoginIcon fontSize={'16px'} />} onClick={onOpen}>
-                Login / Register
-              </MenuItem>
+              <Link as={NextLink} href={'signin'} _hover={{ textDecoration: 'none' }}>
+                <MenuItem icon={<LoginIcon fontSize={'16px'} />}>Sign In</MenuItem>
+              </Link>
+              <Link as={NextLink} href={'signup'} _hover={{ textDecoration: 'none' }}>
+                <MenuItem icon={<RegisterIcon fontSize={'16px'} />}>Sign Up</MenuItem>
+              </Link>
             </>
           )}
 
@@ -53,8 +52,6 @@ export default function NavMenu() {
           </Link>
         </MenuList>
       </Menu>
-
-      <FormModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

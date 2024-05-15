@@ -1,24 +1,5 @@
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 
-export function generateRandomColorScheme(): string {
-  const colorSchemes = ['gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'];
-
-  return colorSchemes[Math.floor(Math.random() * (colorSchemes.length - 1))];
-}
-
-export function generateRandomTags(): Array<string> {
-  const tags = ['demo', 'quote', 'demo quote', 'testing', 'lorem ipsum'];
-  const tagLength = Math.floor(Math.random() * 5); // Limit to 3 tags
-
-  const tagArr: Array<string> = [];
-
-  for (let i = 0; i < tagLength; i++) {
-    tagArr.push(tags[Math.floor(Math.random() * 4)]);
-  }
-
-  return tagArr;
-}
-
 export function generateTestData() {
   const demoDataList: Array<QuoteProps> = [];
 
@@ -31,7 +12,7 @@ export function generateTestData() {
           : `${i}. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
       author: `Demo Account`,
       createdBy: new Date(),
-      tags: generateRandomTags(),
+      tags: ['demo', 'lorem ipsum', 'testing'],
     };
 
     demoDataList.push(demoData);
@@ -39,3 +20,7 @@ export function generateTestData() {
 
   return demoDataList;
 }
+
+export const PERSONAL_GITHUB = 'https://github.com/ScorpyG';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/justin-gia-hoang/';
+export const DEV_COMMUNITY_URL = 'https://dev.to/scorpyg';

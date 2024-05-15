@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -40,6 +41,7 @@ export default function SignUpForm() {
       }}
     >
       <FormControl isInvalid={errors.firstName && true}>
+        <FormLabel>First Name</FormLabel>
         <Input
           {...register('firstName', {
             pattern: {
@@ -50,11 +52,13 @@ export default function SignUpForm() {
           })}
           name="firstName"
           placeholder="First Name"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={errors.firstName && true}>
+        <FormLabel>Last Name</FormLabel>
         <Input
           {...register('lastName', {
             pattern: {
@@ -65,11 +69,13 @@ export default function SignUpForm() {
           })}
           name="lastName"
           placeholder="Last Name"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.lastName && errors.lastName.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={errors.email && true}>
+        <FormLabel>Email</FormLabel>
         <Input
           {...register('email', {
             pattern: {
@@ -82,11 +88,13 @@ export default function SignUpForm() {
           name="email"
           placeholder="Email"
           type="email"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
 
       <FormControl isInvalid={errors.password && true}>
+        <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
             {...register('password', {
@@ -103,6 +111,7 @@ export default function SignUpForm() {
             name="password"
             placeholder="Password"
             type={isPasswordVisible ? 'text' : 'password'}
+            variant={'filled'}
           />
           <InputRightElement>
             <IconButton
@@ -117,6 +126,7 @@ export default function SignUpForm() {
       </FormControl>
 
       <FormControl isInvalid={errors.confirmPassword && true}>
+        <FormLabel>Confirm Password</FormLabel>
         <InputGroup>
           <Input
             {...register('confirmPassword', {
@@ -126,6 +136,7 @@ export default function SignUpForm() {
             name="confirmPassword"
             placeholder="Confirm Password"
             type={isConfirmPasswordVisible ? 'text' : 'password'}
+            variant={'filled'}
           />
           <InputRightElement>
             <IconButton
@@ -139,7 +150,17 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.confirmPassword && errors.confirmPassword.message}</FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" isLoading={isSubmitting} w={'100%'}>
+      <Button
+        type="submit"
+        isLoading={isSubmitting}
+        w={'100%'}
+        mt={2}
+        bgGradient={'linear(to-l, pink.400, purple.500)'}
+        _hover={{
+          bgGradient: 'linear(to-l, pink.300, purple.300)',
+        }}
+        textColor={'white'}
+      >
         Sign Up
       </Button>
     </form>

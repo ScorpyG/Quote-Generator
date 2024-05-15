@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -10,6 +11,7 @@ export interface LoginFormInput {
 
 export default function useLoginForm() {
   const toast = useToast();
+  const router = useRouter();
 
   // TODO: Refactor this implementation
   const onSubmit: SubmitHandler<LoginFormInput> = useCallback(
@@ -20,7 +22,15 @@ export default function useLoginForm() {
         password: data.password,
       });
 
-      if (res?.error) {
+      if (res?.status === 200) {
+        toast({
+          title: 'Login successful',
+          status: 'success',
+          duration: 3500,
+          isClosable: true,
+        });
+        router.push('/');
+      } else {
         toast({
           title: 'Login failed',
           description: 'Please enter the correct email and password',
@@ -28,16 +38,9 @@ export default function useLoginForm() {
           duration: 5000,
           isClosable: true,
         });
-      } else {
-        toast({
-          title: 'Login successful',
-          status: 'success',
-          duration: 3500,
-          isClosable: true,
-        });
       }
     },
-    [toast]
+    [router, toast]
   );
 
   const onInvalidSubmit = useCallback(() => {

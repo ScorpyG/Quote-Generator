@@ -19,4 +19,16 @@ export const theme = extendTheme({
       },
     },
   },
+  components: {
+    Modal: {
+      baseStyle: {
+        dialog: {
+          borderRadius: '20px',
+          borderWidth: '5px',
+          borderColor: 'purple.400',
+          boxShadow: '6px 6px rgba(214, 188, 250, 0.8)',
+        },
+      },
+    },
+  },
 });

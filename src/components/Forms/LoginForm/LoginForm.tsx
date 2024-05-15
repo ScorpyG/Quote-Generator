@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -33,16 +34,19 @@ export default function LoginForm() {
       }}
     >
       <FormControl isInvalid={errors.email && true}>
+        <FormLabel>Email</FormLabel>
         <Input
           {...register('email', {
             required: 'Please enter your email',
           })}
           type="email"
           placeholder="Email"
+          variant={'filled'}
         />
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={errors.password && true}>
+        <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
             {...register('password', {
@@ -50,6 +54,7 @@ export default function LoginForm() {
             })}
             type={isPasswordVisible ? 'text' : 'password'}
             placeholder="Password"
+            variant={'filled'}
           />
           <InputRightElement>
             <IconButton
@@ -63,7 +68,16 @@ export default function LoginForm() {
         <FormErrorMessage mt={1}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
 
-      <Button type="submit" isLoading={isSubmitting} w={'100%'}>
+      <Button
+        type="submit"
+        isLoading={isSubmitting}
+        w={'100%'}
+        bgGradient={'linear(to-l, pink.400, purple.500)'}
+        _hover={{
+          bgGradient: 'linear(to-r, pink.300, purple.300)',
+        }}
+        textColor={'white'}
+      >
         Login
       </Button>
     </form>
