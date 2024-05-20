@@ -9,7 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const db = client.db(process.env.MONGODB_DB_NAME);
     const { quote, author, tags } = req.body;
 
-    const quoteId = req.body.quoteId;
+    const quoteId = req.query.qid as string;
 
     const result = await db.collection('quotes').updateOne(
       { _id: new ObjectId(quoteId) },

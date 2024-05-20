@@ -10,8 +10,7 @@ export interface QuoteProps {
   author: string;
   createdAt: Date;
   tags: Array<string>;
-
-  isAdmin?: boolean;
+  isAdmin?: boolean; // Enable the control options for authorized users
 }
 
 export default function QuoteContainer({ _id, quote, author, createdAt, tags, isAdmin }: QuoteProps) {

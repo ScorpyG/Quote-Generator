@@ -30,8 +30,8 @@ export const authOptions: NextAuthOptions = {
           } else {
             return {
               id: user._id.toString(),
-              email: user.email,
               name: `${user.firstName} ${user.lastName}`,
+              ...user,
             };
           }
         }
@@ -45,6 +45,35 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: 'jwt',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          name: user.name,
+        };
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      // console.log('session');
+      // console.log(session);
+      // console.log('token');
+      // console.log(token);
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          name: token.name,
+        },
+      };
+    },
   },
 };
 

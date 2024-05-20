@@ -1,36 +1,31 @@
 import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
+import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
 import useQuote from '@/hooks/useQuote';
-import { Box } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 import Head from 'next/head';
 
 export default function Home() {
   const { useAllQuotes } = useQuote();
-  const { quotes, isLoading, error } = useAllQuotes();
+  const { quotes, isLoading } = useAllQuotes();
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  if (error || !quotes) {
-    return <p>No data found</p>;
-  } else {
-    return (
-      <>
-        <Head>
-          <title>Quote Generator</title>
-        </Head>
-        <Box
-          margin={'auto'}
-          display={'flex'}
-          flexDirection={'column'}
-          gap={'25px'}
-          justifyContent={'center'}
-          alignItems={'center'}
-        >
-          {quotes.map((quote, i) => (
-            <QuoteContainer {...quote} isAdmin={false} key={quote._id ?? i} />
-          ))}
-        </Box>
-      </>
-    );
-  }
+  return (
+    <>
+      <Head>
+        <title>Quote Generator</title>
+      </Head>
+      <Stack spacing={6} margin={'auto'}>
+        {!isLoading && quotes ? (
+          quotes.map((quote, i) => <QuoteContainer {...quote} isAdmin={false} key={quote._id ?? i} />)
+        ) : (
+          <>
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
+          </>
+        )}
+      </Stack>
+    </>
+  );
 }

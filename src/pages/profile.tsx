@@ -1,6 +1,7 @@
 import AddQuoteForm from '@/components/Forms/AddQuoteForm/AddQuoteForm';
 import ProfileForm from '@/components/Forms/ProfileForm/ProfileForm';
 import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
+import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
 import useQuote from '@/hooks/useQuote';
 import {
   Box,
@@ -12,7 +13,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Skeleton,
   Stack,
   Text,
   useDisclosure,
@@ -116,30 +116,9 @@ export default function Profile() {
             <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
               You have not created any quotes yet
             </Text>
-            <Box
-              backgroundColor={'#CBD5E0'}
-              height={'300px'}
-              borderRadius={'lg'}
-              w={'650px'}
-              h={'220px'}
-              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-            />
-            <Box
-              backgroundColor={'#CBD5E0'}
-              height={'300px'}
-              borderRadius={'lg'}
-              w={'650px'}
-              h={'220px'}
-              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-            />
-            <Box
-              backgroundColor={'#CBD5E0'}
-              height={'300px'}
-              borderRadius={'lg'}
-              w={'650px'}
-              h={'220px'}
-              boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-            />
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
+            <QuoteContainerSkeleton />
           </Stack>
         )}
 
@@ -163,28 +142,11 @@ export default function Profile() {
     );
   } else if (status === 'loading' || isLoading) {
     return (
-      <Stack spacing={7} margin={'auto'}>
-        <Skeleton
-          height={'300px'}
-          borderRadius={'lg'}
-          w={'650px'}
-          h={'220px'}
-          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-        />
-        <Skeleton
-          height={'300px'}
-          borderRadius={'lg'}
-          w={'650px'}
-          h={'220px'}
-          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-        />
-        <Skeleton
-          height={'300px'}
-          borderRadius={'lg'}
-          w={'650px'}
-          h={'220px'}
-          boxShadow={'6px 6px rgba(160, 174, 192, 0.9)'}
-        />
+      <Stack spacing={6} margin={'auto'}>
+        <QuoteContainerSkeleton />
+        <QuoteContainerSkeleton />
+        <QuoteContainerSkeleton />
+        <QuoteContainerSkeleton />
       </Stack>
     );
   } else {

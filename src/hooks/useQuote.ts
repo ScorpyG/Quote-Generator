@@ -36,5 +36,7 @@ export default function useQuote() {
     };
   };
 
-  return { useAllQuotes, useQuoteById, useUserQuotes };
+  const useUpdateQuote = async () => {};
+
+  return { useAllQuotes, useQuoteById, useUserQuotes, useUpdateQuote };
 }
