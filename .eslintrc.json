@@ -25,6 +25,6 @@
     "no-unused-expressions": "warn",
     "no-var": "error",
     "prefer-const": "error",
-    "no-shadow": "error"
+    "no-shadow": "off"
   }
 }

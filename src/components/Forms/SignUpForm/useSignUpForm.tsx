@@ -1,32 +1,17 @@
+import useAuth from '@/hooks/useAuth';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-
-export interface SignUpFormInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { TRegister } from '../../../types/auth';
 
 export default function useSignUpForm() {
   const toast = useToast();
+  const { register } = useAuth();
 
-  const onSubmit: SubmitHandler<SignUpFormInput> = useCallback(
-    async (data: SignUpFormInput) => {
-      const config = {
-        method: 'POST',
-        url: '/api/auth/register',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data,
-      };
-
+  const onSubmit: SubmitHandler<TRegister> = useCallback(
+    async (data: TRegister) => {
       try {
-        const response = await axios(config);
+        const response = await register(data);
 
         if (response.status === 201) {
           toast({
@@ -63,7 +48,7 @@ export default function useSignUpForm() {
         });
       }
     },
-    [toast]
+    [register, toast]
   );
 
   const onInvalidSubmit = useCallback(() => {

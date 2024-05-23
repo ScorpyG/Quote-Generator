@@ -1,23 +1,25 @@
 import { NAME_PATTERN } from '@/utils/helpers';
 import { Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Text } from '@chakra-ui/react';
-import { Session } from 'next-auth';
 import { useForm } from 'react-hook-form';
 import useProfileForm, { ProfileFormInput } from './useProfileForm';
 
 interface ProfileFormProps {
-  userSessionData: Session | null;
+  firstName: string;
+  lastName: string;
 }
 
-export default function ProfileForm(profileFormProps: ProfileFormProps) {
+export default function ProfileForm({ firstName, lastName }: ProfileFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ProfileFormInput>();
+  } = useForm<ProfileFormInput>({
+    defaultValues: {
+      firstName: firstName,
+      lastName: lastName,
+    },
+  });
   const { onSubmit, onInvalidSubmit } = useProfileForm();
-
-  // TODO: split user.name into first and last name
-  const { userSessionData } = profileFormProps;
 
   return (
     <>
@@ -50,7 +52,6 @@ export default function ProfileForm(profileFormProps: ProfileFormProps) {
             name="firstName"
             placeholder="First Name"
             variant={'filled'}
-            defaultValue={userSessionData?.user?.name ?? 'First name'}
           />
           <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
         </FormControl>
@@ -67,7 +68,6 @@ export default function ProfileForm(profileFormProps: ProfileFormProps) {
             name="lastName"
             placeholder="Last Name"
             variant={'filled'}
-            defaultValue={userSessionData?.user?.name ?? 'Last name'}
           />
           <FormErrorMessage mt={1}>{errors.lastName && errors.lastName.message}</FormErrorMessage>
         </FormControl>

@@ -1,10 +1,10 @@
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
-import { fetcher } from '@/lib/swrFetcher';
+import { fetcher } from '@/utils/swrFetcher';
 import useSWR from 'swr';
 
 export default function useQuote() {
   const useAllQuotes = () => {
-    const { data, error, isLoading } = useSWR<QuoteProps[]>('/api/quote/getQuote/getAllQuotes', fetcher);
+    const { data, error, isLoading } = useSWR<QuoteProps[]>('/api/quote/getQuotes', fetcher);
 
     return {
       quotes: data,
@@ -14,10 +14,7 @@ export default function useQuote() {
   };
 
   const useQuoteById = (quoteId: string) => {
-    const { data, error, isLoading } = useSWR<QuoteProps>(
-      `/api/quote/getQuote/getQuoteById?quoteId=${quoteId}`,
-      fetcher
-    );
+    const { data, error, isLoading } = useSWR<QuoteProps>(`/api/quote/getQuote/${quoteId}`, fetcher);
 
     return {
       quote: data,

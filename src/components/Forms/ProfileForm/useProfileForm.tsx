@@ -25,6 +25,7 @@ export default function useProfileForm() {
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json',
+              // 'Authorization': 'Bearer'
             },
           }
         );

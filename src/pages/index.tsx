@@ -14,7 +14,7 @@ export default function Home() {
         <title>Quote Generator</title>
       </Head>
       <Stack spacing={6} margin={'auto'}>
-        {!isLoading && quotes ? (
+        {!isLoading && quotes && quotes?.length > 0 ? (
           quotes.map((quote, i) => <QuoteContainer {...quote} isAdmin={false} key={quote._id ?? i} />)
         ) : (
           <>

@@ -1,3 +1,4 @@
+import { TRegister } from '@/types/auth';
 import { EMAIL_PATTERN, NAME_PATTERN, PASSWORD_PATTERN } from '@/utils/helpers';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {
@@ -12,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useSignUpForm, { SignUpFormInput } from './useSignUpForm';
+import useSignUpForm from './useSignUpForm';
 
 export default function SignUpForm() {
   const {
@@ -21,7 +22,7 @@ export default function SignUpForm() {
     watch,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
-  } = useForm<SignUpFormInput>();
+  } = useForm<TRegister>();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const { onSubmit, onInvalidSubmit } = useSignUpForm();

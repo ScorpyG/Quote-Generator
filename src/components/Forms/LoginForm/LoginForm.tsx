@@ -11,14 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useLoginForm, { LoginFormInput } from './useLoginForm';
+import { TLogin } from '../../../types/auth';
+import useLoginForm from './useLoginForm';
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormInput>();
+  } = useForm<TLogin>();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { onSubmit, onInvalidSubmit } = useLoginForm();
 
@@ -55,6 +56,7 @@ export default function LoginForm() {
             type={isPasswordVisible ? 'text' : 'password'}
             placeholder="Password"
             variant={'filled'}
+            autoComplete="current-password"
           />
           <InputRightElement>
             <IconButton

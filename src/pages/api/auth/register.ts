@@ -1,35 +1,31 @@
-import clientPromise from '@/lib/mongodbClient';
+import User from '@/models/User';
+import dbConnect from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+  await dbConnect();
+
   try {
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB_NAME);
-    const { email, password, firstName, lastName } = req.body;
+    const { email, firstName, lastName, password } = request.body;
+    const user = await User.findOne({ email });
 
-    const userExist = await db.collection('users').findOne({ email });
-
-    if (userExist) {
-      return res.status(203).json({ message: 'Email is already in use' });
+    if (user) {
+      return response.status(400).json({ message: 'User already exists' });
     } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = await db.collection('users').insertOne({
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const newUser = new User({
         email,
-        password: hashedPassword,
         firstName,
         lastName,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        password: hashedPassword,
       });
-
-      return res.status(201).json({ newUser, message: 'Account registered successfully!' });
+      const savedUser = await newUser.save();
+      return response.status(201).json({ message: 'User created successfully', success: true, savedUser });
     }
   } catch (error) {
-    return res.status(500).json({
-      message: 'Service is temporarily unavailable. Please try again later.',
-    });
+    return response.status(500).json({ error });
   }
 }
-
-export default handler;
