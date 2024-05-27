@@ -1,57 +1,55 @@
 import useQuote from '@/hooks/useQuote';
 import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
+import { QuoteFormInput } from '../AddQuoteForm/useAddQuoteForm';
 
-export interface QuoteFormInput {
-  quote: string;
-  author: string;
-  tags: string;
-}
-
-export default function useAddQuoteForm() {
+export default function useEditQuoteForm() {
   const toast = useToast();
-  const { createQuote } = useQuote();
+  const { query } = useRouter();
+  const { editQuote } = useQuote();
+  const quoteId = query.quoteId as string;
 
   const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
       try {
-        const res = await createQuote(quoteData);
+        const res = await editQuote(quoteId, quoteData);
 
-        if (res.status === 201) {
+        if (res.status === 200) {
           toast({
-            title: 'Add Quote successful',
-            description: 'Your quote is available for to the public',
+            title: 'Quote update successful',
+            description: 'Your quote has been updated',
             status: 'success',
             duration: 3500,
             isClosable: true,
           });
         } else {
           toast({
-            title: 'Unable to add quote',
+            title: 'Quote update failed',
+            description: 'Unable to update your quote',
             status: 'error',
-            description: 'Please try again later',
             duration: 3500,
             isClosable: true,
           });
         }
       } catch (error) {
         toast({
-          title: 'Something went wrong!',
-          description: 'Service not available, please try again later.',
+          title: 'Quote update failed',
+          description: 'Unable to update your quote',
           status: 'error',
-          duration: 6000,
+          duration: 3500,
           isClosable: true,
         });
       }
     },
-    [toast, createQuote]
+    [editQuote, quoteId, toast]
   );
 
   const onInvalidSubmit = useCallback(() => {
     toast({
       title: 'Missing information',
-      description: 'Please fill out the form',
+      description: 'Please fill out all required fields',
       status: 'error',
       duration: 3500,
       isClosable: true,

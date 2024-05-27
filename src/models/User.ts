@@ -1,35 +1,42 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema(
+export interface TUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  verifyToken?: string;
+  verifyTokenExpires?: Date;
+}
+
+const userSchema = new mongoose.Schema<TUser>(
   {
-    email: {
-      type: String,
-      unique: [true, 'Must provide a unique email'],
-      required: [true, 'Must provide an email'],
-    },
-    password: {
-      type: String,
-      required: [true, 'Must provide an password'],
-      select: false,
-    },
     firstName: {
       type: String,
-      required: [true, 'Must provide a first name'],
+      required: true,
     },
     lastName: {
       type: String,
-      required: [true, 'Must provide a last name'],
+      required: true,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    verifyToken: String,
+    verifyTokenExpires: Date,
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
-export interface User {
-  email: string;
-  firstName: string;
-  lastName: string;
-}
+const User = mongoose.models.User || mongoose.model('User', userSchema, 'users');
 
-export default mongoose.models.User || mongoose.model('User', userSchema);
+export default User;

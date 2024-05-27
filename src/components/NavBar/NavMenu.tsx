@@ -1,11 +1,11 @@
+import useAuth from '@/hooks/useAuth';
 import { GithubIcon, LoginIcon, LogoutIcon, ProfileIcon, RegisterIcon } from '@/utils/icons';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { IconButton, Link, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import { signOut, useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 
 export default function NavMenu() {
-  const { status } = useSession();
+  const { signOut, isAuthenticated } = useAuth();
 
   return (
     <>
@@ -21,13 +21,13 @@ export default function NavMenu() {
           border={'none'}
         />
         <MenuList>
-          {status === 'authenticated' ? (
+          {isAuthenticated ? (
             <>
-              <Link as={NextLink} href={'/profile'} _hover={{ textDecoration: 'none' }}>
+              <Link as={NextLink} href={`/profile`} _hover={{ textDecoration: 'none' }}>
                 <MenuItem icon={<ProfileIcon fontSize={'16px'} />}>Profile</MenuItem>
               </Link>
 
-              <MenuItem icon={<LogoutIcon fontSize={'16px'} />} onClick={() => signOut()}>
+              <MenuItem icon={<LogoutIcon fontSize={'16px'} />} onClick={signOut}>
                 Logout
               </MenuItem>
             </>
