@@ -14,35 +14,15 @@ export default function useProfileForm() {
 
   const onSubmit: SubmitHandler<ProfileFormInput> = useCallback(
     async (data) => {
-      try {
-        const res = await updateProfile(data);
+      const response = await updateProfile(data);
 
-        if (res.status === 200) {
-          toast({
-            title: 'Profile update successful',
-            description: 'Your profile information was successfully updated',
-            status: 'success',
-            duration: 3500,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            title: 'Profile update failed',
-            description: 'Unable to update your profile information',
-            status: 'error',
-            duration: 3500,
-            isClosable: true,
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Profile update failed',
-          description: 'Unable to update your profile information',
-          status: 'error',
-          duration: 3500,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: response.status ? 'Profile update successful' : 'Profile update failed',
+        description: response.message,
+        status: response.status ? 'success' : 'error',
+        duration: 3500,
+        isClosable: true,
+      });
     },
     [toast, updateProfile]
   );

@@ -1,15 +1,15 @@
 import Footer from '@/components/Footer/Footer';
 import NavBar from '@/components/NavBar/NavBar';
-import { Chakra } from '@/context/CustomChakraProvider';
-import { SessionProvider } from 'next-auth/react';
+import { AuthProvider } from '@/contexts/AuthProvider';
+import { Chakra } from '@/contexts/CustomChakraProvider';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Suspense } from 'react';
 import { SWRConfig } from 'swr';
 
-export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export default function App({ Component, pageProps: { ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={session}>
+    <AuthProvider>
       <SWRConfig>
         <Chakra cookies={pageProps.cookies}>
           {/* TODO:  replace null with 404 page*/}
@@ -37,6 +37,6 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           </Suspense>
         </Chakra>
       </SWRConfig>
-    </SessionProvider>
+    </AuthProvider>
   );
 }

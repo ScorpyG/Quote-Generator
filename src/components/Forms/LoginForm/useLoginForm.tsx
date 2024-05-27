@@ -7,40 +7,24 @@ import { TLogin } from '../../../types/auth';
 
 export default function useLoginForm() {
   const toast = useToast();
-  const router = useRouter();
   const { signIn } = useAuth();
+  const router = useRouter();
 
   // TODO: Refactor this implementation
   const onSubmit: SubmitHandler<TLogin> = useCallback(
     async (data) => {
-      try {
-        const response = await signIn(data);
+      const response = await signIn(data);
 
-        if (response?.status === 200) {
-          toast({
-            title: 'Login successful',
-            status: 'success',
-            duration: 3500,
-            isClosable: true,
-          });
-          router.push('/');
-        } else {
-          toast({
-            title: 'Login failed',
-            description: 'Please enter the correct email and password',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Login failed',
-          description: `${error}`,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
+      toast({
+        title: response.status ? 'Login successful' : 'Login failed',
+        description: response.message,
+        status: response.status ? 'success' : 'error',
+        duration: 3500,
+        isClosable: true,
+      });
+
+      if (response.status) {
+        router.push('/');
       }
     },
     [router, signIn, toast]

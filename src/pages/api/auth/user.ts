@@ -4,7 +4,7 @@ import dbConnect from '@/utils/dbConnect';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
   const token = request.headers.authorization?.split(' ')[1];
@@ -16,20 +16,22 @@ export default async function handler(request: NextApiRequest, response: NextApi
   }
 
   try {
-    const newUserData = request.body;
     const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
-    const updatedUserData = await User.findByIdAndUpdate({ _id: user.id }, { ...newUserData }, { new: true });
 
-    return response.status(201).json({
-      data: updatedUserData,
-      message: 'Profile updated successfully.',
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const userDataFromDB = await User.findById(user.id).select('-password'); // User data from DB excluding password
+
+    return response.status(200).json({
+      data: user,
+      message: 'User retrieved successfully.',
       success: true,
     });
   } catch (error) {
     return response.status(503).json({
       error,
-      message: 'Unable to update profile.',
+      message: 'Unable to retrieve user info.',
       success: false,
     });
   }
 }
+export default handler;

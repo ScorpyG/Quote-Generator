@@ -13,9 +13,16 @@ function handler(request: NextApiRequest, response: NextApiResponse) {
     });
 
     response.setHeader('Set-Cookie', cookie);
-    return response.status(200).json({ message: 'Signed out successfully' });
+    return response.status(200).json({
+      message: 'Signed out successfully',
+      success: true,
+    });
   } catch (error) {
-    return response.status(500).json({ message: error });
+    return response.status(503).json({
+      error,
+      message: 'Service Unavailable.',
+      success: false,
+    });
   }
 }
 

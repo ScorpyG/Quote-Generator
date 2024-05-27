@@ -11,7 +11,10 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const user = await User.findOne({ email });
 
     if (user) {
-      return response.status(400).json({ message: 'User already exists' });
+      return response.status(400).json({
+        message: 'User already exists',
+        success: false,
+      });
     } else {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -22,10 +25,18 @@ export default async function handler(request: NextApiRequest, response: NextApi
         lastName,
         password: hashedPassword,
       });
-      const savedUser = await newUser.save();
-      return response.status(201).json({ message: 'User created successfully', success: true, savedUser });
+      await newUser.save();
+
+      return response.status(201).json({
+        message: 'User created successfully',
+        success: true,
+      });
     }
   } catch (error) {
-    return response.status(500).json({ error });
+    return response.status(503).json({
+      error,
+      message: 'Service Unavailable.',
+      success: false,
+    });
   }
 }
