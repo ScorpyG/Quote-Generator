@@ -1,5 +1,5 @@
+import useQuote from '@/hooks/useQuote';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -11,25 +11,12 @@ export interface QuoteFormInput {
 
 export default function useAddQuoteForm() {
   const toast = useToast();
+  const { createQuote } = useQuote();
 
   const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
       try {
-        const res = await axios.post(
-          '/api/quote/createQuote',
-          {
-            ...quoteData,
-            tags: quoteData.tags.split(',').map((tag) => tag.trim()),
-            // TODO: Add user ID
-          },
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const res = await createQuote(quoteData);
 
         if (res.status === 201) {
           toast({
@@ -58,7 +45,7 @@ export default function useAddQuoteForm() {
         });
       }
     },
-    [toast]
+    [toast, createQuote]
   );
 
   const onInvalidSubmit = useCallback(() => {

@@ -1,13 +1,39 @@
 import EditQuoteForm from '@/components/Forms/EditQuoteForm/EditQuoteForm';
-import useQuote from '@/hooks/useQuote';
+import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import axios from 'axios';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
-export default function EditQuote() {
-  const { query } = useRouter();
-  const { useQuoteById } = useQuote();
-  const { quote, isLoading, error } = useQuoteById(query.quoteId as string);
+export const getStaticPaths: GetStaticPaths = async () => {
+  // Fetch all from from specified user
+  // The route needs to be dynamic
+  const result = await axios.get<{ data: QuoteProps[] }>('http://localhost:3000/api/quote/getAll');
 
+  const paths = result.data.data.map((quote) => ({
+    params: {
+      quoteId: quote._id.toString(),
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const params = context.params!;
+  // The route needs to be dynamic
+  const result = await axios.get<{ data: QuoteProps }>(`http://localhost:3000/api/quote/get/${params.quoteId}`);
+
+  return {
+    props: {
+      quote: result.data.data, // Extract the 'quote' property from 'result.data'
+    },
+  };
+};
+
+export default function EditQuote({ quote }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Box textAlign={'center'}>
@@ -25,7 +51,7 @@ export default function EditQuote() {
         width={'650px'}
         margin={'auto'}
       >
-        {quote && !isLoading && !error ? (
+        {quote ? (
           <EditQuoteForm quote={quote?.quote} author={quote.author} tags={quote.tags.toString()} />
         ) : (
           <Stack spacing={4}>

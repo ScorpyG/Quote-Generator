@@ -90,6 +90,7 @@ export default function SignUpForm() {
           placeholder="Email"
           type="email"
           variant={'filled'}
+          autoComplete="email"
         />
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
@@ -113,6 +114,7 @@ export default function SignUpForm() {
             placeholder="Password"
             type={isPasswordVisible ? 'text' : 'password'}
             variant={'filled'}
+            autoComplete="new-password"
           />
           <InputRightElement>
             <IconButton
@@ -138,6 +140,7 @@ export default function SignUpForm() {
             placeholder="Confirm Password"
             type={isConfirmPasswordVisible ? 'text' : 'password'}
             variant={'filled'}
+            autoComplete="new-password"
           />
           <InputRightElement>
             <IconButton

@@ -9,10 +9,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
-  const JWT_TOKEN_SECRET = process.env.JWT_TOKEN_SECRET!;
+  const JWT_SECRET = process.env.JWT_SECRET!;
 
-  if (!JWT_TOKEN_SECRET) {
-    return response.status(500).json({ message: 'JWT_TOKEN is undefined' });
+  if (!JWT_SECRET) {
+    return response.status(500).json({ message: 'JWT_SECRET is undefined' });
   }
 
   try {
@@ -32,7 +32,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
           firstName: user.firstName,
           lastName: user.lastName,
         };
-        const token = await jwt.sign(jwtTokenData, process.env.JWT_TOKEN_SECRET!, {
+        const token = await jwt.sign(jwtTokenData, JWT_SECRET, {
           expiresIn: '1d',
           algorithm: 'HS512',
         });
@@ -45,7 +45,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
           path: '/',
         });
         response.setHeader('Set-Cookie', cookie);
-        return response.status(200).json({ token });
+        return response.status(200).json({ message: 'Signed in successfully', success: true });
       }
     }
   } catch (error) {

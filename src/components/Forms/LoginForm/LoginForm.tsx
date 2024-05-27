@@ -43,6 +43,7 @@ export default function LoginForm() {
           type="email"
           placeholder="Email"
           variant={'filled'}
+          autoComplete="email"
         />
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>

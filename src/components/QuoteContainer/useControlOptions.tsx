@@ -1,11 +1,12 @@
+import useQuote from '@/hooks/useQuote';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 
 export default function useControlOptions() {
   const toast = useToast();
   const router = useRouter();
+  const { deleteQuote } = useQuote();
 
   // function to direct to dynamic page editQuote/[qid]
   const updateQueryParamToIncludeQuoteId = (qid: string) => {
@@ -15,10 +16,10 @@ export default function useControlOptions() {
     });
   };
 
-  const deleteQuote = useCallback(
+  const deleteQuoteHandler = useCallback(
     async (quoteId: string) => {
       try {
-        const res = await axios.delete(`/api/quote/deleteQuote/${quoteId}`);
+        const res = await deleteQuote(quoteId);
 
         if (res.status === 200) {
           toast({
@@ -39,11 +40,11 @@ export default function useControlOptions() {
         });
       }
     },
-    [toast]
+    [toast, deleteQuote]
   );
 
   return {
-    deleteQuote,
+    deleteQuoteHandler,
     updateQueryParamToIncludeQuoteId,
   };
 }

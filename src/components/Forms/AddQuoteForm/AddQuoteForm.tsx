@@ -75,7 +75,7 @@ export default function AddQuoteForm() {
           <FormErrorMessage mt={1}>{errors.author && errors.author.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.tags && true}>
-          <FormLabel>Tags</FormLabel>
+          <FormLabel>Tags (Separate tags by commas)</FormLabel>
           <Input
             {...register('tags', {
               required: 'Please enter tags',

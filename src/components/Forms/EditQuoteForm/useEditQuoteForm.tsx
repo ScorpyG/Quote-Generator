@@ -1,5 +1,5 @@
+import useQuote from '@/hooks/useQuote';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
@@ -8,15 +8,13 @@ import { QuoteFormInput } from '../AddQuoteForm/useAddQuoteForm';
 export default function useEditQuoteForm() {
   const toast = useToast();
   const { query } = useRouter();
+  const { editQuote } = useQuote();
   const quoteId = query.quoteId as string;
 
   const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
       try {
-        const res = await axios.put(`/api/quote/editQuote/${quoteId}`, {
-          ...quoteData,
-          tags: quoteData.tags.split(',').map((tag) => tag.trim()),
-        });
+        const res = await editQuote(quoteId, quoteData);
 
         if (res.status === 200) {
           toast({
@@ -45,7 +43,7 @@ export default function useEditQuoteForm() {
         });
       }
     },
-    [quoteId, toast]
+    [editQuote, quoteId, toast]
   );
 
   const onInvalidSubmit = useCallback(() => {

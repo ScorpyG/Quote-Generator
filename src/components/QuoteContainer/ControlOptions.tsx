@@ -12,7 +12,7 @@ interface ControlOptionProps {
 
 export default function ControlOption(controlOptionProps: ControlOptionProps) {
   const { quoteId, isOpen, onOpen, onClose, children } = controlOptionProps;
-  const { deleteQuote, updateQueryParamToIncludeQuoteId } = useControlOptions();
+  const { deleteQuoteHandler, updateQueryParamToIncludeQuoteId } = useControlOptions();
 
   return (
     <Popover placement="right" isOpen={isOpen} onClose={onClose} onOpen={onOpen} closeOnEsc>
@@ -37,7 +37,7 @@ export default function ControlOption(controlOptionProps: ControlOptionProps) {
 
           <Button
             onClick={() => {
-              deleteQuote(quoteId);
+              deleteQuoteHandler(quoteId);
             }}
             gap={3}
             colorScheme="red"

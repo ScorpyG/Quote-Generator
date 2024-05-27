@@ -1,5 +1,5 @@
+import useAuth from '@/hooks/useAuth';
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
@@ -10,25 +10,12 @@ export interface ProfileFormInput {
 
 export default function useProfileForm() {
   const toast = useToast();
+  const { updateProfile } = useAuth();
 
   const onSubmit: SubmitHandler<ProfileFormInput> = useCallback(
     async (data) => {
       try {
-        // TODO: implement the API request to update user profile
-        const res = await axios.put(
-          '/api/auth/updateProfile',
-          {
-            data,
-          },
-          {
-            method: 'PUT',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              // 'Authorization': 'Bearer'
-            },
-          }
-        );
+        const res = await updateProfile(data);
 
         if (res.status === 200) {
           toast({
@@ -57,7 +44,7 @@ export default function useProfileForm() {
         });
       }
     },
-    [toast]
+    [toast, updateProfile]
   );
 
   const onInvalidSubmit = useCallback(() => {
