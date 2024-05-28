@@ -1,6 +1,7 @@
 import { ProfileFormInput } from '@/components/Forms/ProfileForm/useProfileForm';
 import { AuthResponse, AuthUser, TLogin, TRegister } from '@/types/auth';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 export interface TAuthContext {
@@ -36,6 +37,7 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const router = useRouter();
 
   // ! useEffect is bad
   useEffect(() => {
@@ -109,6 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (response.status === 200) {
       setUser(null);
       setIsAuthenticated(false);
+      router.push('/signin');
 
       return {
         status: response.data.success,

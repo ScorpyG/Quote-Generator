@@ -12,6 +12,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (!token) {
     return response.status(401).json({
       message: 'Unauthorized.',
+      success: false,
     });
   }
 

@@ -1,10 +1,11 @@
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import Quote from '@/models/Quote';
-import dbConnect from './dbConnect';
+import dbConnect from '../lib/dbConnect';
 
 export async function getAllQuotes(): Promise<QuoteProps[]> {
   await dbConnect();
   const quotes = await Quote.find({});
+
   return quotes;
 }
 
