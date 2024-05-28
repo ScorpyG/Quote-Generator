@@ -1,17 +1,42 @@
-# Quote Generator (MERN Project)
+# Quote Generator (v2.0)
 
-### Description
-- A quote generator, this page will allow you to request API calls to the backend server MongoDB hosted by Heroku. For each fetch will give you **one** random quote available inside the server.
-- The website also allow the user to add their own quotes and modification if needed.
-- The project focuses on the fondation principles of full-stack project on UX/UI design for the front-end and server/database optimization.
+### This project was rewritten from traditional JavaScript and React.js and Node/Express (MERN) framework
 
-[View Page!](https://mern-quote-generator.netlify.app/)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/146ea0c6-f41d-45fc-a7d5-737e1311fc4d/deploy-status)](https://app.netlify.com/sites/mern-quote-generator/deploys)
+- Using [TypeScript v5](https://www.typescriptlang.org/)
+- Using [Next.js v14.1.0 - Page Routes](https://nextjs.org/docs)
 
-## Revision!?
-### Problem 
-- Quote ***duplication*** as every single user allow to add their own quote. There is nothing preventing them to add a quote that already existing in the database. 
-- This issue is a bad practice is the process design which lead to data redundancy cause storage constraint, poor optimization and longer response time. 
-### Possible Solutions 
-- Create a duplication detector, that will prevent the user to add a similar quote that already exist in the database. The solution will be handle in the back-end side (where a POST request will return an error/ message and stop the new user's quote save into the database if duplication detected)
-- Duplication Detector -> The server will grab the new user's input and remove the anomalies from the string (**NO CAPITALIZATION**, **NO UNIQUE CHARACTERS**, **NO WHITE SPACE**) then compare that to the existing *non-anomalies* attribute of each quote object in the database if it's match then there is duplication. Otherwise save that new quote into the database
+<img width="1800" alt="quotegen" src="https://github.com/ScorpyG/Quote-Generator/assets/69221471/82f42c3c-5c57-43a4-b26d-b0d8a116d1d4">
+
+## Getting Started
+
+First, after you cloned the repository install all necessary dependencies
+
+```bash
+yarn install
+```
+
+Second, to start the development server locally
+
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the website.
+
+## Development Resources
+
+The technologies I used for this project:
+
+- [TypeScript](https://www.typescriptlang.org/docs/)
+- [Next.js](https://nextjs.org/docs)
+- [ChakraUI](https://v2.chakra-ui.com/getting-started)
+- [React-hook-form](https://react-hook-form.com/)
+- [React](https://react.dev/reference/react)
+- [MongoDB](https://www.mongodb.com/)
+- [JWT](https://jwt.io/)
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
