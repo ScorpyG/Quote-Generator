@@ -9,6 +9,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (!token) {
     return response.status(401).json({
       message: 'Unauthorized.',
+      success: false,
     });
   }
 
@@ -17,14 +18,16 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     const quoteData = request.body;
     const updatedQuote = await Quote.findByIdAndUpdate({ _id: quoteId }, { ...quoteData }, { new: true });
 
-    return response.status(200).json({
+    return response.status(201).json({
       data: updatedQuote,
       message: 'Quote updated successfully.',
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({
       error,
       message: 'Unable to update your quote.',
+      success: false,
     });
   }
 }

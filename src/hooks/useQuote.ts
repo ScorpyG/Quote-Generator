@@ -40,7 +40,18 @@ export default function useQuote() {
       }
     );
 
-    return response;
+    if (response.status === 201) {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+      };
+    }
   };
 
   const editQuote = async (quoteId: string, quoteData: QuoteFormInput) => {
@@ -49,13 +60,34 @@ export default function useQuote() {
       tags: quoteData.tags.split(',').map((tag) => tag.trim()),
     });
 
-    return response;
+    if (response.status === 201) {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+      };
+    }
   };
 
   const deleteQuote = async (quoteId: string) => {
     const response = await axios.delete(`/api/quote/delete/${quoteId}`);
 
-    return response;
+    if (response.status === 202) {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+      };
+    } else {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+      };
+    }
   };
 
   return { useAllQuotes, useUserQuotes, createQuote, editQuote, deleteQuote };

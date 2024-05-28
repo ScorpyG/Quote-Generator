@@ -15,35 +15,15 @@ export default function useAddQuoteForm() {
 
   const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
-      try {
-        const res = await createQuote(quoteData);
+      const response = await createQuote(quoteData);
 
-        if (res.status === 201) {
-          toast({
-            title: 'Add Quote successful',
-            description: 'Your quote is available for to the public',
-            status: 'success',
-            duration: 3500,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            title: 'Unable to add quote',
-            status: 'error',
-            description: 'Please try again later',
-            duration: 3500,
-            isClosable: true,
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Something went wrong!',
-          description: 'Service not available, please try again later.',
-          status: 'error',
-          duration: 6000,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: response.status ? 'Successful' : 'Failed',
+        description: response.message,
+        status: response.status ? 'success' : 'error',
+        duration: 3500,
+        isClosable: true,
+      });
     },
     [toast, createQuote]
   );

@@ -18,27 +18,15 @@ export default function useControlOptions() {
 
   const deleteQuoteHandler = useCallback(
     async (quoteId: string) => {
-      try {
-        const res = await deleteQuote(quoteId);
+      const response = await deleteQuote(quoteId);
 
-        if (res.status === 200) {
-          toast({
-            title: 'Quote deletion successful',
-            description: 'The quote was successfully deleted',
-            status: 'success',
-            duration: 3500,
-            isClosable: true,
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Quote deletion failed',
-          description: 'Unable to delete the quote',
-          status: 'error',
-          duration: 3500,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: response.status ? 'Successful' : 'Failed',
+        description: response.message,
+        status: response.status ? 'success' : 'error',
+        duration: 3500,
+        isClosable: true,
+      });
     },
     [toast, deleteQuote]
   );
