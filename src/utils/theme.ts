@@ -1,12 +1,22 @@
 import { ThemeConfig, extendTheme } from '@chakra-ui/react';
+import { GlobalStyleProps, mode } from '@chakra-ui/theme-tools';
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
   useSystemColorMode: true,
 };
 
+const styles = {
+  global: (props: GlobalStyleProps) => ({
+    body: {
+      bg: mode('white', 'gray.900')(props),
+    },
+  }),
+};
+
 export const theme = extendTheme({
   config,
+  styles,
   semanticTokens: {
     colors: {
       heroGradientStart: {
