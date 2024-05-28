@@ -5,9 +5,9 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 export const getStaticPaths: GetStaticPaths = (async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/getAll`);
-  const result = (await response.json()) as { data: QuoteProps[] };
+  const result = await response.json();
 
-  const paths = result.data.map((quote) => ({
+  const paths = result.data.map((quote: QuoteProps) => ({
     params: {
       quoteId: quote._id.toString(),
     },

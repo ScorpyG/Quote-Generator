@@ -19,20 +19,15 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
     const quotes = await Quote.find({ userId: new mongoose.Types.ObjectId(user.id) });
 
-    if (!quotes) {
-      return response.status(204).json({
-        message: 'No quotes found.',
-      });
-    } else {
-      return response.status(200).json({
-        data: quotes,
-        message: 'User quotes retrieved successfully.',
-      });
-    }
+    return response.status(200).json({
+      data: quotes,
+      message: 'User quotes retrieved successfully.',
+      success: true,
+    });
   } catch (error) {
     return response.status(500).json({
-      error,
-      message: 'Service unavailable. Unable to retrieve user quotes.',
+      message: 'Unable to retrieve user quotes.',
+      success: false,
     });
   }
 }
