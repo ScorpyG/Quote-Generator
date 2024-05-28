@@ -27,11 +27,12 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     return response.status(201).json({
       data: savedQuote,
       message: 'Quote created successfully.',
+      success: true,
     });
   } catch (error) {
     response.status(500).json({
-      error,
       message: 'Service not available, unable to create quote.',
+      success: false,
     });
   }
 }
