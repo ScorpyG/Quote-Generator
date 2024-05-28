@@ -2,11 +2,13 @@ import useQuote from '@/hooks/useQuote';
 import { useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { useSWRConfig } from 'swr';
 
 export default function useControlOptions() {
   const toast = useToast();
   const router = useRouter();
   const { deleteQuote } = useQuote();
+  const { mutate } = useSWRConfig();
 
   // function to direct to dynamic page editQuote/[qid]
   const updateQueryParamToIncludeQuoteId = (qid: string) => {
@@ -19,6 +21,7 @@ export default function useControlOptions() {
   const deleteQuoteHandler = useCallback(
     async (quoteId: string) => {
       const response = await deleteQuote(quoteId);
+      mutate('/api/quote/userQuotes');
 
       toast({
         title: response.status ? 'Successful' : 'Failed',
@@ -28,7 +31,7 @@ export default function useControlOptions() {
         isClosable: true,
       });
     },
-    [toast, deleteQuote]
+    [toast, deleteQuote, mutate]
   );
 
   return {
