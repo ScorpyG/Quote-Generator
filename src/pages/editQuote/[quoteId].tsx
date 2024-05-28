@@ -5,9 +5,7 @@ import axios from 'axios';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Fetch all from from specified user
-  // The route needs to be dynamic
-  const result = await axios.get<{ data: QuoteProps[] }>('http://localhost:3000/api/quote/getAll');
+  const result = await axios.get<{ data: QuoteProps[] }>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/getAll`);
 
   const paths = result.data.data.map((quote) => ({
     params: {
@@ -23,8 +21,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const params = context.params!;
-  // The route needs to be dynamic
-  const result = await axios.get<{ data: QuoteProps }>(`http://localhost:3000/api/quote/get/${params.quoteId}`);
+  const result = await axios.get<{ data: QuoteProps }>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/get/${params.quoteId}`
+  );
 
   return {
     props: {
