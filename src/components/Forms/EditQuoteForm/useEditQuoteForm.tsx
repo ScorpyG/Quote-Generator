@@ -13,35 +13,15 @@ export default function useEditQuoteForm() {
 
   const onSubmit: SubmitHandler<QuoteFormInput> = useCallback(
     async (quoteData) => {
-      try {
-        const res = await editQuote(quoteId, quoteData);
+      const response = await editQuote(quoteId, quoteData);
 
-        if (res.status === 200) {
-          toast({
-            title: 'Quote update successful',
-            description: 'Your quote has been updated',
-            status: 'success',
-            duration: 3500,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            title: 'Quote update failed',
-            description: 'Unable to update your quote',
-            status: 'error',
-            duration: 3500,
-            isClosable: true,
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Quote update failed',
-          description: 'Unable to update your quote',
-          status: 'error',
-          duration: 3500,
-          isClosable: true,
-        });
-      }
+      toast({
+        title: response.status ? 'Successful' : 'Failed',
+        description: response.message,
+        status: response.status ? 'success' : 'error',
+        duration: 3500,
+        isClosable: true,
+      });
     },
     [editQuote, quoteId, toast]
   );

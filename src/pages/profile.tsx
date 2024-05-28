@@ -6,7 +6,6 @@ import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteCon
 import useAuth from '@/hooks/useAuth';
 import useQuote from '@/hooks/useQuote';
 import {
-  Box,
   Heading,
   Modal,
   ModalBody,
@@ -38,7 +37,7 @@ export default function Profile() {
         <Heading as={'h1'} textAlign={'center'} mb={'25px'}>
           Hi, {`${user.firstName} ${user.lastName}`}
         </Heading>
-        <Stack w={'sm'} mx={'auto'} direction={'row'} spacing={'25px'}>
+        <Stack w={'sm'} mx={'auto'} direction={'row'} spacing={'25px'} mb={'25px'}>
           <CustomButton
             buttonText="Edit Profile"
             onClick={() => {
@@ -56,20 +55,13 @@ export default function Profile() {
         </Stack>
 
         {quotes.length > 0 ? (
-          <Box
-            margin={'auto'}
-            display={'flex'}
-            flexDirection={'column'}
-            gap={'25px'}
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
+          <Stack spacing={6} margin={'auto'}>
             {quotes.map((quote) => (
               <QuoteContainer {...quote} isAdmin={true} key={quote._id} />
             ))}
-          </Box>
+          </Stack>
         ) : (
-          <Stack spacing={7} margin={'auto'}>
+          <Stack spacing={6} margin={'auto'}>
             <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
               You have not created any quotes yet
             </Text>

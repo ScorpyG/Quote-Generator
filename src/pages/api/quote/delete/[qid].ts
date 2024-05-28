@@ -9,6 +9,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (!token) {
     return response.status(401).json({
       message: 'Unauthorized.',
+      success: false,
     });
   }
 
@@ -17,20 +18,23 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     const quote = await Quote.findById(quoteId);
 
     if (!quote) {
-      return response.status(400).json({
+      return response.status(200).json({
         message: 'Quote not found.',
+        success: false,
       });
     } else {
       await Quote.findByIdAndDelete(quoteId);
 
       return response.status(202).json({
         message: 'Quote deleted successfully.',
+        success: true,
       });
     }
   } catch (error) {
     return response.status(500).json({
       error,
       message: 'Unable to delete the quote.',
+      success: false,
     });
   }
 }
