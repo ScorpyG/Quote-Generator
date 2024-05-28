@@ -1,13 +1,13 @@
 import EditQuoteForm from '@/components/Forms/EditQuoteForm/EditQuoteForm';
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
-import axios from 'axios';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const result = await axios.get<{ data: QuoteProps[] }>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/getAll`);
+export const getStaticPaths: GetStaticPaths = (async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/getAll`);
+  const result = (await response.json()) as { data: QuoteProps[] };
 
-  const paths = result.data.data.map((quote) => ({
+  const paths = result.data.map((quote) => ({
     params: {
       quoteId: quote._id.toString(),
     },
@@ -17,20 +17,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths,
     fallback: false,
   };
-};
+}) satisfies GetStaticPaths;
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = (async (context) => {
   const params = context.params!;
-  const result = await axios.get<{ data: QuoteProps }>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/get/${params.quoteId}`
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/get/${params.quoteId}`);
+  const result = await response.json();
 
   return {
     props: {
-      quote: result.data.data, // Extract the 'quote' property from 'result.data'
+      quote: result.data,
     },
   };
-};
+}) satisfies GetStaticProps<{ quote: QuoteProps }>;
 
 export default function EditQuote({ quote }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
