@@ -1,6 +1,6 @@
 import { QuoteFormInput } from '@/components/Forms/AddQuoteForm/useAddQuoteForm';
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
-import { fetcher } from '@/utils/swrFetcher';
+import { fetcher } from '@/lib/swrFetcher';
 import axios from 'axios';
 import useSWR from 'swr';
 

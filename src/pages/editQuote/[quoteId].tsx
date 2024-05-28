@@ -1,13 +1,13 @@
 import EditQuoteForm from '@/components/Forms/EditQuoteForm/EditQuoteForm';
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
+import { getAllQuotes, getQuoteById } from '@/lib/serverless';
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 
 export const getStaticPaths: GetStaticPaths = (async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/getAll`);
-  const result = await response.json();
+  const quotes = await getAllQuotes();
 
-  const paths = result.data.map((quote: QuoteProps) => ({
+  const paths = quotes.map((quote) => ({
     params: {
       quoteId: quote._id.toString(),
     },
@@ -21,12 +21,12 @@ export const getStaticPaths: GetStaticPaths = (async () => {
 
 export const getStaticProps: GetStaticProps = (async (context) => {
   const params = context.params!;
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/quote/get/${params.quoteId}`);
-  const result = await response.json();
+  const quote = await getQuoteById(params.quoteId as string);
+  const quoteData = JSON.parse(JSON.stringify(quote));
 
   return {
     props: {
-      quote: result.data,
+      quote: quoteData,
     },
   };
 }) satisfies GetStaticProps<{ quote: QuoteProps }>;

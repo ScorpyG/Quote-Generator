@@ -1,6 +1,6 @@
+import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import { AuthUser } from '@/types/auth';
-import dbConnect from '@/utils/dbConnect';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 

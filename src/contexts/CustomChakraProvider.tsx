@@ -1,4 +1,4 @@
-import { theme } from '@/utils/theme';
+import { theme } from '@/lib/theme';
 import { ChakraProvider, cookieStorageManagerSSR, localStorageManager } from '@chakra-ui/react';
 import type { NextApiRequest } from 'next';
 import { ReactNode } from 'react';

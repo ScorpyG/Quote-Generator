@@ -1,5 +1,5 @@
+import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
-import dbConnect from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 

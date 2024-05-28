@@ -1,6 +1,6 @@
+import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import { AuthUser } from '@/types/auth';
-import dbConnect from '@/utils/dbConnect';
 import bcrypt from 'bcryptjs';
 import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';

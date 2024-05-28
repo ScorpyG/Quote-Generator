@@ -1,6 +1,6 @@
+import dbConnect from '@/lib/dbConnect';
 import Quote from '@/models/Quote';
 import { AuthUser } from '@/types/auth';
-import dbConnect from '@/utils/dbConnect';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';

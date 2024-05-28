@@ -1,5 +1,5 @@
+import { fetcher } from '@/lib/swrFetcher';
 import { AuthUser } from '@/types/auth';
-import { fetcher } from '@/utils/swrFetcher';
 import useSWR from 'swr';
 
 export default function useUser() {
