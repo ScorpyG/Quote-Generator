@@ -30,7 +30,7 @@ export default function useQuote() {
       '/api/quote/create',
       {
         ...quote,
-        tags: quote.tags.split(',').map((tag) => tag.trim()),
+        tags: quote.tags.split(',').map((tag) => tag.trim().toLowerCase()),
       },
       {
         headers: {

@@ -1,6 +1,6 @@
 import EditQuoteForm from '@/components/Forms/EditQuoteForm/EditQuoteForm';
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
-import { getAllQuotes, getQuoteById } from '@/lib/serverless';
+import { getAllQuotes, getQuoteById } from '@/utils/serverFuncs';
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 

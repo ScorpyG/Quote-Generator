@@ -41,8 +41,8 @@ export default function QuoteContainer({ _id, quote, author, createdAt, tags, is
           </>
         )}
 
-        <Text>&quot;{quote}&quot;</Text>
-        <Text mt={2} textAlign={'right'} fontStyle={'italic'} fontWeight={600}>
+        <Text>{quote}</Text>
+        <Text mt={4} textAlign={'right'} fontStyle={'italic'} fontWeight={600}>
           {author}
         </Text>
         {tags.length > 0 && <TagsList tagsList={tags} />}
