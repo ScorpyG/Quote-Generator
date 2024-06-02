@@ -1,5 +1,6 @@
 import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
 import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
+import SearchBar from '@/components/SearchBar/SearchBar';
 import useQuote from '@/hooks/useQuote';
 import { Stack } from '@chakra-ui/react';
 import Head from 'next/head';
@@ -13,6 +14,9 @@ export default function Home() {
       <Head>
         <title>Quote Generator</title>
       </Head>
+
+      <SearchBar />
+
       <Stack spacing={6} margin={'auto'}>
         {!isLoading && quotes && quotes?.length > 0 ? (
           quotes.map((quote, i) => <QuoteContainer {...quote} isAdmin={false} key={quote._id ?? i} />)
