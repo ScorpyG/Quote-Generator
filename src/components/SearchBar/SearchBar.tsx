@@ -14,7 +14,7 @@ export default function SearchBar() {
 
   return (
     <FormControl
-      isInvalid={errors.search && true}
+      isInvalid={errors.searchQuery && true}
       onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       // styling
       as={'form'}
@@ -33,7 +33,7 @@ export default function SearchBar() {
         </InputRightElement>
       </InputGroup>
       <Input
-        {...register('search', {
+        {...register('searchQuery', {
           validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
         })}
         type="text"

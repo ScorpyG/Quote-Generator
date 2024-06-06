@@ -1,19 +1,25 @@
 import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 export interface TSearchBar {
-  search: string;
+  searchQuery: string;
 }
 
 export default function useSearchBar() {
   const toast = useToast();
+  const router = useRouter();
 
-  const onSubmit: SubmitHandler<TSearchBar> = useCallback(async (data: TSearchBar) => {
-    // TODO: perform search action
-    // eslint-disable-next-line no-console
-    console.log(data);
-  }, []);
+  const onSubmit: SubmitHandler<TSearchBar> = useCallback(
+    async ({ searchQuery }: TSearchBar) => {
+      router.push({
+        pathname: '/',
+        query: { tag: searchQuery },
+      });
+    },
+    [router]
+  );
 
   const onInvalidSubmit = useCallback(() => {
     toast({
