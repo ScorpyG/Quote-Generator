@@ -5,6 +5,7 @@ import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
 import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
 import useAuth from '@/hooks/useAuth';
 import useQuote from '@/hooks/useQuote';
+import { ChatIcon, EditIcon } from '@chakra-ui/icons';
 import {
   Heading,
   Modal,
@@ -44,6 +45,7 @@ export default function Profile() {
               setModalType('edit');
               onOpen();
             }}
+            icon={<EditIcon />}
           />
           <CustomButton
             buttonText="Create Quote"
@@ -51,6 +53,7 @@ export default function Profile() {
               setModalType('create');
               onOpen();
             }}
+            icon={<ChatIcon />}
           />
         </Stack>
 

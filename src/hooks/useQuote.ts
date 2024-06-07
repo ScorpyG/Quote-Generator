@@ -1,12 +1,12 @@
 import { QuoteFormInput } from '@/components/Forms/AddQuoteForm/useAddQuoteForm';
 import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
-import { fetcher } from '@/lib/swrFetcher';
 import axios from 'axios';
 import useSWR from 'swr';
 
 export default function useQuote() {
-  const useAllQuotes = () => {
-    const { data, error, isLoading } = useSWR<{ data: QuoteProps[] }>('/api/quote/getAll', fetcher);
+  const useAllQuotes = (searchedTag: string) => {
+    const endpoint = searchedTag ? `/api/quote/getAll?tag=${searchedTag}` : '/api/quote/getAll';
+    const { data, error, isLoading } = useSWR<{ data: QuoteProps[] }>(endpoint);
 
     return {
       quotes: data?.data,
@@ -16,7 +16,7 @@ export default function useQuote() {
   };
 
   const useUserQuotes = () => {
-    const { data, isLoading, error } = useSWR<{ data: QuoteProps[] }>(`/api/quote/userQuotes`, fetcher);
+    const { data, isLoading, error } = useSWR<{ data: QuoteProps[] }>(`/api/quote/userQuotes`);
 
     return {
       quotes: data?.data,
