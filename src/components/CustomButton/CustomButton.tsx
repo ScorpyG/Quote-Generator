@@ -1,13 +1,15 @@
 import { Button } from '@chakra-ui/react';
+import { ReactElement } from 'react';
 
 interface CustomButtonProps {
   buttonText: string;
   onClick: () => void;
   isLoading?: boolean;
+  icon?: ReactElement;
   buttonType?: 'submit' | 'button' | 'reset';
 }
 
-export default function CustomButton({ buttonText, onClick, isLoading, buttonType }: CustomButtonProps) {
+export default function CustomButton({ buttonText, onClick, isLoading, icon, buttonType }: CustomButtonProps) {
   return (
     <Button
       w={'full'}
@@ -28,6 +30,7 @@ export default function CustomButton({ buttonText, onClick, isLoading, buttonTyp
       // Optional
       isLoading={isLoading}
       type={buttonType}
+      leftIcon={icon}
     >
       {buttonText}
     </Button>

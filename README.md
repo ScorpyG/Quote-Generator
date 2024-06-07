@@ -46,7 +46,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Upcoming Features
 
-- [ ] Search by tags (Including a searchbox enable the user to enter tags name)
+- [x] Search by tags (Including a searchbox enable the user to enter tags name)
+- [ ] Add auto complete feature to the search bar.
 - [x] Revalidate `.../quote/getAllQuotes` and `.../quote/userQuotes` endpoints when user add new quote (So they don't have to refresh the page to see the changes)
 - [ ] Profile image
 - [ ] Quote with image
