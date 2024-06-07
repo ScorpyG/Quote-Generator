@@ -13,10 +13,15 @@ export default function useSearchBar() {
 
   const onSubmit: SubmitHandler<TSearchBar> = useCallback(
     async ({ searchQuery }: TSearchBar) => {
-      router.push({
-        pathname: '/',
-        query: { tag: searchQuery },
-      });
+      // This approach "sanitizes" the url by removing the tag query if the search query is empty
+      if (searchQuery === '') {
+        router.replace('/');
+      } else {
+        router.push({
+          pathname: '/',
+          query: { tag: searchQuery },
+        });
+      }
     },
     [router]
   );

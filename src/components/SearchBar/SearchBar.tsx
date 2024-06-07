@@ -4,12 +4,16 @@ import { FormControl, Input, InputGroup, InputRightElement } from '@chakra-ui/re
 import { useForm } from 'react-hook-form';
 import useSearchBar, { TSearchBar } from './useSearchBar';
 
-export default function SearchBar() {
+export default function SearchBar({ searchQuery }: TSearchBar) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<TSearchBar>();
+  } = useForm<TSearchBar>({
+    defaultValues: {
+      searchQuery,
+    },
+  });
   const { onSubmit, onInvalidSubmit } = useSearchBar();
 
   return (
@@ -23,7 +27,7 @@ export default function SearchBar() {
       borderRadius={'20px'}
       boxShadow={'6px 6px rgba(214, 188, 250, 0.5)'}
       padding={'6px'}
-      margin={'auto'}
+      marginX={'auto'}
       marginBottom={'25px'}
       width={'80%'}
     >
