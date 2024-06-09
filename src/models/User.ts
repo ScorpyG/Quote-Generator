@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
-export interface TUser {
+export interface TUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
