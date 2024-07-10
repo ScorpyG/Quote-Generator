@@ -13,6 +13,7 @@ export interface TAuthContext {
   register: (data: TRegister) => Promise<AuthResponse>;
   signOut: () => Promise<AuthResponse>;
   updateProfile: (data: ProfileFormInput) => Promise<AuthResponse>;
+  uploadProfileImage: () => Promise<AuthResponse>;
 }
 
 const defaultResponse: AuthResponse = {
@@ -28,6 +29,7 @@ export const AuthContext = createContext<TAuthContext>({
   register: async () => defaultResponse,
   signOut: async () => defaultResponse,
   updateProfile: async () => defaultResponse,
+  uploadProfileImage: async () => defaultResponse,
 });
 
 interface AuthProviderProps {
@@ -148,8 +150,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   };
 
+  const uploadProfileImage = async () => {
+    // TODO: implement update profile imag endpoint to accept binary data
+    return {
+      status: false,
+      message: 'Service Unavailable',
+    };
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn, signOut, register, updateProfile }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, signIn, signOut, register, updateProfile, uploadProfileImage }}
+    >
       {children}
     </AuthContext.Provider>
   );

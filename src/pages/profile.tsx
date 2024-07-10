@@ -1,30 +1,12 @@
-import CustomButton from '@/components/CustomButton/CustomButton';
-import AddQuoteForm from '@/components/Forms/AddQuoteForm/AddQuoteForm';
-import ProfileForm from '@/components/Forms/ProfileForm/ProfileForm';
+import Header from '@/components/ProfileSection/Header';
 import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
 import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
 import useAuth from '@/hooks/useAuth';
 import useQuote from '@/hooks/useQuote';
-import { ChatIcon, EditIcon } from '@chakra-ui/icons';
-import {
-  Heading,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Stack,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Stack, Text } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useState } from 'react';
 
 export default function Profile() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [modalType, setModalType] = useState<'edit' | 'create' | null>(null);
-
   const { useUserQuotes } = useQuote();
   const { quotes, isLoading } = useUserQuotes();
   const { user } = useAuth();
@@ -35,27 +17,8 @@ export default function Profile() {
         <Head>
           <title>Profile</title>
         </Head>
-        <Heading as={'h1'} textAlign={'center'} mb={'25px'}>
-          Hi, {`${user.firstName} ${user.lastName}`}
-        </Heading>
-        <Stack w={'sm'} mx={'auto'} direction={'row'} spacing={'25px'} mb={'25px'}>
-          <CustomButton
-            buttonText="Edit Profile"
-            onClick={() => {
-              setModalType('edit');
-              onOpen();
-            }}
-            icon={<EditIcon />}
-          />
-          <CustomButton
-            buttonText="Create Quote"
-            onClick={() => {
-              setModalType('create');
-              onOpen();
-            }}
-            icon={<ChatIcon />}
-          />
-        </Stack>
+
+        <Header userFirstName={user.firstName} userLastName={user.lastName} />
 
         {quotes.length > 0 ? (
           <Stack spacing={6} margin={'auto'}>
@@ -73,29 +36,6 @@ export default function Profile() {
             <QuoteContainerSkeleton />
           </Stack>
         )}
-
-        {/* ---------------------------------- Form Modal ---------------------------------- */}
-        <Modal
-          isOpen={isOpen}
-          onClose={() => {
-            setModalType(null);
-            onClose();
-          }}
-          isCentered
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalCloseButton />
-            <ModalHeader>{modalType === 'edit' ? 'Edit Profile' : 'Create Quote'}</ModalHeader>
-            <ModalBody>
-              {modalType === 'edit' ? (
-                <ProfileForm firstName={user.firstName} lastName={user.lastName} />
-              ) : (
-                <AddQuoteForm />
-              )}
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </>
     );
   } else {

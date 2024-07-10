@@ -48,6 +48,7 @@ The technologies I used for this project:
 - [MongoDB](https://www.mongodb.com/)
 - [JWT](https://jwt.io/)
 - [SWR](https://swr.vercel.app/)
+- [UploadThing]()
 
 ## Deploy on Vercel
 
