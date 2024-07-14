@@ -21,9 +21,10 @@ import ProfileForm from '../Forms/ProfileForm/ProfileForm';
 export interface HeaderProps {
   userFirstName: string;
   userLastName: string;
+  userProfileImage?: string;
 }
 
-export default function Header({ userFirstName, userLastName }: HeaderProps) {
+export default function Header({ userFirstName, userLastName, userProfileImage }: HeaderProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalType, setModalType] = useState<'edit' | 'create' | 'upload' | null>(null);
 
@@ -40,7 +41,7 @@ export default function Header({ userFirstName, userLastName }: HeaderProps) {
           width={200}
           height={200}
           // TODO: Replace with user profile image
-          src={'/images/randomuser.jpeg'}
+          src={userProfileImage || '/images/blank.jpg'}
           alt="User profile image"
           style={{
             borderWidth: '5px',

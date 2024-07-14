@@ -3,6 +3,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import { AuthProvider } from '@/contexts/AuthProvider';
 import { Chakra } from '@/contexts/CustomChakraProvider';
 import { fetcher } from '@/lib/swrFetcher';
+import '@uploadthing/react/styles.css';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Suspense } from 'react';
