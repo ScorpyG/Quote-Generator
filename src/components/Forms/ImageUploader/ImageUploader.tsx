@@ -9,7 +9,7 @@ import useImageUploader, { ProfileImgFile } from './useImageUploader';
 
 export default function ImageUploader() {
   const { onSubmit, onInvalidSubmit } = useImageUploader();
-  const [imagePreview, setImagePreview] = useState<(File & { preview: string })[]>([]);
+  const [imagePreview, setImagePreview] = useState<(File & { preview: string }) | null>(null);
   const {
     handleSubmit,
     register,
@@ -24,19 +24,17 @@ export default function ImageUploader() {
       'image/png': [],
     },
     onDrop: (acceptedFiles) => {
-      setImagePreview(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
+      const file = acceptedFiles[0];
+      const preview = URL.createObjectURL(file);
+      setImagePreview(Object.assign(file, { preview }));
     },
   });
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => imagePreview.forEach((file) => URL.revokeObjectURL(file.preview));
+    if (imagePreview) {
+      return () => URL.revokeObjectURL(imagePreview.preview);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,7 +49,7 @@ export default function ImageUploader() {
         alignItems: 'center',
       }}
     >
-      {imagePreview.length > 0 && imagePreview[0].preview ? (
+      {imagePreview ? (
         <Flex
           direction={'column'}
           justifyContent={'center'}
@@ -61,7 +59,7 @@ export default function ImageUploader() {
           marginBottom={4}
         >
           <Image
-            src={imagePreview[0].preview}
+            src={imagePreview.preview}
             alt="Profile Image"
             height={300}
             width={300}
@@ -71,11 +69,11 @@ export default function ImageUploader() {
               padding: '4px',
             }}
             onLoad={() => {
-              URL.revokeObjectURL(imagePreview[0].preview);
+              URL.revokeObjectURL(imagePreview.preview);
             }}
             onClick={() => {
-              URL.revokeObjectURL(imagePreview[0].preview);
-              setImagePreview([]);
+              URL.revokeObjectURL(imagePreview.preview);
+              setImagePreview(null);
             }}
           />
         </Flex>
