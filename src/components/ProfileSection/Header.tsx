@@ -40,7 +40,6 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
         <Image
           width={200}
           height={200}
-          // TODO: Replace with user profile image
           src={userProfileImage || '/images/blank.jpg'}
           alt="User profile image"
           style={{

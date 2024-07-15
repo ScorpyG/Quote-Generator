@@ -1,27 +1,30 @@
+import { ImageIcon } from '@/utils/icons';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useDropzone } from '@uploadthing/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './dropzone.module.css';
-import useImageUploader from './useImageUploader';
+import useImageUploader, { ProfileImgFile } from './useImageUploader';
 
 export default function ImageUploader() {
   const { onSubmit, onInvalidSubmit } = useImageUploader();
-  const [profileImage, setProfileImage] = useState<(File & { preview: string })[]>([]);
+  const [imagePreview, setImagePreview] = useState<(File & { preview: string })[]>([]);
   const {
     handleSubmit,
+    register,
     formState: { isSubmitting },
-  } = useForm();
+  } = useForm<ProfileImgFile>();
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
+    multiple: false,
     accept: {
       'image/jpeg': [],
       'image/png': [],
     },
     onDrop: (acceptedFiles) => {
-      setProfileImage(
+      setImagePreview(
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -33,7 +36,7 @@ export default function ImageUploader() {
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => profileImage.forEach((file) => URL.revokeObjectURL(file.preview));
+    return () => imagePreview.forEach((file) => URL.revokeObjectURL(file.preview));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -48,7 +51,7 @@ export default function ImageUploader() {
         alignItems: 'center',
       }}
     >
-      {profileImage.length > 0 && profileImage[0].preview ? (
+      {imagePreview.length > 0 && imagePreview[0].preview ? (
         <Flex
           direction={'column'}
           justifyContent={'center'}
@@ -58,7 +61,7 @@ export default function ImageUploader() {
           marginBottom={4}
         >
           <Image
-            src={profileImage[0].preview}
+            src={imagePreview[0].preview}
             alt="Profile Image"
             height={300}
             width={300}
@@ -68,18 +71,32 @@ export default function ImageUploader() {
               padding: '4px',
             }}
             onLoad={() => {
-              URL.revokeObjectURL(profileImage[0].preview);
+              URL.revokeObjectURL(imagePreview[0].preview);
             }}
             onClick={() => {
-              URL.revokeObjectURL(profileImage[0].preview);
-              setProfileImage([]);
+              URL.revokeObjectURL(imagePreview[0].preview);
+              setImagePreview([]);
             }}
           />
         </Flex>
       ) : (
-        <div {...getRootProps()} className={styles.dropzone}>
-          <input {...getInputProps()} />
-          <Text as="b">Choose image file or drag and drop</Text>
+        <div
+          className={styles.dropzone}
+          {...getRootProps()}
+          {...register('file', {
+            required: 'Please upload an image',
+          })}
+        >
+          <input
+            // ! this is set to hidden and cannot be register with react-hook-form
+            // so we need to specific the name attribute in order to get the value/file
+            name="file"
+            {...getInputProps()}
+          />
+          <ImageIcon fontSize={'7xl'} />
+          <Text as="b" marginTop={4}>
+            Choose image file or drag and drop
+          </Text>
           <Text as="i" fontSize={'sm'} marginTop={1}>
             Accept .JPEG (.JPG) or .PNG
           </Text>

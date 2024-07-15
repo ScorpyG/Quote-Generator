@@ -1,8 +1,8 @@
-import { uploadRouter } from '@/server/uploadthing';
+import { customFileRouter } from '@/server/uploadthing';
 import { createRouteHandler } from 'uploadthing/next-legacy';
 
 const handler = createRouteHandler({
-  router: uploadRouter,
+  router: customFileRouter,
 });
 
 export default handler;
