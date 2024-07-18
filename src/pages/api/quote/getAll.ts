@@ -9,7 +9,18 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     const {
       query: { tag },
     } = request;
-    const quotes = await Quote.find(tag ? { tags: tag } : {});
+
+    const quotes = await Quote.find(
+      tag
+        ? {
+            tags: {
+              $elemMatch: {
+                $regex: new RegExp(tag as string, 'i'), // Casting here is fine
+              },
+            },
+          }
+        : {}
+    );
 
     return response.status(200).json({
       data: quotes,

@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.11.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.6",
+    "@uploadthing/react": "^6.7.2",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "cookie": "^0.6.0",
@@ -28,7 +29,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "uploadthing": "^6.13.2"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",
