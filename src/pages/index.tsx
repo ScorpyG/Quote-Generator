@@ -29,7 +29,7 @@ export default function Home() {
           <QuoteContainerSkeleton />
         </Stack>
       ) : !quotes || quotes.length === 0 ? (
-        <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
+        <Text fontSize={'lg'} fontWeight={700} textAlign={'center'} margin={'auto'}>
           No quotes found
         </Text>
       ) : (

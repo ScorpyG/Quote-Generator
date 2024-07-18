@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 
-export interface TQuote {
+export interface TQuote extends Document {
   userId: mongoose.Schema.Types.ObjectId;
   quote: string;
   author: string;

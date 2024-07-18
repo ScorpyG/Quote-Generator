@@ -12,6 +12,7 @@ export interface AuthUser extends JwtPayload {
   firstName: string;
   lastName: string;
   email: string;
+  profileImgUrl: string;
 }
 
 export interface TLogin {

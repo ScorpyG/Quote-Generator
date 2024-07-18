@@ -1,5 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Quote from '@/models/Quote';
+import { AuthUser } from '@/types/auth';
+import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -15,11 +17,18 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
 
   try {
     const quoteId = request.query.qid;
+    const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
     const quote = await Quote.findById(quoteId);
 
+    // VERIFY ONLY THE USER WHO CREATED THE QUOTE CAN DELETE IT
     if (!quote) {
       return response.status(200).json({
         message: 'Quote not found.',
+        success: false,
+      });
+    } else if (user.id !== quote.userId.toString()) {
+      return response.status(401).json({
+        message: 'Unauthorized.',
         success: false,
       });
     } else {
