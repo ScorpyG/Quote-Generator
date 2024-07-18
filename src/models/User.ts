@@ -5,6 +5,7 @@ export interface TUser extends Document {
   lastName: string;
   email: string;
   password: string;
+  profileImgUrl?: string;
   verifyToken?: string;
   verifyTokenExpires?: Date;
 }
@@ -27,6 +28,9 @@ const userSchema = new mongoose.Schema<TUser>(
     password: {
       type: String,
       required: true,
+    },
+    profileImgUrl: {
+      type: String,
     },
     verifyToken: String,
     verifyTokenExpires: Date,

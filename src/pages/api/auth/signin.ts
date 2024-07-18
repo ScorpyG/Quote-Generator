@@ -40,6 +40,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
+          profileImgUrl: user.profileImgUrl,
         };
         const token = await jwt.sign(jwtTokenData, JWT_SECRET, {
           expiresIn: '1d',

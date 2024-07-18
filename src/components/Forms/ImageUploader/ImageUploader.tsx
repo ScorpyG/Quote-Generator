@@ -13,7 +13,7 @@ export default function ImageUploader() {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isSubmitted },
   } = useForm<ProfileImgFile>();
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -42,7 +42,6 @@ export default function ImageUploader() {
     <form
       onSubmit={handleSubmit(onSubmit, onInvalidSubmit)}
       style={{
-        marginBottom: 12,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -104,6 +103,7 @@ export default function ImageUploader() {
       <Button
         type="submit"
         isLoading={isSubmitting}
+        isDisabled={isSubmitted}
         w={'full'}
         my={2}
         bgGradient={'linear(to-l, pink.400, purple.500)'}

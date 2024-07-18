@@ -5,6 +5,16 @@ const nextConfig = {
     config.externals = [...config.externals, 'bcrypt'];
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+        pathname: '/f/**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

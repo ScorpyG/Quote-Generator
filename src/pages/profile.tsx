@@ -18,7 +18,7 @@ export default function Profile() {
           <title>Profile</title>
         </Head>
 
-        <Header userFirstName={user.firstName} userLastName={user.lastName} />
+        <Header userFirstName={user.firstName} userLastName={user.lastName} userProfileImage={user.profileImgUrl} />
 
         {quotes.length > 0 ? (
           <Stack spacing={6} margin={'auto'}>
