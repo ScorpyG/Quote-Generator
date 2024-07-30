@@ -45,7 +45,7 @@ export default function AddQuoteForm() {
           gap: 10,
         }}
       >
-        <FormControl isInvalid={errors.quote && true} isRequired>
+        <FormControl isInvalid={errors.quote && true}>
           <FormLabel>Quote</FormLabel>
           <Textarea
             {...register('quote', {
@@ -62,7 +62,7 @@ export default function AddQuoteForm() {
           <FormErrorMessage mt={1}>{errors.quote && errors.quote.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.author && true} isRequired>
+        <FormControl isInvalid={errors.author && true}>
           <FormLabel>Author</FormLabel>
           <Input
             {...register('author', {

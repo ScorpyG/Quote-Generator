@@ -21,13 +21,13 @@ export default function Profile() {
         <Header userFirstName={user.firstName} userLastName={user.lastName} userProfileImage={user.profileImgUrl} />
 
         {quotes.length > 0 ? (
-          <Stack spacing={6} margin={'auto'}>
+          <Stack spacing={6} margin={'auto'} flex={1}>
             {quotes.map((quote) => (
               <QuoteContainer {...quote} isAdmin={true} key={quote._id} />
             ))}
           </Stack>
         ) : (
-          <Stack spacing={6} margin={'auto'}>
+          <Stack spacing={6} flex={1} marginX={'auto'}>
             <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
               You have not created any quotes yet
             </Text>
@@ -40,7 +40,7 @@ export default function Profile() {
     );
   } else {
     return (
-      <Stack spacing={6} margin={'auto'}>
+      <Stack spacing={6} marginX={'auto'} flex={1}>
         <QuoteContainerSkeleton />
         <QuoteContainerSkeleton />
         <QuoteContainerSkeleton />

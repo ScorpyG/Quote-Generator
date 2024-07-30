@@ -42,7 +42,7 @@ export default function SignUpForm() {
         gap: 15,
       }}
     >
-      <FormControl isInvalid={errors.firstName && true} isRequired>
+      <FormControl isInvalid={errors.firstName && true}>
         <FormLabel>First Name</FormLabel>
         <Input
           {...register('firstName', {
@@ -59,7 +59,7 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.firstName && true} isRequired>
+      <FormControl isInvalid={errors.firstName && true}>
         <FormLabel>Last Name</FormLabel>
         <Input
           {...register('lastName', {
@@ -76,7 +76,7 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.lastName && errors.lastName.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.email && true} isRequired>
+      <FormControl isInvalid={errors.email && true}>
         <FormLabel>Email</FormLabel>
         <Input
           {...register('email', {
@@ -95,7 +95,7 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.email && errors.email.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.password && true} isRequired>
+      <FormControl isInvalid={errors.password && true}>
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
@@ -128,7 +128,7 @@ export default function SignUpForm() {
         <FormErrorMessage mt={1}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={errors.confirmPassword && true} isRequired>
+      <FormControl isInvalid={errors.confirmPassword && true}>
         <FormLabel>Confirm Password</FormLabel>
         <InputGroup>
           <Input

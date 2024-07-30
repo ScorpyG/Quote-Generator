@@ -21,7 +21,7 @@ export default function Home() {
       <SearchBar searchQuery={typeof searchQuery === 'string' ? searchQuery : ''} />
 
       {isLoading ? (
-        <Stack spacing={6} margin={'auto'}>
+        <Stack spacing={6} flex={1} marginX={'auto'}>
           <QuoteContainerSkeleton />
           <QuoteContainerSkeleton />
           <QuoteContainerSkeleton />

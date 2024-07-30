@@ -14,7 +14,7 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import CustomButton from '../CustomButton/CustomButton';
-import AddQuoteForm from '../Forms/AddQuoteForm/AddQuoteForm';
+import BlogForm from '../Forms/BlogForm/BlogForm';
 import ImageUploader from '../Forms/ImageUploader/ImageUploader';
 import ProfileForm from '../Forms/ProfileForm/ProfileForm';
 
@@ -70,7 +70,7 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
               }}
             />
             <CustomButton
-              buttonText="Create Quote"
+              buttonText="Create Post"
               icon={<ChatIcon />}
               onClick={() => {
                 setModalType('create');
@@ -89,18 +89,24 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
           onClose();
         }}
         isCentered
+        size={modalType === 'create' ? '4xl' : 'xl'}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
           <ModalHeader>
-            {modalType === 'edit' ? 'Edit Profile' : modalType === 'create' ? 'Create Quote' : 'Update Profile Image'}
+            {modalType === 'edit'
+              ? 'Edit Profile'
+              : modalType === 'create'
+                ? 'Create Blog Post'
+                : 'Update Profile Image'}
           </ModalHeader>
           <ModalBody>
             {modalType === 'edit' ? (
               <ProfileForm firstName={userFirstName} lastName={userLastName} />
             ) : modalType === 'create' ? (
-              <AddQuoteForm />
+              // <AddQuoteForm />
+              <BlogForm />
             ) : (
               <ImageUploader />
             )}
