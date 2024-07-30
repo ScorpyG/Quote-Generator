@@ -9,3 +9,8 @@ export const PROFANITY_WORDS = /fuck|fk|shit|fag|pussy|cunt|bitch|slut|twat|nigg
 export const PERSONAL_GITHUB = 'https://github.com/ScorpyG';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/justin-gia-hoang/';
 export const DEV_COMMUNITY_URL = 'https://dev.to/scorpyg';
+
+export const generateRandomColor = () => {
+  const colorList = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'];
+  return colorList[Math.floor(Math.random() * colorList.length)];
+};

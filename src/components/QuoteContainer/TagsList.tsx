@@ -1,3 +1,4 @@
+import { generateRandomColor } from '@/utils/helpers';
 import { Divider, Stack, Tag } from '@chakra-ui/react';
 
 interface TagsListProp {
@@ -5,11 +6,6 @@ interface TagsListProp {
 }
 
 export default function TagsList(tagsListProp: TagsListProp) {
-  const generateRandomColor = () => {
-    const colorList = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'];
-    return colorList[Math.floor(Math.random() * colorList.length)];
-  };
-
   return (
     <>
       <Divider marginTop={1} marginBottom={2} />

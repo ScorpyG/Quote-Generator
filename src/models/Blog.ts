@@ -4,7 +4,7 @@ export interface TBlog extends Document {
   userId: mongoose.Schema.Types.ObjectId;
   title: string;
   author: string;
-  description: string;
+  content: string[];
   imageUrl?: string;
   tags?: string[];
 }
@@ -24,8 +24,8 @@ const BlogSchema = new mongoose.Schema<TBlog>(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
+    content: {
+      type: [String],
       required: true,
     },
     imageUrl: {
