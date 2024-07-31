@@ -77,18 +77,20 @@ export default function useQuote() {
   const deleteQuote = async (quoteId: string) => {
     const response = await axios.delete(`/api/quote/delete/${quoteId}`);
 
-    if (response.status === 202) {
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
-    } else {
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
-    }
+    return {
+      status: response.data.success,
+      message: response.data.message,
+    };
   };
 
-  return { useAllQuotes, useUserQuotes, createQuote, editQuote, deleteQuote };
+  return {
+    // Query
+    useAllQuotes,
+    useUserQuotes,
+
+    // Mutations
+    createQuote,
+    editQuote,
+    deleteQuote,
+  };
 }
