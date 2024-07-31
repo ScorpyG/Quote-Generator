@@ -33,10 +33,17 @@ export const theme = extendTheme({
     Modal: {
       baseStyle: {
         dialog: {
+          maxHeight: '95vh',
           borderRadius: '20px',
           borderWidth: '5px',
           borderColor: 'purple.400',
           boxShadow: '6px 6px rgba(214, 188, 250, 0.8)',
+          overflow: 'auto',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          msOverFlowStyle: 'none',
+          scrollbarWidth: 'none',
         },
       },
     },

@@ -1,5 +1,6 @@
 import { ChatIcon, EditIcon } from '@chakra-ui/icons';
 import {
+  Box,
   Flex,
   Heading,
   Modal,
@@ -37,25 +38,30 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
         gap={[4, 8, 12]}
         marginBottom={8}
       >
-        <Image
-          width={200}
-          height={200}
-          src={userProfileImage || '/images/blank.jpg'}
-          alt="User profile image"
-          style={{
-            borderWidth: '5px',
-            borderStyle: 'solid',
-            borderColor: '#9AE6B4',
-            borderRadius: '50%',
-            padding: '4px',
-
-            cursor: 'pointer',
-          }}
-          onClick={() => {
-            setModalType('upload');
-            onOpen();
-          }}
-        />
+        <Box
+          w={200}
+          h={200}
+          borderWidth={4}
+          borderColor={'#9AE6B4'}
+          borderRadius={'full'}
+          position={'relative'}
+          overflow={'hidden'}
+        >
+          <Image
+            fill
+            src={userProfileImage || '/images/blank.jpg'}
+            alt="User profile image"
+            style={{
+              objectFit: 'contain',
+              cursor: 'pointer',
+            }}
+            sizes="200px"
+            onClick={() => {
+              setModalType('upload');
+              onOpen();
+            }}
+          />
+        </Box>
         <Flex flexDirection={'column'} gap={4}>
           <Heading as={'h1'} textAlign={'center'}>
             {`${userFirstName} ${userLastName}`}

@@ -16,7 +16,7 @@ export default function NavBar() {
         bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
         bgClip={'text'}
       >
-        Quote Gen
+        QuoteGen
       </Link>
       <Box display={'flex'} gap={'20px'}>
         <ThemeSwitch />
