@@ -68,7 +68,10 @@ export default function EditQuoteForm({ quote, author, tags }: QuoteFormInput) {
         <Input
           {...register('tags', {
             required: 'Please enter tags',
-            validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
+            validate: {
+              containsProfanity: (value) =>
+                value === undefined || !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
+            },
           })}
           placeholder="Please enter tags"
           name="tags"

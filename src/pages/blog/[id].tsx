@@ -7,7 +7,7 @@ export default function BlogPage() {
     title: 'How can Spair help you?',
     author: 'Spair Creator',
     postedDate: 'July 17, 2024',
-    content: [
+    contents: [
       `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, obcaecati tempora. 
       Ipsa labore aliquam blanditiis ab architecto nihil veritatis commodi quis minus magni? 
       Voluptatibus eos repudiandae, sapiente laudantium cumque quidem! Lorem ipsum, dolor 
@@ -29,6 +29,8 @@ export default function BlogPage() {
     imageUrl: '/image.png',
     tags: ['Spair', 'SaaS', 'Productivity', 'Collaboration'],
   };
+
+  // TODO: Fetch blog post data from API
 
   return (
     <>

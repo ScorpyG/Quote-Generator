@@ -9,7 +9,11 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import styles from './blogImageDropzone.module.css';
 import useBlogForm, { BlogFormInput } from './useBlogForm';
 
-export default function BlogForm() {
+interface BlogFormInputProps {
+  author: string;
+}
+
+export default function BlogForm({ author }: BlogFormInputProps) {
   const { onSubmit, onInvalidSubmit } = useBlogForm();
   const [blogImgPreview, setBlogImgPreview] = useState<(File & { preview: string }) | null>(null);
 
@@ -43,8 +47,8 @@ export default function BlogForm() {
     formState: { errors, isSubmitting },
   } = useForm<BlogFormInput>({
     defaultValues: {
+      author,
       contents: [{ block: '' }],
-      tags: '',
     },
   });
 
@@ -210,7 +214,7 @@ export default function BlogForm() {
           </Flex>
         ) : (
           <div className={styles.dropzone} {...getRootProps()} {...register('image')}>
-            <input name="file" {...getInputProps()} />
+            <input name="image" {...getInputProps()} />
             <ImageIcon fontSize={'7xl'} />
             <Text size={'sm'}>Choose image file or drag and drop</Text>
             <Text as="b" fontSize={'sm'}>

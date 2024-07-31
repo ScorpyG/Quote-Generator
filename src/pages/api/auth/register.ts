@@ -11,8 +11,19 @@ export default async function handler(request: NextApiRequest, response: NextApi
     const user = await User.findOne({ email });
 
     if (user) {
-      return response.status(400).json({
-        message: 'User already exists',
+      /**
+       * By standard we should return Client error codes (400-499)
+       * https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses
+       *
+       * 403 - Forbidden
+       * 404 - Not Found
+       * 409 - Conflict
+       * ...
+       *
+       * But client error codes would trigger exception in the client side --> Error screen
+       */
+      return response.status(200).json({
+        message: 'Email is taken. Please use another email',
         success: false,
       });
     } else {

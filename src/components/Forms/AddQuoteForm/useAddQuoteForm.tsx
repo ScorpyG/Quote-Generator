@@ -7,7 +7,7 @@ import { useSWRConfig } from 'swr';
 export interface QuoteFormInput {
   quote: string;
   author: string;
-  tags: string;
+  tags?: string;
 }
 
 export default function useAddQuoteForm() {

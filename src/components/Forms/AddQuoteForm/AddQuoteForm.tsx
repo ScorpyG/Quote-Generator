@@ -80,8 +80,10 @@ export default function AddQuoteForm() {
           <FormLabel>Tags (Separate tags by commas)</FormLabel>
           <Input
             {...register('tags', {
-              required: 'Please enter tags',
-              validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
+              validate: {
+                containsProfanity: (value) =>
+                  value === undefined || !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
+              },
             })}
             placeholder="Enter tags separated by commas"
             name="tags"

@@ -31,7 +31,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
       success: true,
     });
   } catch (error) {
-    response.status(500).json({
+    return response.status(500).json({
       message: 'Service not available, unable to create quote.',
       success: false,
     });

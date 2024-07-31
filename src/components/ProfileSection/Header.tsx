@@ -112,7 +112,7 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
               <ProfileForm firstName={userFirstName} lastName={userLastName} />
             ) : modalType === 'create' ? (
               // <AddQuoteForm />
-              <BlogForm />
+              <BlogForm author={`${userFirstName} ${userLastName}`} />
             ) : (
               <ImageUploader />
             )}

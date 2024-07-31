@@ -6,12 +6,12 @@ export interface BlogPostProps {
   title: string;
   author: string;
   postedDate: string;
-  content: string[];
+  contents: string[];
   imageUrl?: string;
   tags?: string[];
 }
 
-export default function BlogPost({ title, author, postedDate, content, imageUrl, tags }: BlogPostProps) {
+export default function BlogPost({ title, author, postedDate, contents, imageUrl, tags }: BlogPostProps) {
   return (
     <Box width={'80%'} margin={'auto'} textAlign={'left'}>
       <Text fontSize={'4xl'} textAlign={'center'}>
@@ -47,9 +47,9 @@ export default function BlogPost({ title, author, postedDate, content, imageUrl,
         </Flex>
       )}
 
-      {content.map((paragraph, i) => (
+      {contents.map((content, i) => (
         <Text marginY={6} fontSize={['lg', 'xl']} key={i}>
-          {paragraph}
+          {content}
         </Text>
       ))}
     </Box>

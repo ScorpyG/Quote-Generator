@@ -30,7 +30,7 @@ export default function useQuote() {
       '/api/quote/create',
       {
         ...quote,
-        tags: quote.tags.split(',').map((tag) => tag.trim().toLowerCase()),
+        tags: quote.tags && quote.tags.length > 0 ? quote.tags.split(',').map((tag) => tag.trim()) : [],
       },
       {
         headers: {
@@ -57,7 +57,7 @@ export default function useQuote() {
   const editQuote = async (quoteId: string, quoteData: QuoteFormInput) => {
     const response = await axios.put(`/api/quote/edit/${quoteId}`, {
       ...quoteData,
-      tags: quoteData.tags.split(',').map((tag) => tag.trim()),
+      tags: quoteData.tags && quoteData.tags.length > 0 ? quoteData.tags.split(',').map((tag) => tag.trim()) : [],
     });
 
     if (response.status === 201) {
