@@ -1,18 +1,9 @@
 import useBlog from '@/hooks/useBlog';
+import { BlogFormInput } from '@/types/blog';
 import { useUploadThing } from '@/utils/uploadthing';
 import { useToast } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-
-export interface BlogFormInput {
-  title: string;
-  contents: {
-    block: string;
-  }[];
-  author: string;
-  tags?: string;
-  image?: FileList;
-}
 
 export default function useBlogForm() {
   const toast = useToast();
@@ -50,8 +41,8 @@ export default function useBlogForm() {
   });
 
   const onSubmit: SubmitHandler<BlogFormInput> = useCallback(
-    async (postData) => {
-      if (postData.image) {
+    async (postData: BlogFormInput) => {
+      if (postData.image && postData.image.length > 0) {
         const response = await startUpload([postData.image[0]]);
 
         if (response && response.length > 0) {

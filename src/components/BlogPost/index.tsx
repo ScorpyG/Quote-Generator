@@ -1,1 +1,3 @@
-export * from '../BlogPost';
+import BlogPost from './BlogPost';
+
+export { BlogPost };

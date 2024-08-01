@@ -1,3 +1,4 @@
+import { BlogFormInput } from '@/types/blog';
 import { PROFANITY_WORDS } from '@/utils/helpers';
 import { ImageIcon } from '@/utils/icons';
 import { AddIcon, SmallCloseIcon } from '@chakra-ui/icons';
@@ -7,7 +8,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import styles from './blogImageDropzone.module.css';
-import useBlogForm, { BlogFormInput } from './useBlogForm';
+import useBlogForm from './useBlogForm';
 
 interface BlogFormInputProps {
   author: string;

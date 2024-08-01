@@ -14,6 +14,11 @@ const styles = {
   }),
 };
 
+export const generateRandomColor = () => {
+  const colorList = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'];
+  return colorList[Math.floor(Math.random() * colorList.length)];
+};
+
 export const theme = extendTheme({
   config,
   styles,

@@ -60,3 +60,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Upcoming Features
 
 - [ ] Implement pagination.
+- [ ] Update user profile picture once uploaded (by rerunning auth hook????)
+- [ ] Unify the model typings to align with the schema (DO NOT DEFINE TYPES AS U GO). Should be using Schema modal as Source type and extends from there

@@ -1,17 +1,16 @@
+import { BlogContainer, BlogContainerSkeleton } from '@/components/BlogContainer';
 import Header from '@/components/ProfileSection/Header';
-import QuoteContainer from '@/components/QuoteContainer/QuoteContainer';
-import QuoteContainerSkeleton from '@/components/QuoteContainerSkeleton/QuoteContainerSkeleton';
 import useAuth from '@/hooks/useAuth';
-import useQuote from '@/hooks/useQuote';
-import { Stack, Text } from '@chakra-ui/react';
+import useBlog from '@/hooks/useBlog';
+import { SimpleGrid, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 
 export default function Profile() {
-  const { useUserQuotes } = useQuote();
-  const { quotes, isLoading } = useUserQuotes();
-  const { user } = useAuth();
+  const { useAccountBlogsProfilePage } = useBlog();
+  const { posts, isLoading } = useAccountBlogsProfilePage();
+  const { user, isAuthenticated } = useAuth();
 
-  if (quotes && !isLoading && user) {
+  if (posts && !isLoading && user) {
     return (
       <>
         <Head>
@@ -20,32 +19,35 @@ export default function Profile() {
 
         <Header userFirstName={user.firstName} userLastName={user.lastName} userProfileImage={user.profileImgUrl} />
 
-        {quotes.length > 0 ? (
-          <Stack spacing={6} margin={'auto'} flex={1}>
-            {quotes.map((quote) => (
-              <QuoteContainer {...quote} isAdmin={true} key={quote._id} />
+        {posts.length > 0 ? (
+          <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'} flex={1}>
+            {posts.map((post) => (
+              <BlogContainer key={post._id} {...post} isAdmin={isAuthenticated} />
             ))}
-          </Stack>
+            {posts.length < 3 && (
+              <>
+                <BlogContainerSkeleton />
+                <BlogContainerSkeleton />
+              </>
+            )}
+          </SimpleGrid>
         ) : (
-          <Stack spacing={6} flex={1} marginX={'auto'}>
-            <Text fontSize={'lg'} fontWeight={700} textAlign={'center'}>
-              You have not created any quotes yet
-            </Text>
-            <QuoteContainerSkeleton />
-            <QuoteContainerSkeleton />
-            <QuoteContainerSkeleton />
-          </Stack>
+          <Text fontSize={'lg'} fontWeight={700} textAlign={'center'} flex={1}>
+            You have not created any post yet
+          </Text>
         )}
       </>
     );
   } else {
     return (
-      <Stack spacing={6} marginX={'auto'} flex={1}>
-        <QuoteContainerSkeleton />
-        <QuoteContainerSkeleton />
-        <QuoteContainerSkeleton />
-        <QuoteContainerSkeleton />
-      </Stack>
+      <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'} flex={1}>
+        <BlogContainerSkeleton />
+        <BlogContainerSkeleton />
+        <BlogContainerSkeleton />
+        <BlogContainerSkeleton />
+        <BlogContainerSkeleton />
+        <BlogContainerSkeleton />
+      </SimpleGrid>
     );
   }
 }

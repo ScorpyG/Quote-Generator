@@ -1,20 +1,11 @@
+import { BlogData, BlogFormInputData } from '@/types/blog';
 import axios from 'axios';
 import useSWR from 'swr';
-
-interface BlogFormData {
-  title: string;
-  contents: {
-    block: string;
-  }[];
-  author: string;
-  tags?: string;
-  image?: string;
-}
 
 export default function useBlog() {
   const useAllBlogPost = async (searchedTag: string) => {
     const endpoint = searchedTag ? `/api/blog/getAll?tag=${searchedTag}` : '/api/blog/getAll';
-    const { data, error, isLoading } = useSWR<{ data: BlogFormData[] }>(endpoint);
+    const { data, error, isLoading } = useSWR<{ data: BlogData[] }>(endpoint);
 
     return {
       posts: data?.data,
@@ -23,8 +14,18 @@ export default function useBlog() {
     };
   };
 
-  const useAllBlogPostOfAccount = async (userId: string) => {
-    const { data, error, isLoading } = useSWR<{ data: BlogFormData[] }>(`/api/blog/getUserPosts/${userId}`);
+  const useAccountBlogsPage = async (userId: string) => {
+    const { data, error, isLoading } = useSWR<{ data: BlogData[] }>(`/api/blog/readUserPosts/${userId}`);
+
+    return {
+      posts: data?.data,
+      isLoading,
+      error,
+    };
+  };
+
+  const useAccountBlogsProfilePage = () => {
+    const { data, error, isLoading } = useSWR<{ data: BlogData[] }>('/api/blog/userPosts');
 
     return {
       posts: data?.data,
@@ -34,7 +35,7 @@ export default function useBlog() {
   };
 
   const useBlogPostById = async (blogPostId: string) => {
-    const { data, error, isLoading } = useSWR<{ data: BlogFormData }>(`/api/blog/get/${blogPostId}`);
+    const { data, error, isLoading } = useSWR<{ data: BlogData }>(`/api/blog/get/${blogPostId}`);
 
     return {
       data: data?.data,
@@ -43,13 +44,13 @@ export default function useBlog() {
     };
   };
 
-  const createBlogPost = async (blogPost: BlogFormData) => {
+  const createBlogPost = async (blogPost: BlogFormInputData) => {
     const response = await axios.post(
       '/api/blog/create',
       {
         ...blogPost,
         contents: blogPost.contents.map((content) => content.block),
-        tags: blogPost.tags && blogPost.tags.length > 0 ? blogPost.tags.split(',').map((tag) => tag.trim()) : [],
+        tags: blogPost.tags ? blogPost.tags.split(',').map((tag) => tag.trim()) : [],
       },
       {
         headers: {
@@ -91,7 +92,8 @@ export default function useBlog() {
   return {
     // Query
     useAllBlogPost,
-    useAllBlogPostOfAccount,
+    useAccountBlogsPage,
+    useAccountBlogsProfilePage,
     useBlogPostById,
 
     // Mutations

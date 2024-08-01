@@ -27,6 +27,7 @@ export interface HeaderProps {
 
 export default function Header({ userFirstName, userLastName, userProfileImage }: HeaderProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [imageError, setImageError] = useState<boolean>(false);
   const [modalType, setModalType] = useState<'edit' | 'create' | 'upload' | null>(null);
 
   return (
@@ -36,7 +37,7 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
         justifyContent={'center'}
         alignItems={'center'}
         gap={[4, 8, 12]}
-        marginBottom={8}
+        marginBottom={[8, 12]}
       >
         <Box
           w={200}
@@ -49,8 +50,10 @@ export default function Header({ userFirstName, userLastName, userProfileImage }
         >
           <Image
             fill
-            src={userProfileImage || '/images/blank.jpg'}
+            priority
+            src={(imageError && userProfileImage) || '/images/blank.jpg'}
             alt="User profile image"
+            onError={() => setImageError(true)}
             style={{
               objectFit: 'contain',
               cursor: 'pointer',

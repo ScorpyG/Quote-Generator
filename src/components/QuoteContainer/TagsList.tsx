@@ -1,4 +1,4 @@
-import { generateRandomColor } from '@/utils/helpers';
+import { generateRandomColor } from '@/lib/theme';
 import { Divider, Stack, Tag } from '@chakra-ui/react';
 
 interface TagsListProp {
