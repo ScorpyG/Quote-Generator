@@ -34,7 +34,7 @@ export default function BlogContainer({
       position={'relative'}
     >
       {image && (
-        <Box w={'full'} h={220} position={'relative'} overflow={'hidden'}>
+        <Box w={'full'} h={220} position={'relative'} overflow={'hidden'} borderBottomWidth={2}>
           <Image
             src={image}
             alt={'Blog post image'}
@@ -48,7 +48,7 @@ export default function BlogContainer({
           />
         </Box>
       )}
-      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1} borderTopWidth={2}>
+      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1}>
         <Text as={'b'} fontSize={image ? 'xl' : '2xl'}>
           {title}
         </Text>
