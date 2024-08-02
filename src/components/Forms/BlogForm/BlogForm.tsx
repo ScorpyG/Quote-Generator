@@ -74,6 +74,10 @@ export default function BlogForm({ author }: BlogFormInputProps) {
         <Input
           {...register('title', {
             required: 'Please enter a title',
+            maxLength: {
+              value: 60,
+              message: 'Title should not exceed 60 characters',
+            },
             validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
           })}
           placeholder="Enter the title"

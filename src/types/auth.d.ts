@@ -27,3 +27,10 @@ export interface TRegister {
   password: string;
   confirmPassword: string;
 }
+
+export interface BasicUser {
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+}

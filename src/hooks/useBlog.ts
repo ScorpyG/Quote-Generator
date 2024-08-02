@@ -3,7 +3,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 
 export default function useBlog() {
-  const useAllBlogPost = async (searchedTag: string) => {
+  const useAllBlogPost = (searchedTag: string) => {
     const endpoint = searchedTag ? `/api/blog/getAll?tag=${searchedTag}` : '/api/blog/getAll';
     const { data, error, isLoading } = useSWR<{ data: BlogData[] }>(endpoint);
 
@@ -14,8 +14,8 @@ export default function useBlog() {
     };
   };
 
-  const useAccountBlogsPage = async (userId: string) => {
-    const { data, error, isLoading } = useSWR<{ data: BlogData[] }>(`/api/blog/readUserPosts/${userId}`);
+  const useAccountBlogsPage = (username: string) => {
+    const { data, error, isLoading } = useSWR<{ data: BlogData[] }>(`/api/blog/getByUsername/${username}`);
 
     return {
       posts: data?.data,
@@ -34,7 +34,7 @@ export default function useBlog() {
     };
   };
 
-  const useBlogPostById = async (blogPostId: string) => {
+  const useBlogPostById = (blogPostId: string) => {
     const { data, error, isLoading } = useSWR<{ data: BlogData }>(`/api/blog/get/${blogPostId}`);
 
     return {

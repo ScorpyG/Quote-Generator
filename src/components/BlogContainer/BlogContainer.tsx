@@ -8,7 +8,7 @@ import Image from 'next/image';
 import useBlogContainer from './useBlogContainer';
 
 interface BlogContainerProps extends BlogData {
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 export default function BlogContainer({
@@ -31,20 +31,25 @@ export default function BlogContainer({
       borderWidth={2}
       borderRadius={'lg'}
       overflow={'hidden'}
+      position={'relative'}
     >
       {image && (
-        <Image
-          src={image}
-          alt={'Blog post image'}
-          height={360}
-          width={640}
-          style={{ height: 'auto', width: 'auto' }}
-          placeholder="blur"
-          blurDataURL={'/images/placeholder.png'}
-        />
+        <Box w={'full'} h={220} position={'relative'} overflow={'hidden'}>
+          <Image
+            src={image}
+            alt={'Blog post image'}
+            // height={320}
+            // width={600}
+            // style={{ height: 'auto', width: 'auto' }}
+            fill
+            style={{ objectFit: 'cover' }}
+            placeholder="blur"
+            blurDataURL={'/images/placeholder.png'}
+          />
+        </Box>
       )}
-      <Flex padding={4} flexDirection={'column'} gap={3} flex={1}>
-        <Text as={'b'} fontSize={'2xl'}>
+      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1}>
+        <Text as={'b'} fontSize={image ? 'xl' : '2xl'}>
           {title}
         </Text>
         <Box>
@@ -76,7 +81,7 @@ export default function BlogContainer({
           </Flex>
         )}
       </Flex>
-      <Flex margin={4} gap={2}>
+      <Flex gap={2} position={'absolute'} bottom={4} left={4} right={4}>
         {isAdmin && (
           <Button
             onClick={() => [

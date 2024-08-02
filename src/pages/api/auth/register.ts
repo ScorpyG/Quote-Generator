@@ -3,12 +3,29 @@ import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+function generateUsername(firstName: string, lastName: string, email: string): string {
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const emailParts = email.split('@');
+  const emailUsername = emailParts[0];
+  const firstNameInitial = firstName.charAt(0).toLowerCase();
+  const lastNameInitial = lastName.charAt(lastName.length - 1).toLowerCase();
+
+  return `${emailUsername}${firstNameInitial}${lastNameInitial}${getRandomInt(1000, 9990)}`;
+}
+
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
   try {
     const { email, firstName, lastName, password } = request.body;
-    const user = await User.findOne({ email });
+    const username = generateUsername(firstName, lastName, email);
+    const user = await User.findOne({ $or: [{ email }, { username }] });
 
     if (user) {
       /**
@@ -31,6 +48,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       const hashedPassword = await bcrypt.hash(password, salt);
 
       const newUser = new User({
+        username,
         email,
         firstName,
         lastName,

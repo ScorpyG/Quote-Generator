@@ -1,22 +1,25 @@
 import dbConnect from '@/lib/dbConnect';
 import Blog from '@/models/Blog';
+import User from '@/models/User';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
   try {
-    const userId = request.query.uid;
-    const userPosts = await Blog.find({ userId });
+    const username = request.query.username;
+    const user = await User.findOne({ username });
+    const posts = await Blog.find({ userId: user._id });
 
     return response.status(200).json({
-      data: userPosts,
-      message: 'User posts retrieved successfully.',
+      data: posts,
+      message: 'Blog post retrieved successfully.',
       success: true,
     });
   } catch (error) {
     return response.status(500).json({
-      message: 'Unable to retrieve user posts.',
+      error,
+      message: 'Unable to retrieve the blog post.',
       success: false,
     });
   }

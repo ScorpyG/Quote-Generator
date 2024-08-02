@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Quote Generator</title>
+        <title>QuoteGen</title>
       </Head>
 
       <SearchBar searchQuery={typeof searchQuery === 'string' ? searchQuery : ''} />

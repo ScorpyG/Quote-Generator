@@ -2,7 +2,7 @@ import { QuoteProps } from '@/components/QuoteContainer/QuoteContainer';
 import Blog from '@/models/Blog';
 import Quote from '@/models/Quote';
 import User from '@/models/User';
-import { AuthUser } from '@/types/auth';
+import { AuthUser, BasicUser } from '@/types/auth';
 import { BlogData } from '@/types/blog';
 import dbConnect from '../lib/dbConnect';
 
@@ -39,4 +39,18 @@ export async function getBlogPostById(postId: string): Promise<BlogData> {
   const post = await Blog.findById(postId);
 
   return post;
+}
+
+export async function getAllUsers(): Promise<BasicUser[]> {
+  await dbConnect();
+  const users = await User.find({}).select(['-password', '-email', '-profileImgUrl']);
+
+  return users;
+}
+
+export async function getAllPostsByUser(userId: string): Promise<BlogData[]> {
+  await dbConnect();
+  const posts = await Blog.find({ userId });
+
+  return posts;
 }
