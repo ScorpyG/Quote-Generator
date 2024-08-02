@@ -1,5 +1,5 @@
 import { ImageIcon } from '@/utils/icons';
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useDropzone } from '@uploadthing/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -30,6 +30,7 @@ export default function ImageUploader() {
     },
   });
 
+  // https://react-dropzone.js.org/#!/Previews
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     if (imagePreview) {
@@ -57,24 +58,24 @@ export default function ImageUploader() {
           width={'full'}
           marginBottom={4}
         >
-          <Image
-            src={imagePreview.preview}
-            alt="Profile Image"
-            height={300}
-            width={300}
-            style={{
-              borderRadius: '50%',
-              border: '4px solid #A0AEC0',
-              padding: '4px',
-            }}
-            onLoad={() => {
-              URL.revokeObjectURL(imagePreview.preview);
-            }}
-            onClick={() => {
-              URL.revokeObjectURL(imagePreview.preview);
-              setImagePreview(null);
-            }}
-          />
+          <Box w={300} h={300} borderRadius={'full'} borderWidth={4} position={'relative'} overflow={'hidden'}>
+            <Image
+              src={imagePreview.preview}
+              alt="Profile Image"
+              fill
+              sizes="300px"
+              style={{
+                objectFit: 'contain',
+              }}
+              onLoad={() => {
+                URL.revokeObjectURL(imagePreview.preview);
+              }}
+              onClick={() => {
+                URL.revokeObjectURL(imagePreview.preview);
+                setImagePreview(null);
+              }}
+            />
+          </Box>
         </Flex>
       ) : (
         <div

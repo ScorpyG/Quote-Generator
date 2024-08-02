@@ -39,7 +39,7 @@ export default function ProfileForm({ firstName, lastName }: ProfileFormProps) {
           gap: 15,
         }}
       >
-        <FormControl isInvalid={errors.firstName && true} isRequired>
+        <FormControl isInvalid={errors.firstName && true}>
           <FormLabel>First Name</FormLabel>
           <Input
             {...register('firstName', {
@@ -55,7 +55,7 @@ export default function ProfileForm({ firstName, lastName }: ProfileFormProps) {
           />
           <FormErrorMessage mt={1}>{errors.firstName && errors.firstName.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.lastName && true} isRequired>
+        <FormControl isInvalid={errors.lastName && true}>
           <FormLabel>Last Name</FormLabel>
           <Input
             {...register('lastName', {

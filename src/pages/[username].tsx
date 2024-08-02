@@ -1,24 +1,20 @@
 import { BlogContainer, BlogContainerSkeleton } from '@/components/BlogContainer';
-import SearchBar from '@/components/SearchBar/SearchBar';
 import useBlog from '@/hooks/useBlog';
 import { Box, SimpleGrid, Text } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-export default function Home() {
+export default function UserBlog() {
   const router = useRouter();
-  const searchQuery = router.query.tag;
-
-  const { useAllBlogPost } = useBlog();
-  const { posts, isLoading, error } = useAllBlogPost(typeof searchQuery === 'string' ? searchQuery : '');
+  const query = router.query.username as string;
+  const { useAccountBlogsPage } = useBlog();
+  const { posts, isLoading, error } = useAccountBlogsPage(query);
 
   return (
     <>
       <Head>
-        <title>QuoteGen</title>
+        <title>Blogs</title>
       </Head>
-
-      <SearchBar searchQuery={typeof searchQuery === 'string' ? searchQuery : ''} />
 
       <Box flex={1} margin={'auto'} paddingY={[8, 12]}>
         {isLoading ? (
@@ -29,15 +25,21 @@ export default function Home() {
             <BlogContainerSkeleton />
             <BlogContainerSkeleton />
           </SimpleGrid>
-        ) : !posts || posts.length === 0 || error ? (
+        ) : !posts || posts.length < 1 || error ? (
           <Text fontSize={'lg'} as={'b'} textAlign={'center'} margin={'auto'}>
-            No post found
+            This user doesn&apos;t have any blog post
           </Text>
         ) : (
-          <SimpleGrid gap={6} columns={[1, null, null, 2, 3]} margin={'auto'}>
+          <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'}>
             {posts.map((post, i) => (
-              <BlogContainer key={post._id ?? i} {...post} />
+              <BlogContainer key={post._id ?? i} {...post} isSameUser={query === post.userId.username} />
             ))}
+            {posts.length < 3 && (
+              <>
+                <BlogContainerSkeleton />
+                <BlogContainerSkeleton />
+              </>
+            )}
           </SimpleGrid>
         )}
       </Box>

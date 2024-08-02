@@ -3,11 +3,10 @@ import mongoose, { Document } from 'mongoose';
 export interface TUser extends Document {
   firstName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
   profileImgUrl?: string;
-  verifyToken?: string;
-  verifyTokenExpires?: Date;
 }
 
 const userSchema = new mongoose.Schema<TUser>(
@@ -19,6 +18,11 @@ const userSchema = new mongoose.Schema<TUser>(
     lastName: {
       type: String,
       required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
     },
     email: {
       type: String,
@@ -32,8 +36,6 @@ const userSchema = new mongoose.Schema<TUser>(
     profileImgUrl: {
       type: String,
     },
-    verifyToken: String,
-    verifyTokenExpires: Date,
   },
   {
     timestamps: true,
@@ -41,6 +43,6 @@ const userSchema = new mongoose.Schema<TUser>(
   }
 );
 
-const User = mongoose.models.User || mongoose.model('User', userSchema, 'users');
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

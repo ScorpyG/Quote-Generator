@@ -1,6 +1,7 @@
 import LoginForm from '@/components/Forms/LoginForm/LoginForm';
 import { Box, Heading, Text } from '@chakra-ui/react';
 import Head from 'next/head';
+import Link from 'next/link';
 
 export default function SignIn() {
   return (
@@ -26,6 +27,16 @@ export default function SignIn() {
         </Box>
         <Box w={'lg'} border={'2px'} borderRadius={'lg'} borderColor={'gray.300'} p={4}>
           <LoginForm />
+        </Box>
+        <Box>
+          <Text textAlign={'center'}>
+            Don&apos;t have an account?{' '}
+            <Link href={'/signup'}>
+              <Text as={'b'} color={'purple.400'}>
+                Register
+              </Text>
+            </Link>
+          </Text>
         </Box>
       </Box>
     </>
