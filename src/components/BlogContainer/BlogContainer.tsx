@@ -21,7 +21,7 @@ export default function BlogContainer({
   tags,
   isAdmin = false,
 }: BlogContainerProps) {
-  const { deleteQuoteHandler, updateQueryParamToIncludePostId } = useBlogContainer();
+  const { deletePostHandler, updateQueryParamToIncludePostId } = useBlogContainer();
 
   return (
     <Flex
@@ -48,7 +48,7 @@ export default function BlogContainer({
           />
         </Box>
       )}
-      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1}>
+      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1} borderTopWidth={2}>
         <Text as={'b'} fontSize={image ? 'xl' : '2xl'}>
           {title}
         </Text>
@@ -103,7 +103,7 @@ export default function BlogContainer({
           Read More
         </Button>
         {isAdmin && (
-          <Button colorScheme="red" onClick={() => deleteQuoteHandler(_id)}>
+          <Button colorScheme="red" onClick={() => deletePostHandler(_id)}>
             <DeleteIcon />
           </Button>
         )}

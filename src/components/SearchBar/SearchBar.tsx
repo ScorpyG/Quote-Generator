@@ -28,8 +28,8 @@ export default function SearchBar({ searchQuery }: TSearchBar) {
       boxShadow={'6px 6px rgba(214, 188, 250, 0.5)'}
       padding={'6px'}
       marginX={'auto'}
-      marginBottom={'25px'}
-      width={'80%'}
+      marginY={[2, 4]}
+      width={['90%', ' 80%']}
     >
       <InputGroup>
         <InputRightElement>

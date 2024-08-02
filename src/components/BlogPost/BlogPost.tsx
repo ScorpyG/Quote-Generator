@@ -31,15 +31,16 @@ export default function BlogPost({ title, author, createdAt, updatedAt, contents
       </Flex>
 
       {image && (
-        <Box
-          borderWidth={'5px'}
-          borderColor={'#fbc1c0'}
-          boxShadow={'6px 6px rgba(255, 192, 203, 0.5)'}
-          padding={1}
-          textAlign={'left'}
-        >
-          <Box h={'600px'} w={'100%'} position={'relative'}>
-            <Image src={image} alt="Blog Image" fill placeholder="blur" blurDataURL={'/images/placeholder.png'} />
+        <Box borderWidth={'5px'} borderColor={'#fbc1c0'} boxShadow={'6px 6px rgba(255, 192, 203, 0.5)'} padding={1}>
+          <Box h={600} w={'100%'} position={'relative'}>
+            <Image
+              src={image}
+              alt="Blog Image"
+              fill
+              style={{ objectFit: 'cover' }}
+              placeholder="blur"
+              blurDataURL={'/images/placeholder.png'}
+            />
           </Box>
         </Box>
       )}

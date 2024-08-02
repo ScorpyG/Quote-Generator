@@ -22,7 +22,7 @@ export default function SignUp() {
             Welcome,
           </Heading>
           <Text fontSize={'x-large'} textAlign={'center'}>
-            Let&apos;s share your <b>quote</b>
+            Let&apos;s share your <b>ideas</b>
           </Text>
         </Box>
         <Box w={'lg'} border={'2px'} borderRadius={'lg'} borderColor={'gray.300'} p={4}>

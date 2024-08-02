@@ -14,7 +14,7 @@ export default function UserBlog() {
           <title>Blogs</title>
         </Head>
 
-        <Box marginX={'auto'} marginY={4} flex={1}>
+        <Box marginX={'auto'} paddingY={4} flex={1}>
           {posts.length > 0 ? (
             <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'}>
               {posts.map((post) => (
@@ -31,14 +31,16 @@ export default function UserBlog() {
     );
   } else {
     return (
-      <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'} flex={1}>
-        <BlogContainerSkeleton />
-        <BlogContainerSkeleton />
-        <BlogContainerSkeleton />
-        <BlogContainerSkeleton />
-        <BlogContainerSkeleton />
-        <BlogContainerSkeleton />
-      </SimpleGrid>
+      <Box marginX={'auto'} paddingY={4} flex={1}>
+        <SimpleGrid spacing={6} columns={[1, null, null, 2, 3]} margin={'auto'}>
+          <BlogContainerSkeleton />
+          <BlogContainerSkeleton />
+          <BlogContainerSkeleton />
+          <BlogContainerSkeleton />
+          <BlogContainerSkeleton />
+          <BlogContainerSkeleton />
+        </SimpleGrid>
+      </Box>
     );
   }
 }

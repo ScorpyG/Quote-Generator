@@ -1,4 +1,4 @@
-# Quote Generator (v2.0)
+# QuoteGen (v2.0)
 
 ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/spair-blog?style=for-the-badge)
 

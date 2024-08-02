@@ -9,7 +9,7 @@ export default function useBlogContainer() {
   const toast = useToast();
   const router = useRouter();
 
-  const deleteQuoteHandler = useCallback(
+  const deletePostHandler = useCallback(
     async (postId: string) => {
       const response = await deleteBlogPostById(postId);
       mutate('/api/blog/userBlogPosts');
@@ -34,7 +34,7 @@ export default function useBlogContainer() {
   };
 
   return {
-    deleteQuoteHandler,
+    deletePostHandler,
     updateQueryParamToIncludePostId,
   };
 }

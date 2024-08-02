@@ -2,10 +2,10 @@
 // https://nextjs.org/docs/pages/building-your-application/authentication
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedPageRoutes = ['/profile', '/editQuote'];
+const protectedPageRoutes = ['/profile'];
 
-const isGetAllQuotesApiRoute = (path: string) => {
-  return path.startsWith('/api/quote/getAll');
+const isGetAllPostsApiRoute = (path: string) => {
+  return path.startsWith('/api/blog/getAll');
 };
 
 const isProtectPageRoute = (path: string) => {
@@ -27,7 +27,7 @@ export default async function middleware(request: NextRequest) {
       return NextResponse.redirect(url);
     }
   } else if (!isPageRoute(path)) {
-    if (isGetAllQuotesApiRoute(path)) {
+    if (isGetAllPostsApiRoute(path)) {
       return NextResponse.next();
     } else {
       if (request.cookies.has('token')) {
@@ -62,6 +62,6 @@ export const config = {
      */
     '/((?!api/auth/signin|api/auth/register|api/auth/signout|_next/static|_next/image|.*\\.png$).*)',
     // Protected API routes
-    '/api/quote/:path*',
+    '/api/blog/:path*',
   ],
 };
