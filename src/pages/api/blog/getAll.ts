@@ -20,7 +20,9 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
             },
           }
         : {}
-    );
+    )
+      .populate('userId', 'username -_id')
+      .exec();
 
     return response.status(200).json({
       data: postsWithRelatedTag,

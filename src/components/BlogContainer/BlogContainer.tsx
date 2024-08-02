@@ -2,23 +2,27 @@ import { generateRandomColor } from '@/lib/theme';
 import { BlogData } from '@/types/blog';
 import { PencilIcon } from '@/utils/icons';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { Link } from '@chakra-ui/next-js';
 import { Badge, Box, Button, Flex, Text } from '@chakra-ui/react';
 import { format, isAfter } from 'date-fns';
 import Image from 'next/image';
 import useBlogContainer from './useBlogContainer';
 
 interface BlogContainerProps extends BlogData {
+  isSameUser?: boolean;
   isAdmin?: boolean;
 }
 
 export default function BlogContainer({
   _id,
   title,
+  userId: { username },
   createdAt,
   updatedAt,
   author,
   image,
   tags,
+  isSameUser,
   isAdmin = false,
 }: BlogContainerProps) {
   const { deletePostHandler, updateQueryParamToIncludePostId } = useBlogContainer();
@@ -42,19 +46,29 @@ export default function BlogContainer({
             // width={600}
             // style={{ height: 'auto', width: 'auto' }}
             fill
+            sizes="(min-width: 66em) 33vw, (min-width: 44em)"
             style={{ objectFit: 'cover' }}
             placeholder="blur"
             blurDataURL={'/images/placeholder.png'}
           />
         </Box>
       )}
-      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1}>
+      <Flex paddingX={4} paddingY={2} flexDirection={'column'} gap={3} flex={1} userSelect={'none'} cursor={'default'}>
         <Text as={'b'} fontSize={image ? 'xl' : '2xl'}>
           {title}
         </Text>
+
         <Box>
-          by <Text as={'b'}>{author}</Text>
+          by{' '}
+          {isAdmin || isSameUser ? (
+            <Text as={'b'}>{author}</Text>
+          ) : (
+            <Link href={`/${username}`} fontWeight={800} _hover={{ color: 'blue.400' }}>
+              {author}
+            </Link>
+          )}
         </Box>
+
         {isAfter(updatedAt, createdAt) ? (
           <Flex gap={2} justifyContent={'start'} alignItems={'center'}>
             <Badge colorScheme="green" width={'fit-content'}>
