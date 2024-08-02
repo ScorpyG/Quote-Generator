@@ -20,6 +20,13 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
     const blogPost = await Blog.findById(blogPostId);
 
+    if (blogPost === null) {
+      return response.status(204).json({
+        message: 'Blog post not found.',
+        success: false,
+      });
+    }
+
     if (user.id !== blogPost.userId.toString()) {
       return response.status(401).json({
         message: 'Unauthorized.',

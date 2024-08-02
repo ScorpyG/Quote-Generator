@@ -8,6 +8,9 @@ interface Blog {
 
 export interface BlogData extends Blog {
   _id: string;
+  userId: {
+    username: string;
+  };
   createdAt: Date;
   updatedAt: Date;
   contents: string[];

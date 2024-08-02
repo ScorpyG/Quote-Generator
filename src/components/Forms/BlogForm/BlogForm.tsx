@@ -45,7 +45,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<BlogFormInput>({
     defaultValues: {
       author,
@@ -232,6 +232,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
       <Button
         type="submit"
         isLoading={isSubmitting}
+        disabled={isSubmitSuccessful}
         width={'full'}
         marginY={2}
         bgGradient={'linear(to-l, pink.400, purple.500)'}

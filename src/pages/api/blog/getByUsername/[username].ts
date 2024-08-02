@@ -9,13 +9,21 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   try {
     const username = request.query.username;
     const user = await User.findOne({ username });
-    const posts = await Blog.find({ userId: user._id });
 
-    return response.status(200).json({
-      data: posts,
-      message: 'Blog post retrieved successfully.',
-      success: true,
-    });
+    if (!user) {
+      return response.status(204).json({
+        message: 'User not found.',
+        success: false,
+      });
+    } else {
+      const posts = await Blog.find({ userId: user._id }).populate('userId', 'username -_id').exec();
+
+      return response.status(200).json({
+        data: posts,
+        message: 'Blog post retrieved successfully.',
+        success: true,
+      });
+    }
   } catch (error) {
     return response.status(500).json({
       error,
