@@ -17,7 +17,7 @@ export default function Footer() {
         bgGradient={'linear(to-l, heroGradientStart, heroGradientEnd)'}
         bgClip={'text'}
       >
-        &copy; {new Date().getFullYear()} Justin Hoang
+        &copy; {new Date().getFullYear()} QuoteGen
       </Text>
       <MediaLink />
     </Box>

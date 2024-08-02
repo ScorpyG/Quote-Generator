@@ -1,9 +1,10 @@
-# Quote Generator (v2.0)
+# QuoteGen (v2.0)
 
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/scorpy-quote-gen?style=for-the-badge)
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/spair-blog?style=for-the-badge)
 
 ### This project was rewritten from traditional JavaScript and React.js and Node/Express (MERN) framework
 
+- This project is repurpose to serve as a blog website for Spair
 - Using [TypeScript v5](https://www.typescriptlang.org/)
 - Using [Next.js v14.1.0 - Page Routes](https://nextjs.org/docs)
 
@@ -59,9 +60,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Upcoming Features
 
 - [ ] Implement pagination.
-- [x] Search by tags (Including a search box to enable the user to enter tag names)
-- [ ] Add an auto-complete feature to the search bar.
-- [x] Revalidate `.../quote/getAllQuotes` and `.../quote/userQuotes` endpoints when the user adds a new quote (So they don't have to refresh the page to see the changes)
-- [x] Profile image
-- [ ] Quote with image
-- [ ] Individual pill for each tag when entered in `AddQuoteForm`
+- [ ] Update user profile picture once uploaded (by rerunning auth hook????)
+- [ ] Unify the model typings to align with the schema (DO NOT DEFINE TYPES AS U GO). Should be using Schema modal as Source type and extends from there

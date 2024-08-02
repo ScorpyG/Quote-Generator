@@ -48,6 +48,40 @@ export const customFileRouter = {
         };
       }
     }),
+
+  blogImage: f({
+    image: {
+      maxFileSize: '4MB',
+      minFileCount: 1,
+      maxFileCount: 1,
+    },
+  })
+    .middleware(async ({ req }) => {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token) {
+        throw new UploadThingError('Unauthorized');
+      }
+
+      try {
+        const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
+        return {
+          userId: user.id,
+        };
+      } catch (error) {
+        throw new UploadThingError('Error unable to retrieve user');
+      }
+    })
+    .onUploadComplete(async ({ file, metadata }) => {
+      const fileUrl = file.url;
+
+      // TODO: implement the endpoint
+      return {
+        message: 'Image uploaded successfully',
+        success: true,
+        uploadedBy: metadata,
+        fileUrl,
+      };
+    }),
 } satisfies FileRouter;
 
 export type CustomFileRouter = typeof customFileRouter;
