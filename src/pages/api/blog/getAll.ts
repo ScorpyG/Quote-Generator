@@ -10,6 +10,12 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
       query: { tag },
     } = request;
 
+    /**
+     * .populate() required existence of the ref model in the same CONNECTION.
+     *
+     * Explanation - https://stackoverflow.com/questions/26818071/mongoose-schema-hasnt-been-registered-for-model
+     * Docs - https://mongoosejs.com/docs/populate.html#cross-db-populate
+     **/
     const postsWithRelatedTag = await Blog.find(
       tag
         ? {
@@ -21,7 +27,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
           }
         : {}
     )
-      .populate('userId', 'username -_id')
+      .populate('userId', 'username -_id', 'User')
       .exec();
 
     return response.status(200).json({
