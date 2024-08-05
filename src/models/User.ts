@@ -9,7 +9,7 @@ export interface TUser extends Document {
   profileImgUrl?: string;
 }
 
-const userSchema = new mongoose.Schema<TUser>(
+const UserSchema = new mongoose.Schema<TUser>(
   {
     firstName: {
       type: String,
@@ -43,6 +43,6 @@ const userSchema = new mongoose.Schema<TUser>(
   }
 );
 
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema, 'users');
 
 export default User;

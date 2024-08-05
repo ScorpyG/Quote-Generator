@@ -39,6 +39,6 @@ const BlogSchema = new mongoose.Schema<TBlog>(
   }
 );
 
-const Blog = mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
+const Blog = mongoose.models.Blog || mongoose.model('Blog', BlogSchema, 'blogs');
 
 export default Blog;
