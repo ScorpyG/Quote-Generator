@@ -37,6 +37,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
       } else {
         const jwtTokenData: AuthUser = {
           id: user._id,
+          username: user.username,
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,

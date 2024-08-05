@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect';
 import Blog from '@/models/Blog';
+import User from '@/models/User';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -27,7 +28,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
           }
         : {}
     )
-      .populate('userId', 'username -_id', 'User')
+      .populate('userId', 'username -_id', User)
       .exec();
 
     return response.status(200).json({
