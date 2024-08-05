@@ -11,6 +11,14 @@ const styles = {
     body: {
       bg: mode('white', 'gray.900')(props),
     },
+    // Applying global styles - https://github.com/chakra-ui/chakra-ui/discussions/6478
+    '::-webkit-scrollbar': {
+      w: '0.375rem',
+    },
+    '::-webkit-scrollbar-thumb': {
+      bgColor: 'rgba(0, 0, 0, 0.16)',
+      borderRadius: 'full',
+    },
   }),
 };
 
@@ -39,6 +47,7 @@ export const theme = extendTheme({
       baseStyle: {
         dialog: {
           maxHeight: '95vh',
+          width: '95vw',
           borderRadius: '20px',
           borderWidth: '5px',
           borderColor: 'purple.400',
