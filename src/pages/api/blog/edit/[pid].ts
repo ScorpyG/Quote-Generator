@@ -30,7 +30,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     } else {
       const updatedBlogPost = await Blog.findByIdAndUpdate({ _id: blogPostId }, { ...blogPostData }, { new: true });
 
-      return response.status(201).json({
+      return response.status(200).json({
         data: updatedBlogPost,
         message: 'Blog post updated successfully.',
         success: true,

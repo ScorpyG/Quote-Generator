@@ -2,12 +2,15 @@ import useBlog from '@/hooks/useBlog';
 import { BlogFormInput } from '@/types/blog';
 import { useUploadThing } from '@/utils/uploadthing';
 import { useToast } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-export default function useBlogForm() {
+export default function useEditBlogForm() {
   const toast = useToast();
-  const { createBlogPost } = useBlog();
+  const { editBlogPost } = useBlog();
+  const query = useRouter();
+  const blogPostId = query.query.postId as string;
 
   const { startUpload } = useUploadThing('blogImage', {
     onClientUploadComplete(res) {
@@ -41,9 +44,9 @@ export default function useBlogForm() {
   });
 
   const onSubmit: SubmitHandler<BlogFormInput> = useCallback(
-    async (postData: BlogFormInput) => {
-      if (postData.image && postData.image.length > 0) {
-        const response = await startUpload([postData.image[0]]);
+    async (updatedPostData) => {
+      if (updatedPostData.image && updatedPostData.image.length > 0) {
+        const response = await startUpload([updatedPostData.image[0]]);
 
         /**
          * This implementation wait for the image to successfully uploaded onto Uploadthing service
@@ -51,49 +54,53 @@ export default function useBlogForm() {
          */
         if (response && response.length > 0) {
           const imageUrl = response[0].url;
-          const blogPostDataWithImage = {
-            ...postData,
+          const updatedPostDataWithImage = {
+            ...updatedPostData,
             image: imageUrl,
           };
 
-          const createNewBlogPostEndpointResponse = await createBlogPost(blogPostDataWithImage);
+          const editBlogPostEndpointResponse = await editBlogPost(blogPostId, updatedPostDataWithImage);
 
           toast({
-            title: createNewBlogPostEndpointResponse.status ? 'Successful' : 'Failed',
-            description: createNewBlogPostEndpointResponse.message,
-            status: createNewBlogPostEndpointResponse.status ? 'success' : 'error',
-            duration: 3500,
+            title: editBlogPostEndpointResponse.status ? 'Successful' : 'Failed',
+            description: editBlogPostEndpointResponse.message,
+            status: editBlogPostEndpointResponse.status ? 'success' : 'error',
+            duration: 3000,
             isClosable: true,
           });
         }
       } else {
-        const blogPostDataWithoutImage = {
-          ...postData,
+        const updatedPostDataWithoutImage = {
+          ...updatedPostData,
           image: undefined,
         };
-        const response = await createBlogPost(blogPostDataWithoutImage);
+
+        const updateBlogEndpointResponse = await editBlogPost(blogPostId, updatedPostDataWithoutImage);
 
         toast({
-          title: response.status ? 'Successful' : 'Failed',
-          description: response.message,
-          status: response.status ? 'success' : 'error',
+          title: updateBlogEndpointResponse.status ? 'Successful' : 'Failed',
+          description: updateBlogEndpointResponse.message,
+          status: updateBlogEndpointResponse.status ? 'success' : 'error',
           duration: 3500,
           isClosable: true,
         });
       }
     },
-    [createBlogPost, startUpload, toast]
+    [blogPostId, editBlogPost, startUpload, toast]
   );
 
   const onInvalidSubmit = useCallback(() => {
     toast({
-      title: 'Missing information',
-      description: 'Please fill out all required fields',
+      title: 'Failed',
+      description: 'Please fill out all the fields',
       status: 'error',
       duration: 3500,
       isClosable: true,
     });
   }, [toast]);
 
-  return { onSubmit, onInvalidSubmit };
+  return {
+    onSubmit,
+    onInvalidSubmit,
+  };
 }

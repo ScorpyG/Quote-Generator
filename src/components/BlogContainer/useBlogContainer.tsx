@@ -26,15 +26,23 @@ export default function useBlogContainer() {
   );
 
   // function to direct to dynamic page blog/[postId]
-  const updateQueryParamToIncludePostId = (pid: string) => {
+  const directToBlogPage = (pid: string) => {
     router.push({
       pathname: '/blog/[postId]',
       query: { postId: pid },
     });
   };
 
+  const directEditBlogPage = (pid: string) => {
+    router.push({
+      pathname: '/edit/[postId]',
+      query: { postId: pid },
+    });
+  };
+
   return {
     deletePostHandler,
-    updateQueryParamToIncludePostId,
+    directToBlogPage,
+    directEditBlogPage,
   };
 }
