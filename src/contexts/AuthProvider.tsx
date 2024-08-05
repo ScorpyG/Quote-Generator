@@ -2,7 +2,7 @@ import { ProfileFormInput } from '@/components/Forms/ProfileForm/useProfileForm'
 import { AuthResponse, AuthUser, TLogin, TRegister } from '@/types/auth';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 export interface TAuthContext {
   user: AuthUser | null;
@@ -64,17 +64,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
       },
     });
 
-    if (response.status === 201) {
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
-    } else {
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
-    }
+    return {
+      status: response.data.success,
+      message: response.data.message,
+    };
   };
 
   const signIn = async (data: TLogin): Promise<AuthResponse> => {
@@ -135,17 +128,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (response.status === 201) {
       setUser(response.data.data);
-
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
-    } else {
-      return {
-        status: response.data.success,
-        message: response.data.message,
-      };
     }
+
+    return {
+      status: response.data.success,
+      message: response.data.message,
+    };
   };
 
   return (
@@ -154,5 +142,3 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 }
-
-export const useAuth = () => useContext(AuthContext);
