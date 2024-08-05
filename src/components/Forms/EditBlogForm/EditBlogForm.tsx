@@ -19,16 +19,38 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import styles from './blogImageDropzone.module.css';
-import useBlogForm from './useBlogForm';
+import useEditBlogForm from './useEditBlogForm';
 
 interface BlogFormInputProps {
+  title: string;
   author: string;
+  contents: string[];
+  tags?: string[];
+  image?: string;
 }
 
-export default function BlogForm({ author }: BlogFormInputProps) {
-  const { onSubmit, onInvalidSubmit } = useBlogForm();
-  const [blogImgPreview, setBlogImgPreview] = useState<(File & { preview: string }) | null>(null);
+export default function EditBlogForm({ title, author, contents, tags, image }: BlogFormInputProps) {
+  const { onSubmit, onInvalidSubmit } = useEditBlogForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting, isSubmitSuccessful },
+  } = useForm<BlogFormInput>({
+    defaultValues: {
+      title,
+      author,
+      tags: tags ? tags.join(', ') : '',
+      contents: contents.map((block) => ({ block })),
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    name: 'contents',
+    control,
+  });
 
+  const [propBlogImg, setPropBlogImg] = useState<string | undefined>(image);
+  const [blogImgPreview, setBlogImgPreview] = useState<(File & { preview: string }) | null>(null);
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     multiple: false,
@@ -51,23 +73,6 @@ export default function BlogForm({ author }: BlogFormInputProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-  } = useForm<BlogFormInput>({
-    defaultValues: {
-      author,
-      contents: [{ block: '' }],
-    },
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    name: 'contents',
-    control,
-  });
 
   return (
     <form
@@ -92,7 +97,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
             validate: (value) => !PROFANITY_WORDS.test(value) || 'Profanity is prohibited!',
           })}
           placeholder="Enter the title"
-          name="title"
+          title="title"
           variant={'filled'}
           type="text"
         />
@@ -104,7 +109,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
         <Stack spacing={4}>
           {fields.map((field, index) => {
             return (
-              <Box key={`${field.block}-${index}`}>
+              <Box key={`${field.block}_${index}`}>
                 <Box position={'relative'}>
                   <Textarea
                     key={field.id}
@@ -116,7 +121,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
                     placeholder="Enter text..."
                     resize={'none'}
                     variant={'filled'}
-                    h={'140px'}
+                    height={170}
                     py={2}
                     paddingLeft={3}
                     paddingRight={12} // 3rem = 48px (avoid overlapping with the delete button)
@@ -126,7 +131,7 @@ export default function BlogForm({ author }: BlogFormInputProps) {
                     <Button
                       type="button"
                       onClick={() => remove(index)}
-                      colorScheme="gray"
+                      colorScheme={'gray'}
                       color={'red.400'}
                       top={1}
                       right={1}
@@ -187,10 +192,10 @@ export default function BlogForm({ author }: BlogFormInputProps) {
 
       <FormControl>
         <FormLabel>Image</FormLabel>
-        {blogImgPreview ? (
+        {blogImgPreview || propBlogImg ? (
           <Flex
             height={'fit-content'}
-            width={'fit-content'}
+            width={'full'}
             borderWidth={4}
             borderStyle={'dashed'}
             p={1}
@@ -200,23 +205,41 @@ export default function BlogForm({ author }: BlogFormInputProps) {
             overflow={'hidden'}
             margin={'auto'}
           >
-            <Image
-              src={blogImgPreview.preview}
-              height={360}
-              width={640}
-              style={{
-                width: 'auto',
-                height: 'auto',
-              }}
-              alt="Blog Image"
-              onLoad={() => {
-                URL.revokeObjectURL(blogImgPreview.preview);
-              }}
-              onClick={() => {
-                URL.revokeObjectURL(blogImgPreview.preview);
-                setBlogImgPreview(null);
-              }}
-            />
+            {blogImgPreview && (
+              <Image
+                src={blogImgPreview.preview}
+                height={360}
+                width={640}
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                }}
+                alt="Blog Image"
+                onLoad={() => {
+                  URL.revokeObjectURL(blogImgPreview.preview);
+                }}
+                onClick={() => {
+                  URL.revokeObjectURL(blogImgPreview.preview);
+                  setBlogImgPreview(null);
+                }}
+              />
+            )}
+
+            {propBlogImg && (
+              <Image
+                src={propBlogImg}
+                height={360}
+                width={640}
+                style={{
+                  width: 'auto',
+                  height: 'auto',
+                }}
+                alt="Blog Image"
+                onClick={() => {
+                  setPropBlogImg(undefined);
+                }}
+              />
+            )}
           </Flex>
         ) : (
           <div className={styles.dropzone} {...getRootProps()} {...register('image')}>
@@ -235,14 +258,13 @@ export default function BlogForm({ author }: BlogFormInputProps) {
         isLoading={isSubmitting}
         disabled={isSubmitSuccessful}
         width={'full'}
-        marginY={2}
         bgGradient={'linear(to-l, pink.400, purple.500)'}
         _hover={{
           bgGradient: 'linear(to-r, pink.300, purple.300)',
         }}
         textColor={'white'}
       >
-        Create
+        Update
       </Button>
     </form>
   );

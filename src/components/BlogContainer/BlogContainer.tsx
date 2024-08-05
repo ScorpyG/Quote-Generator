@@ -25,7 +25,7 @@ export default function BlogContainer({
   isSameUser,
   isAdmin = false,
 }: BlogContainerProps) {
-  const { deletePostHandler, updateQueryParamToIncludePostId } = useBlogContainer();
+  const { deletePostHandler, directToBlogPage, directEditBlogPage } = useBlogContainer();
 
   return (
     <Flex
@@ -97,13 +97,7 @@ export default function BlogContainer({
       </Flex>
       <Flex gap={2} position={'absolute'} bottom={4} left={4} right={4}>
         {isAdmin && (
-          <Button
-            onClick={() => [
-              // TODO: open edit form modal
-              // eslint-disable-next-line no-console
-              console.log('Edit button clicked'),
-            ]}
-          >
+          <Button onClick={() => [directEditBlogPage(_id)]}>
             <PencilIcon />
           </Button>
         )}
@@ -111,7 +105,7 @@ export default function BlogContainer({
         <Button
           flexGrow={1}
           onClick={() => {
-            updateQueryParamToIncludePostId(_id);
+            directToBlogPage(_id);
           }}
         >
           Read More

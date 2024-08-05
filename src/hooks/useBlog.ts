@@ -38,7 +38,7 @@ export default function useBlog() {
     const { data, error, isLoading } = useSWR<{ data: BlogData }>(`/api/blog/get/${blogPostId}`);
 
     return {
-      data: data?.data,
+      post: data?.data,
       isLoading,
       error,
     };
@@ -83,10 +83,31 @@ export default function useBlog() {
     };
   };
 
-  // TODO: implement this function
-  const editBlogPost = async (blogPostId: string) => {
-    // eslint-disable-next-line no-console
-    console.log(blogPostId);
+  const editBlogPost = async (blogPostId: string, blogPostData: BlogFormInputData) => {
+    /**
+     * The differences between PUT & PATCH request
+     *
+     * Explanation - https://stackoverflow.com/questions/28459418/use-of-put-vs-patch-methods-in-rest-api-real-life-scenarios
+     * Docs - https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+     */
+    const response = await axios.put(`/api/blog/edit/${blogPostId}`, {
+      ...blogPostData,
+      contents: blogPostData.contents.map((content) => content.block),
+      tags: blogPostData.tags ? blogPostData.tags.split(',').map((tag) => tag.trim()) : [],
+    });
+
+    if (response.status === 200) {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+        data: response.data.data,
+      };
+    } else {
+      return {
+        status: response.data.success,
+        message: response.data.message,
+      };
+    }
   };
 
   return {

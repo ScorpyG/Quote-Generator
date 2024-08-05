@@ -2,7 +2,7 @@
 // https://nextjs.org/docs/pages/building-your-application/authentication
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedPageRoutes = ['/profile'];
+const protectedPageRoutes = ['/profile', '/edit'];
 
 const isGetAllPostsApiRoute = (path: string) => {
   return path.startsWith('/api/blog/getAll');
@@ -62,6 +62,9 @@ export const config = {
      */
     '/((?!api/auth/signin|api/auth/register|api/auth/signout|_next/static|_next/image|.*\\.png$).*)',
     // Protected API routes
-    '/api/blog/:path*',
+    '/api/blog/delete',
+    '/api/blog/edit',
+    '/api/blog/create',
+    '/api/blog/userPosts',
   ],
 };
