@@ -8,7 +8,7 @@
 - Using [TypeScript v5](https://www.typescriptlang.org/)
 - Using [Next.js v14.1.0 - Page Routes](https://nextjs.org/docs)
 
-[<img width="1800" alt="quotegen" src="https://github.com/ScorpyG/Quote-Generator/assets/69221471/82f42c3c-5c57-43a4-b26d-b0d8a116d1d4">](https://scorpy-quote-gen.vercel.app/)
+[<img width="1800" alt="quotegen" src="https://github.com/ScorpyG/Quote-Generator/assets/69221471/82f42c3c-5c57-43a4-b26d-b0d8a116d1d4">](https://spair-blog.vercel.app/)
 
 ## Getting Started
 
@@ -21,12 +21,12 @@ yarn install
 Second, add necessary environment variables (well I suggest get your own)
 
 ```
-NODE_ENV="development"
+NODE_ENV = "development"
 .
 ..
 ...
 .....
-MONGODB_CREDENTIALS=<your_own_credentials>
+MONGODB_CREDENTIALS = your_credentials
 ```
 
 Third, to start the development server locally
@@ -43,13 +43,13 @@ The technologies I used for this project:
 
 - [TypeScript](https://www.typescriptlang.org/docs/)
 - [Next.js](https://nextjs.org/docs)
-- [ChakraUI](https://v2.chakra-ui.com/getting-started)
+- [Chakra UI](https://v2.chakra-ui.com/getting-started)
 - [React-hook-form](https://react-hook-form.com/)
 - [React](https://react.dev/reference/react)
 - [MongoDB](https://www.mongodb.com/)
 - [JWT](https://jwt.io/)
 - [SWR](https://swr.vercel.app/)
-- [UploadThing]()
+- [Uploadthing](https://uploadthing.com/)
 
 ## Deploy on Vercel
 
@@ -60,5 +60,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Upcoming Features
 
 - [ ] Implement pagination.
-- [ ] Update user profile picture once uploaded (by rerunning auth hook????)
+- [ ] Update user profile picture once uploaded (by rerunning auth hook????) | update the SWR auth cache
+- [ ] Close the input modal after successfully upload.
 - [ ] Unify the model typings to align with the schema (DO NOT DEFINE TYPES AS U GO). Should be using Schema modal as Source type and extends from there
