@@ -31,7 +31,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
     });
   } catch (error) {
     return response.status(500).json({
-      message: 'Unable retrieve data.',
+      message: `Unable retrieve data. ${error}`,
       success: false,
     });
   }
