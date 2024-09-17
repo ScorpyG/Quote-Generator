@@ -5,9 +5,13 @@ import { z } from 'zod';
 const envSchema = z.object({
   NODE_ENV: z.union([z.literal('development'), z.literal('production')]).default('development'),
   JWT_SECRET: z.string({
-    message: 'JWT_SECRET is required.',
+    message: 'JWT Secret key to encode and decode JWT token.',
     required_error: 'JWT_SECRET is required.',
   }), // ! Zod v3.23.8 does not support JWT verification, wait till v4
+  SECRET_KEY: z.string({
+    description: 'A different secret key for encode and decode JWT data user data',
+    required_error: 'SECRET_KEY is required.',
+  }),
   MONGODB_URI: z
     .string({
       description: 'MongoDB connection string.',

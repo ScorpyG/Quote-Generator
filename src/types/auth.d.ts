@@ -35,3 +35,9 @@ export interface BasicUser {
   firstName: string;
   lastName: string;
 }
+
+export interface MinUserData {
+  firstName: string;
+  lastName: string;
+  profileImgUrl: string;
+}

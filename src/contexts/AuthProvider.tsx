@@ -1,11 +1,13 @@
 import { ProfileFormInput } from '@/components/Forms/ProfileForm/useProfileForm';
-import { AuthResponse, AuthUser, TLogin, TRegister } from '@/types/auth';
+import { AuthResponse, MinUserData, TLogin, TRegister } from '@/types/auth';
+import { decodeCookie } from '@/utils/userCookie';
 import axios from 'axios';
+import { deleteCookie, getCookie, hasCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 export interface TAuthContext {
-  user: AuthUser | null;
+  user: MinUserData | null;
   isAuthenticated: boolean;
 
   // Auth functions
@@ -35,7 +37,7 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<MinUserData | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const router = useRouter();
 
@@ -43,8 +45,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const response = await axios.get('/api/auth/user'); // ! This is bad since we have to make a request to the server to check if the user is authenticated
-        setUser(response.data.data);
+        if (hasCookie('user')) {
+          const userCookie = getCookie('user') as string; // Casting here because CookieValueTypes = string | undefined
+          const userData = await decodeCookie(userCookie);
+          setUser(userData);
+        }
+
         setIsAuthenticated(true);
       } catch (error) {
         setUser(null);
@@ -79,6 +85,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     if (response.status === 200) {
+      const userCookie = getCookie('user') as string;
+      const userData = await decodeCookie(userCookie);
+
+      setUser(userData);
       setIsAuthenticated(true);
 
       return {
@@ -102,6 +112,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     });
 
     if (response.status === 200) {
+      deleteCookie('user');
       setUser(null);
       setIsAuthenticated(false);
       router.push('/signin');
