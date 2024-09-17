@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { createUploadthing, type FileRouter } from 'uploadthing/next-legacy';
 import { UploadThingError } from 'uploadthing/server';
 import { updateProfilePic } from './mongodb';
+import env from '@/utils/env';
 
 const f = createUploadthing();
 
@@ -22,7 +23,7 @@ export const customFileRouter = {
       }
 
       try {
-        const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
+        const user = (await jwt.verify(token, env.JWT_SECRET!)) as AuthUser;
         return {
           userId: user.id,
         };
@@ -63,7 +64,7 @@ export const customFileRouter = {
       }
 
       try {
-        const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
+        const user = (await jwt.verify(token, env.JWT_SECRET!)) as AuthUser;
         return {
           userId: user.id,
         };

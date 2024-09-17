@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import { AuthUser } from '@/types/auth';
+import env from '@/utils/env';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -16,13 +17,13 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
+    console.log(env);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const userDataFromDB = await User.findById(user.id).select('-password'); // User data from DB excluding password
+    const user = (await jwt.verify(token, env.JWT_SECRET!)) as AuthUser;
+    const userDataFromDB = await User.findById(user.id).select('-password -updatedAt -createdAt'); // User data from DB excluding password
 
     return response.status(200).json({
-      data: user,
+      data: userDataFromDB,
       message: 'User retrieved successfully.',
       success: true,
     });
