@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import { AuthUser } from '@/types/auth';
+import env from '@/utils/env';
 import bcrypt from 'bcryptjs';
 import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
@@ -9,7 +10,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
-  const JWT_SECRET = process.env.JWT_SECRET!;
+  const JWT_SECRET = env.JWT_SECRET!;
 
   if (!JWT_SECRET) {
     return response.status(501).json({
@@ -51,7 +52,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const cookie = serialize('token', token, {
           httpOnly: true,
           sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
+          secure: env.NODE_ENV === 'production',
           maxAge: 60 * 60 * 24, // 1 day
           path: '/',
         });

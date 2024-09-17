@@ -43,7 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const response = await axios.get('/api/auth/user');
+        const response = await axios.get('/api/auth/user'); // ! This is bad since we have to make a request to the server to check if the user is authenticated
         setUser(response.data.data);
         setIsAuthenticated(true);
       } catch (error) {
