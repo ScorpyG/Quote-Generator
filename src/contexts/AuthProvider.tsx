@@ -44,15 +44,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // ! useEffect is bad
   useEffect(() => {
     const checkUser = async () => {
-      try {
-        if (hasCookie('user')) {
-          const userCookie = getCookie('user') as string; // Casting here because CookieValueTypes = string | undefined
-          const userData = await decodeCookie(userCookie);
-          setUser(userData);
-        }
-
+      if (hasCookie('user')) {
+        const userCookie = getCookie('user') as string; // Casting here because CookieValueTypes = string | undefined
+        const userData = await decodeCookie(userCookie);
+        setUser(userData);
         setIsAuthenticated(true);
-      } catch (error) {
+      } else {
         setUser(null);
         setIsAuthenticated(false);
       }
