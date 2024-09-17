@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Blog from '@/models/Blog';
 import { AuthUser } from '@/types/auth';
+import env from '@/utils/env';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -16,7 +17,7 @@ async function handler(request: NextApiRequest, response: NextApiResponse) {
   }
 
   try {
-    const user = (await jwt.verify(token, process.env.JWT_SECRET!)) as AuthUser;
+    const user = (await jwt.verify(token, env.JWT_SECRET!)) as AuthUser;
     const posts = await Blog.find({ userId: new mongoose.Types.ObjectId(user.id) });
 
     return response.status(200).json({

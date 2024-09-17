@@ -1,6 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
-import { AuthUser } from '@/types/auth';
+import { AuthUser, MinUserData } from '@/types/auth';
+import env from '@/utils/env';
 import bcrypt from 'bcryptjs';
 import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
@@ -8,15 +9,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
-
-  const JWT_SECRET = process.env.JWT_SECRET!;
-
-  if (!JWT_SECRET) {
-    return response.status(501).json({
-      message: 'JWT_SECRET is undefined',
-      success: false,
-    });
-  }
 
   try {
     const { email, password } = request.body;
@@ -43,19 +35,40 @@ export default async function handler(request: NextApiRequest, response: NextApi
           lastName: user.lastName,
           profileImgUrl: user.profileImgUrl,
         };
-        const token = await jwt.sign(jwtTokenData, JWT_SECRET, {
+
+        const userData: MinUserData = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          profileImgUrl: user.profileImgUrl,
+        };
+
+        const token = await jwt.sign(jwtTokenData, env.JWT_SECRET, {
           expiresIn: '1d',
           algorithm: 'HS512',
         });
 
-        const cookie = serialize('token', token, {
+        // TODO: Encrypt user data using a different method instead of using JWT??
+        const userToken = await jwt.sign(userData, env.SECRET_KEY, {
+          expiresIn: '1d',
+        });
+
+        const jwtCookie = serialize('token', token, {
           httpOnly: true,
           sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
+          secure: env.NODE_ENV === 'production',
           maxAge: 60 * 60 * 24, // 1 day
           path: '/',
         });
-        response.setHeader('Set-Cookie', cookie);
+
+        const userCookie = serialize('user', userToken, {
+          httpOnly: false,
+          sameSite: 'strict',
+          secure: env.NODE_ENV === 'production',
+          maxAge: 60 * 60 * 24, // 1 day
+          path: '/',
+        });
+
+        response.setHeader('Set-Cookie', [jwtCookie, userCookie]);
         return response.status(200).json({
           message: 'Signed in successfully',
           success: true,
